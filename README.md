@@ -6,7 +6,7 @@ We don't byte
 
 <!-- [![CI](https://github.com/Hardi-hood/AI-Shopping-System/actions/workflows/main.yml/badge.svg)](https://github.com/Hardi-hood/AI-Shopping-System/actions/workflows/main.yml) -->
 
-# AI_Shopping System Test
+# AI_Shopping System 
 
 A complete Flutter application written in dart with firebase implementation.
 
