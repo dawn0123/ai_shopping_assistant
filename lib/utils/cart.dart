@@ -13,6 +13,7 @@ class Cart  {
           'price':price,
           'quantity':1,
           'stockamt': stockamt,
+          'total': price
         }
     );
   }
