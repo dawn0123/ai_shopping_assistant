@@ -114,7 +114,7 @@ class SearchState extends State<Search> {
                           snapshot.data!.docs[index].get('url'),
                           snapshot.data!.docs[index].get('name'),
                           snapshot.data!.docs[index].get('description'),
-                          snapshot.data!.docs[index].get('price').toString(),
+                          snapshot.data!.docs[index].get('price'),
                           snapshot.data!.docs[index].get('stockamt'),
                         );
                       },
@@ -142,7 +142,7 @@ class SearchState extends State<Search> {
                             element.data()['url'].toString(),
                             element.data()['name'].toString(),
                             element.data()['description'].toString(),
-                            element.data()['price'].toString(),
+                            element.data()['price'],
                             element.data()['stockamt']);
                       }).toList())
                 ])
