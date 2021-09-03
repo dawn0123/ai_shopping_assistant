@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'dart:async';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -33,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController userForgotP = TextEditingController();
   String longitude = "";
   String latitude = "";
+  late String Province=" ";
   late String cityname = "";
 
   late TextEditingController userPasswordController;
@@ -72,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String? _validatePassword(String value) {
     value = value.trim();
-//makesure user creates a strong password
+//make sure user creates a strong password
     if (userPasswordController.text.isNotEmpty) {
       if (value.isEmpty) {
         return 'Please enter password';
@@ -85,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void getLocationData() async {
     print("running location data function");
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.bestForNavigation);
+        desiredAccuracy: LocationAccuracy.best);
     print("done with Geolocator+${position.longitude}");
     longitude = await position.longitude.toString();
     latitude = await position.latitude.toString();
@@ -93,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'http://api.positionstack.com/v1/reverse?access_key=5e65a2bf717cff420bade43bf75f0cec&query=$latitude,$longitude');
     await networkHelper.getData();
     cityname = networkHelper.cityname;
+    Province=networkHelper.Province;
 
   }
 
@@ -338,6 +341,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 align: Alignment.center,
                                 press: () => {
                                       print(cityname),
+                                  Timer(Duration(seconds: 2), () {
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(
@@ -345,9 +349,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   RegisterScreen(
                                                     cityName:
                                                         cityname.toString(),
+                                                    province:Province.toString(),
                                                     longitude: longitude,
                                                     latitude: latitude,
-                                                  ))),
+                                                  )));})
                                     })
                             //=====================================================
                           ])))

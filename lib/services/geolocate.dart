@@ -39,7 +39,7 @@ class Geolocate{
    // When we reach here, permissions are granted and we can
    // continue accessing the position of the device.
 
-  position=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+  position=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
    print('${placemarks.first.toString()}');
    return placemarks.first.toString();
