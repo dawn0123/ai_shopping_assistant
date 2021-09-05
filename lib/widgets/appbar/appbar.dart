@@ -24,7 +24,8 @@ void choiceAction(String choice) {
     Navigator.push(
         contxt, new MaterialPageRoute(builder: (context) => PastPurchase()));
   } else if (choice == Constants.invoices) {
-    Navigator.push(contxt, new MaterialPageRoute(builder: (context) => Info()));
+    Navigator.push(
+        contxt, new MaterialPageRoute(builder: (context) => InvoicesPage()));
   } else if (choice == Constants.signout) {
     signOut().then((response) => {
           if (response == "User signed out")
