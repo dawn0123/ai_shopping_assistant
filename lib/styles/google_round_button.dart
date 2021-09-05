@@ -6,6 +6,9 @@ import 'package:aishop/utils/authentication.dart';
 import 'package:flutter/material.dart';
 
 class GoogleRoundButton extends StatefulWidget {
+  GoogleRoundButton({this.location, this.province});
+  final location;
+  final province;
   @override
   State<StatefulWidget> createState() {
     return _GoogleButtonState();

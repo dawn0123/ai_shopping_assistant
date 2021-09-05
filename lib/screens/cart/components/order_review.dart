@@ -217,7 +217,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                           widget.prodprice,
                           widget.prodquantity,
                           widget.stockamt,
-                      widget.category);
+                          widget.category);
                       setState(() {
                         g -= double.parse(widget.prodprice);
                         updateCartTotal();
