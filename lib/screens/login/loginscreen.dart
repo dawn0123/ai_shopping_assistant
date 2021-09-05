@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/signup/registerscreen.dart';
 import 'package:aishop/services/networking.dart';
@@ -15,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'dart:async';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -28,79 +29,24 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 //declare and initialize the controllers and focus on each field.
 //initialize variable to check if user is editing the specific fiels.
+  static const notRegisteredTextKey = Key('notRegisteredTextKey');
   late TextEditingController userEmailController;
   late FocusNode textFocusNodeEmail;
   bool _isEditingEmail = false;
   late TextEditingController userForgotP = TextEditingController();
   String longitude = "";
   String latitude = "";
-  late String Province=" ";
-  late String cityname = "";
+  late String province = "";
 
+  late String cityname = "";
   late TextEditingController userPasswordController;
   late FocusNode textFocusNodePassword;
-  bool _isEditingpassword = false;
 
+  bool _isEditingpassword = false;
   String loginStatus = "";
+
   late Color loginStringColor;
 
-  @override
-  void initState() {
-    getLocationData();
-    userEmailController = TextEditingController();
-    userEmailController.text = '';
-    textFocusNodeEmail = FocusNode();
-
-    userPasswordController = TextEditingController();
-    userPasswordController.text = '';
-    textFocusNodePassword = FocusNode();
-    super.initState();
-  }
-
-  String? _validateEmail(String value) {
-    value = value.trim();
-// validate the email input that the usr gives.
-    if (userEmailController.text.isNotEmpty) {
-      if (value.isEmpty) {
-        return 'Email can\'t be empty';
-      } else if (!value.contains(RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
-        return 'Enter a correct email address';
-      }
-    }
-
-    return null;
-  }
-
-  String? _validatePassword(String value) {
-    value = value.trim();
-//make sure user creates a strong password
-    if (userPasswordController.text.isNotEmpty) {
-      if (value.isEmpty) {
-        return 'Please enter password';
-      }
-    }
-
-    return null;
-  }
-
-  void getLocationData() async {
-    print("running location data function");
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
-    print("done with Geolocator+${position.longitude}");
-    longitude = await position.longitude.toString();
-    latitude = await position.latitude.toString();
-    NetworkHelper networkHelper = await NetworkHelper(
-        'http://api.positionstack.com/v1/reverse?access_key=5e65a2bf717cff420bade43bf75f0cec&query=$latitude,$longitude');
-    await networkHelper.getData();
-    cityname = networkHelper.cityname;
-    Province=networkHelper.Province;
-
-  }
-
-//test keys
-  static const notRegisteredTextKey = Key('notRegisteredTextKey');
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -340,22 +286,75 @@ class _LoginScreenState extends State<LoginScreen> {
                                 text: "Not Registered?",
                                 align: Alignment.center,
                                 press: () => {
-                                      print(cityname),
                                   Timer(Duration(seconds: 2), () {
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) =>
                                                   RegisterScreen(
-                                                    cityName:
-                                                        cityname.toString(),
-                                                    province:Province.toString(),
-                                                    longitude: longitude,
-                                                    latitude: latitude,
-                                                  )));})
+                                                    cityName: cityname,
+                                                    //longitude: longitude,
+                                                    //latitude: latitude,
+                                                    province: province,
+                                                  )
+                                          )
+                                      );
+                                  })
                                     })
                             //=====================================================
                           ])))
             ])));
+  }
+
+  Future<void> getLocationData() async {
+    print("running location data function");
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
+    print("done with Geolocator+${position.longitude}");
+    longitude = await position.longitude.toString();
+    latitude = await position.latitude.toString();
+    NetworkHelper networkHelper = await NetworkHelper(
+        'http://api.positionstack.com/v1/reverse?access_key=5e65a2bf717cff420bade43bf75f0cec&query=$latitude,$longitude');
+    await networkHelper.getData();
+    cityname = networkHelper.cityname.toString();
+    province = networkHelper.Province.toString();
+  }
+
+  @override
+  void initState() {
+    getLocationData();
+    userEmailController = TextEditingController();
+    userEmailController.text = '';
+    textFocusNodeEmail = FocusNode();
+
+    userPasswordController = TextEditingController();
+    userPasswordController.text = '';
+    textFocusNodePassword = FocusNode();
+    super.initState();
+  }
+
+//test keys
+  String? _validateEmail(String value) {
+    value = value.trim();
+// validate the email input that the usr gives.
+    if (userEmailController.text.isNotEmpty) {
+      if (value.isEmpty) {
+        return 'Email can\'t be empty';
+      } else if (!value.contains(RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
+        return 'Enter a correct email address';
+      }
+    }
+    return null;
+  }
+  String? _validatePassword(String value) {
+    value = value.trim();
+//make sure user creates a strong password
+    if (userPasswordController.text.isNotEmpty) {
+      if (value.isEmpty) {
+        return 'Please enter password';
+      }
+    }
+    return null;
   }
 }

@@ -51,8 +51,8 @@ class _ClothesScreen extends State<ClothesScreen> {
               } else {
                 return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
-                      childAspectRatio: 2 / 3,
+                      crossAxisCount: (MediaQuery.of(context).size.width/250).floor(),
+                      childAspectRatio: 2 / 3.5,
                       mainAxisSpacing: 0),
                   itemBuilder: (context, index) {
                     return ProductCard(
@@ -62,6 +62,7 @@ class _ClothesScreen extends State<ClothesScreen> {
                       snapshot.data!.docs[index].get('description'),
                       snapshot.data!.docs[index].get('price').toString(),
                       snapshot.data!.docs[index].get('stockamt'),
+                        snapshot.data!.docs[index].get('category')
                     );
                   },
                   itemCount: snapshot.data!.docs.length,

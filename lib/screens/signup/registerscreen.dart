@@ -1,5 +1,5 @@
+import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/login/loginscreen.dart';
-import 'package:aishop/screens/verification_page/verifyscreen.dart';
 import 'package:aishop/styles/google_round_button.dart';
 import 'package:aishop/styles/or_divider.dart';
 import 'package:aishop/styles/round_button.dart';
@@ -16,13 +16,14 @@ import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({this.cityName,this.longitude,this.latitude,this.province});
   final cityName;
   final longitude;
   final latitude;
   final province;
+  RegisterScreen({this.cityName,this.longitude,this.latitude,this.province});
   @override
   State<StatefulWidget> createState() {
+    print("->"+cityName+"<-"+"->"+province+"<-");
     return _RegisterScreenState();
   }
 }
@@ -59,78 +60,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late TextEditingController userLocationController;
   late FocusNode textFocusNodeLocation = FocusNode();
 
-  @override
-  void initState() {
-    userEmailController = TextEditingController();
-    userEmailController.text = '';
-
-    userPasswordController = TextEditingController();
-    userPasswordController.text = '';
-
-    userConfirmPasswordController = TextEditingController();
-    userFirstNameController = TextEditingController();
-    userLastNameController = TextEditingController();
-    userBirthdayController = TextEditingController();
-    userLocationController = TextEditingController();
-
-    super.initState();
-  }
-
-  String? _validateEmail(String value) {
-    value = value.trim();
-//check user is enetring a valid email.
-    if (userEmailController.text.isNotEmpty) {
-      if (value.isEmpty) {
-        return 'Email can\'t be empty';
-      } else if (!value.contains(RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
-        return 'Enter a correct email address';
-      }
-    }
-
-    return null;
-  }
-
-  String? _validatePassword(String value) {
-    value = value.trim();
-//check user enters a strong enough password.
-    if (userPasswordController.text.isNotEmpty) {
-      print(value);
-      if (value.isEmpty) {
-        return 'Please enter password';
-      } else {
-        if (!value.contains(new RegExp(r'[0-9]'))) {
-          return ' Password must contain atleast one digit ';
-        }
-
-        if (!value.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-          return 'Password must contain at least on special character';
-        }
-        if (!value.contains(new RegExp(r'[a-z]'))) {
-          return 'Password must contain at least one lower case letter';
-        }
-
-        // if (value.contains(new RegExp(r'[A-Z]'))) {
-        //   return 'Password must contain at least one upper case letter';
-        // }
-      }
-    }
-
-    return null;
-  }
-
-  String? _checkRepeatedPassword(String value) {
-    value = value.trim();
-//check that passwords are matching.
-    if (userConfirmPasswordController.text.isNotEmpty) {
-      if (userConfirmPasswordController.text != userPasswordController.text) {
-        return 'Passwords do not match';
-      } else {
-        return 'Password Confirmed';
-      }
-    }
-    return null;
-  }
+  late TextEditingController userProvinceController;
+  late FocusNode textFocusNodeProvince = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       cityname = widget.cityName.toString();
     });
     Size size = MediaQuery.of(context).size;
-    
+
     return new Scaffold(
         body: Container(
             width: size.width,
@@ -149,7 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Expanded(child: SidePanel()),
               Expanded(
                   child: Container(
-                      padding: EdgeInsets.all(60),
+                      padding: EdgeInsets.symmetric(horizontal: 60, vertical: 30),
                       decoration: BoxDecoration(color: white),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -353,15 +284,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             //==================================================
                             //location
                             RoundTextField(
-                              text: "${widget.cityName.toString()}",
+                              text: (!widget.cityName.toString().contains(new RegExp(r'[a-zA-Z]')))
+                                  ? "Location"
+                                  : "${widget.cityName.toString()}",
                               focusNode: textFocusNodeLocation,
                               autofocus: false,
                               control: userLocationController,
                               preicon: Icon(LineIcons.mapMarker),
-                              suficon: IconButton(
-                                icon: Icon(LineIcons.searchLocation),
-                                onPressed: () {},
-                              ),
+                            ),
+                            RoundTextField(
+                              text: (!widget.province.toString().contains(new RegExp(r'[a-zA-Z]')))
+                                  ? "Province"
+                                  : "${widget.province.toString()}",
+                              focusNode: textFocusNodeProvince,
+                              autofocus: false,
+                              control: userProvinceController,
+                              preicon: Icon(LineIcons.mapMarker),
                             ),
 
                             //=============================================
@@ -369,159 +307,208 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             RoundButton(
                               text: "SIGNUP",
                               press: () async {
-                                await registerWithEmailPassword(
-                                        userEmailController.text,
-                                        userPasswordController.text)
-                                    .then((result) {
-                                  if (result != null) {
-                                    setState(() async {
-                                      final _firestore =
-                                          FirebaseFirestore.instance;
-                                      DocumentReference doc_ref = _firestore
-                                          .collection("Users")
-                                          .doc(uid)
-                                          .collection("info")
-                                          .doc();
-                                      DocumentSnapshot docSnap =
-                                          await doc_ref.get();
-                                      var doc_id2 = docSnap.reference.id;
-                                      if (userLocationController.text == "") {
-                                        _firestore
-                                            .collection('Users')
-                                            .doc(uid)
-                                            .collection("info")
-                                            .doc(doc_id2)
-                                            .set({
-                                          'bday': userBirthdayController.text,
-                                          'email': userEmailController.text,
-                                          'fname': userFirstNameController.text,
-                                          'location': widget.cityName,
-                                          'lname': userLastNameController.text,
-                                          'longitude':widget.longitude,
-                                          'latitude':widget.latitude,
-                                          'province':widget.province
-                                        });
-                                      } else {
-                                        _firestore
-                                            .collection('Users')
-                                            .doc(uid)
-                                            .collection("info")
-                                            .doc(doc_id2)
-                                            .set({
-                                          'bday': userBirthdayController.text,
-                                          'email': userEmailController.text,
-                                          'fname': userFirstNameController.text,
-                                          'location':
-                                              userLocationController.text,
-                                          'lname': userLastNameController.text,
-
-
-                                        });
-                                      }
+                                if(userEmailController.text == ""
+                                || userBirthdayController.text == ""
+                                || userConfirmPasswordController.text == ""
+                                || userFirstNameController.text == ""
+                                || userLastNameController.text == ""
+                                || userLocationController.text == ""
+                                || userPasswordController.text == ""
+                                || userProvinceController.text == ""){
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(32.0))),
+                                          contentPadding:
+                                          EdgeInsets.only(top: 10.0),
+                                          content: Container(
+                                            width: 370.0,
+                                            // height: 30,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Text(
+                                                  "Please fill in all the fields.",
+                                                  style: TextStyle(
+                                                      fontSize: 24.0),
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                TextButton(
+                                                  child: Text('OK',
+                                                      style: TextStyle(
+                                                          color:
+                                                          Colors.black)),
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop();
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                }
+                                else {
+                                  await registerWithEmailPassword(
+                                      userEmailController.text,
+                                      userPasswordController.text)
+                                      .then((result) {
+                                    if (result != null) {
+                                      setState(() async {
+                                        if (userLocationController.text == "") {
+                                          FirebaseFirestore.instance
+                                              .collection('Users')
+                                              .doc(uid)
+                                              .collection("info")
+                                              .doc(uid)
+                                              .set({
+                                            'bday': userBirthdayController.text,
+                                            'email': userEmailController.text,
+                                            'fname': userFirstNameController.text,
+                                            'location': widget.cityName,
+                                            'lname': userLastNameController.text,
+                                            'province': widget.province.toString()
+                                          });
+                                        } else {
+                                          FirebaseFirestore.instance
+                                              .collection('Users')
+                                              .doc(uid)
+                                              .collection("info")
+                                              .doc(uid)
+                                              .set({
+                                            'bday': userBirthdayController.text,
+                                            'email': userEmailController.text,
+                                            'fname': userFirstNameController.text,
+                                            'location': userLocationController.text,
+                                            'lname': userLastNameController.text,
+                                            'province': userProvinceController.text
+                                          });
+                                        }
+                                        loginStatus =
+                                        'You have registered successfully';
+                                        loginStringColor = Colors.green;
+                                        /*Navigator.push(
+                                            context,
+                                            new MaterialPageRoute(
+                                                builder: (context) =>
+                                                    VerifyScreen(
+                                                        userEmailController
+                                                            .text,
+                                                        widget.cityName,
+                                                        userBirthdayController
+                                                            .text,
+                                                        userFirstNameController
+                                                            .text,
+                                                        userLastNameController
+                                                            .text)));*/
+                                        Navigator.push(context,
+                                            new MaterialPageRoute(builder:
+                                                (context) => HomePage()));
+                                      });
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius
+                                                      .all(
+                                                      Radius.circular(32.0))),
+                                              contentPadding:
+                                              EdgeInsets.only(top: 10.0),
+                                              content: Container(
+                                                width: 370.0,
+                                                // height: 30,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                                  mainAxisSize: MainAxisSize
+                                                      .min,
+                                                  children: <Widget>[
+                                                    SizedBox(
+                                                      height: 3,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                      mainAxisSize:
+                                                      MainAxisSize.min,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          "Error has occured !",
+                                                          style: TextStyle(
+                                                              fontSize: 24.0),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                      mainAxisSize:
+                                                      MainAxisSize.min,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          "This account already exist/There's something wrong",
+                                                          style: TextStyle(
+                                                              fontSize: 15.0,
+                                                              color: Colors
+                                                                  .red),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    TextButton(
+                                                      child: Text('OK',
+                                                          style: TextStyle(
+                                                              color:
+                                                              Colors.black)),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    }
+                                  }).catchError((error) {
+                                    print('Sign in Error: $error');
+                                    setState(() {
                                       loginStatus =
-                                          'You have registered successfully';
-                                      loginStringColor = Colors.green;
+                                      'Error occured while Signing in';
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) =>
-                                                  VerifyScreen(
-                                                      userEmailController.text,
-                                                      widget.cityName,
-                                                      userBirthdayController
-                                                          .text,
-                                                      userFirstNameController
-                                                          .text,
-                                                      userLastNameController
-                                                          .text)));
+                                                  LoginScreen()));
+                                      loginStringColor = Colors.black54;
                                     });
-                                  } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(32.0))),
-                                            contentPadding:
-                                                EdgeInsets.only(top: 10.0),
-                                            content: Container(
-                                              width: 370.0,
-                                              // height: 30,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: <Widget>[
-                                                  SizedBox(
-                                                    height: 3,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        "Error has occured !",
-                                                        style: TextStyle(
-                                                            fontSize: 24.0),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        "This account already exist/There's something wrong",
-                                                        style: TextStyle(
-                                                            fontSize: 15.0,
-                                                            color: Colors.red),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 15,
-                                                  ),
-                                                  TextButton(
-                                                    child: Text('OK',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.black)),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        });
-                                  }
-                                }).catchError((error) {
-                                  print('Sign in Error: $error');
-                                  setState(() {
-                                    loginStatus =
-                                        'Error occured while Signing in';
-                                    Navigator.push(
-                                        context,
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginScreen()));
-                                    loginStringColor = Colors.black54;
                                   });
-                                });
+                                }
                               },
                             ),
                             //=================================================================
@@ -529,7 +516,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             OrDivider(),
                             //==========================================
                             //Google sign in button
-                            GoogleRoundButton(),
+                            GoogleRoundButton(
+                                location: widget.cityName.toString(),
+                                province: widget.province.toString()
+                            ),
                             //=============================================
                             // Already registered button => take user to login page
                             TextLink(
@@ -544,5 +534,79 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     })
                           ])))
             ])));
+  }
+
+  @override
+  void initState() {
+    userEmailController = TextEditingController();
+    userEmailController.text = '';
+
+    userPasswordController = TextEditingController();
+    userPasswordController.text = '';
+
+    userConfirmPasswordController = TextEditingController();
+    userFirstNameController = TextEditingController();
+    userLastNameController = TextEditingController();
+    userBirthdayController = TextEditingController();
+    userLocationController = TextEditingController();
+    userProvinceController = TextEditingController();
+
+    super.initState();
+  }
+
+  String? _checkRepeatedPassword(String value) {
+    value = value.trim();
+//check that passwords are matching.
+    if (userConfirmPasswordController.text.isNotEmpty) {
+      if (userConfirmPasswordController.text != userPasswordController.text) {
+        return 'Passwords do not match';
+      } else {
+        return 'Password Confirmed';
+      }
+    }
+    return null;
+  }
+
+  String? _validateEmail(String value) {
+    value = value.trim();
+//check user is enetring a valid email.
+    if (userEmailController.text.isNotEmpty) {
+      if (value.isEmpty) {
+        return 'Email can\'t be empty';
+      } else if (!value.contains(RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
+        return 'Enter a correct email address';
+      }
+    }
+
+    return null;
+  }
+
+  String? _validatePassword(String value) {
+    value = value.trim();
+//check user enters a strong enough password.
+    if (userPasswordController.text.isNotEmpty) {
+      if (value.isEmpty) {
+        return 'Please enter password';
+
+      } else {
+        if (!value.contains(new RegExp(r'[0-9]'))) {
+          return ' Password must contain atleast one digit ';
+        }
+
+        if (!value.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+          return 'Password must contain at least on special character';
+        }
+        if (!value.contains(new RegExp(r'[a-z]'))) {
+          return 'Password must contain at least one lower case letter';
+        }
+
+        if (!value.contains(new RegExp(r'[A-Z]'))) {
+           return 'Password must contain at least one upper case letter';
+        }
+      }
+    }
+
+    return null;
   }
 }

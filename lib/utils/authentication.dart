@@ -4,15 +4,34 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-FirebaseAuth _auth = FirebaseAuth.instance;
-
-String? uid;
-String? userEmail;
-
 late GoogleSignIn googleSignIn = GoogleSignIn();
 
-String? name;
 String? imageUrl;
+String? name;
+
+String? uid;
+
+String? userEmail;
+FirebaseAuth _auth = FirebaseAuth.instance;
+
+Future getUser() async {
+  // Initialize Firebase
+  await Firebase.initializeApp();
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool authSignedIn = prefs.getBool('auth') ?? false;
+
+  final User? user = _auth.currentUser;
+
+  if (authSignedIn == true) {
+    if (user != null) {
+      uid = user.uid;
+      name = user.displayName;
+      userEmail = user.email;
+      imageUrl = user.photoURL;
+    }
+  }
+}
 
 Future<User?> registerWithEmailPassword(String email, String password) async {
   await Firebase.initializeApp();
@@ -44,6 +63,10 @@ Future<User?> registerWithEmailPassword(String email, String password) async {
   return user;
 }
 
+void resetPassword(String email){
+  _auth.sendPasswordResetEmail(email: email);
+}
+
 Future<User?> signInWithEmailPassword(String email, String password) async {
   await Firebase.initializeApp();
   User? user;
@@ -73,30 +96,7 @@ Future<User?> signInWithEmailPassword(String email, String password) async {
   return user;
 }
 
-Future<String> signOut() async {
-  try {
-    await _auth.signOut().then((value) => {
-    if(uid != null)
-      uid = null,
-    if(userEmail != null)
-      userEmail = null,
-    if(name != null)
-      name = null,
-    if(imageUrl != null)
-      imageUrl = null
-  });
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('auth', false);
-  return 'User signed out';
-  }
-  catch (e) {
-    print("Sign out error: $e");
-    return 'Error signing out. Try again.';
-  }
-}
-
-Future<User?> signInWithGoogle() async {
+Future<User?> signInWithGoogle(location, province) async {
   // Initialize Firebase
   await Firebase.initializeApp();
   User? user;
@@ -132,7 +132,8 @@ Future<User?> signInWithGoogle() async {
               'lname':name!.split(" ")[1],
               'email':userEmail,
               'bday':"*missing",
-              'location': "*missing",
+              'location': location,
+              'province' : province
             }
         )
       }
@@ -141,12 +142,34 @@ Future<User?> signInWithGoogle() async {
       }
     });
 
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('auth', true);
   }
 
   return user;
+}
+
+Future<String> signOut() async {
+  try {
+    await _auth.signOut().then((value) => {
+    if(uid != null)
+      uid = null,
+    if(userEmail != null)
+      userEmail = null,
+    if(name != null)
+      name = null,
+    if(imageUrl != null)
+      imageUrl = null
+  });
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('auth', false);
+  return 'User signed out';
+  }
+  catch (e) {
+    print("Sign out error: $e");
+    return 'Error signing out. Try again.';
+  }
 }
 
 void signOutGoogle() async {
@@ -161,27 +184,4 @@ void signOutGoogle() async {
   imageUrl = null;
 
   print("User signed out of Google account");
-}
-
-Future getUser() async {
-  // Initialize Firebase
-  await Firebase.initializeApp();
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool authSignedIn = prefs.getBool('auth') ?? false;
-
-  final User? user = _auth.currentUser;
-
-  if (authSignedIn == true) {
-    if (user != null) {
-      uid = user.uid;
-      name = user.displayName;
-      userEmail = user.email;
-      imageUrl = user.photoURL;
-    }
-  }
-}
-
-void resetPassword(String email){
-  _auth.sendPasswordResetEmail(email: email);
 }

@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 class AIicons {
   
   // coverage: false
-  AIicons._();
-
   static const _kFontFam = 'AIicons';
 
   static const IconData wishlist = IconData(0xe800, fontFamily: _kFontFam);
+
   static const IconData kettle_black = IconData(0xe801, fontFamily: _kFontFam);
   static const IconData books = IconData(0xe802, fontFamily: _kFontFam);
   static const IconData tech = IconData(0xe803, fontFamily: _kFontFam);
@@ -23,4 +22,5 @@ class AIicons {
   static const IconData search = IconData(0xe80d, fontFamily: _kFontFam);
   static const IconData roboshopper = IconData(0xe80e, fontFamily: _kFontFam);
   static const IconData chip = IconData(0xe811, fontFamily: _kFontFam);
+  AIicons._();
 }

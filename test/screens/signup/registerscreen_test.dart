@@ -14,7 +14,7 @@ import 'package:line_icons/line_icons.dart';
 void main() {
   Widget testWidget = new MediaQuery(
       data: new MediaQueryData(),
-      child: new MaterialApp(home: new RegisterScreen())
+      child: new MaterialApp(home: new RegisterScreen(cityName: "",latitude: "",longitude: "",province: ""))
   );
 
   final input_fields = find.byType(RoundTextField);
@@ -33,12 +33,12 @@ void main() {
   testWidgets('Enabled widgets', (WidgetTester tester) async {
     await tester.pumpWidget(testWidget);
 
-    expect(input_fields, findsNWidgets(5));
+    expect(input_fields, findsNWidgets(6));
     expect(pass_fields, findsNWidgets(2));
 
     expect(find.byType(PageTitle), findsOneWidget);
     expect(confirmPassField, findsOneWidget);
-    expect(locationField, findsOneWidget);
+    expect(locationField, findsNWidgets(2));
     expect(birthdayField, findsOneWidget);
     expect(nameField, findsOneWidget);
     expect(surnameField, findsOneWidget);
@@ -66,11 +66,6 @@ void main() {
 
     await tester.enterText(birthdayField, '00/00/0000');
     expect(find.text('00/00/0000'), findsOneWidget);
-    final dialog = find.byType(AlertDialog);
-
-    await tester.tap(signupbutton);
-    await tester.pump();
-    expect(dialog, findsNothing);
 
     final alreadyhaveaccount = find.widgetWithText(TextLink, 'Already have an account? Login here.');
 
