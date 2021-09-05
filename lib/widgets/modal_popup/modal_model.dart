@@ -5,7 +5,7 @@ import 'package:aishop/utils/cart.dart';
 import 'package:aishop/utils/wishlist.dart';
 import 'package:flutter/material.dart';
 
-Modal(context, id, imgUrl, name, description, price, stockamt) {
+Modal(context, id, imgUrl, name, description, price, stockamt, category) {
   int amount = stockamt;
   bool toggle = false;
   bool add = false;
@@ -83,13 +83,13 @@ Modal(context, id, imgUrl, name, description, price, stockamt) {
                             });
                             if (toggle) {
                               Wishlist.addToCart(id, imgUrl, description, name,
-                                  price, stockamt);
+                                  price, stockamt, category);
 
                               HistoryTracker.addToHistory(id, imgUrl,
-                                  description, name, price, stockamt);
+                                  description, name, price, stockamt, category);
                             } else {
                               Wishlist.removeFromCart(id, imgUrl, description,
-                                  name, price, stockamt);
+                                  name, price, stockamt, category);
                             }
                           },
                         ),
@@ -105,13 +105,13 @@ Modal(context, id, imgUrl, name, description, price, stockamt) {
                                   double quantity = 1;
                                   if (add) {
                                     Cart.addToCart(id, imgUrl, name,
-                                        description, price, quantity, stockamt);
+                                        description, price, quantity, stockamt, category);
 
                                     HistoryTracker.addToHistory(id, imgUrl,
-                                        name, description, price, stockamt);
+                                        name, description, price, stockamt, category);
                                   } else {
                                     Cart.removeFromCart(id, imgUrl, name,
-                                        description, price, quantity, stockamt);
+                                        description, price, quantity, stockamt, category);
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(

@@ -2,9 +2,9 @@ import 'package:aishop/utils/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HistoryTracker {
-  final id, imgUrl, description, name, price, stockamt;
+  final id, imgUrl, description, name, price, stockamt, category;
   HistoryTracker.addToHistory(this.id, this.imgUrl, this.description, this.name,
-      this.price, this.stockamt) {
+      this.price, this.stockamt,  this.category) {
     int index;
     FirebaseFirestore.instance
         .collection('Users')
@@ -127,6 +127,7 @@ void addToPurchases() {
                               'name': productid.get("name"),
                               'description': productid.get("description"),
                               'price': productid.get("price"),
+                              'category': productid.get("category"),
                                   'date': date
                             }),
                             /*FirebaseFirestore.instance

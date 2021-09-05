@@ -48,6 +48,7 @@ dependencies:
   cached_network_image: ^3.0.0
   badges: ^2.0.1
   mockito: ^5.0.10
+  csv: ^5.0.0
 
 dev_dependencies:
   flutter_test:

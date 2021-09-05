@@ -62,6 +62,7 @@ class _KitchenScreen extends State<KitchenScreen> {
                       snapshot.data!.docs[index].get('description'),
                       snapshot.data!.docs[index].get('price').toString(),
                       snapshot.data!.docs[index].get('stockamt'),
+                        snapshot.data!.docs[index].get('category')
                     );
                   },
                   itemCount: snapshot.data!.docs.length,

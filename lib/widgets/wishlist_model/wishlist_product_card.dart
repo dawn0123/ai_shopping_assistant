@@ -14,6 +14,7 @@ class wishlistModel extends StatefulWidget {
   final cartid;
   final prodquantity;
   final int stockamt;
+  final category;
 
   wishlistModel(
       {this.prodname,
@@ -22,7 +23,8 @@ class wishlistModel extends StatefulWidget {
       this.proddescription,
       this.cartid,
       this.prodquantity,
-      required this.stockamt});
+      required this.stockamt,
+      this.category});
 
   @override
   _WishlistModel createState() => _WishlistModel();
@@ -43,7 +45,8 @@ class _WishlistModel extends State<wishlistModel> {
                 widget.proddescription,
                 widget.prodname,
                 widget.prodprice,
-                widget.stockamt);
+                widget.stockamt,
+            widget.category);
           },
           leading: new Image.network(
             widget.prodpicture,
@@ -79,7 +82,8 @@ class _WishlistModel extends State<wishlistModel> {
                       widget.proddescription,
                       widget.prodname,
                       widget.prodprice,
-                      widget.stockamt);
+                      widget.stockamt,
+                  widget.category);
                 },
               ),
             ),
@@ -100,14 +104,16 @@ class _WishlistModel extends State<wishlistModel> {
                             widget.prodname,
                             widget.prodprice,
                             widget.prodquantity,
-                            widget.stockamt);
+                            widget.stockamt,
+                        widget.category);
                         HistoryTracker.addToHistory(
                             widget.cartid,
                             widget.prodpicture,
                             widget.proddescription,
                             widget.prodname,
                             widget.prodprice,
-                            widget.stockamt);
+                            widget.stockamt,
+                        widget.category);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.black54,

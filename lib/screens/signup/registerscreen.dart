@@ -40,6 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String cityname = "";
   String loginStatus = "";
+  String Province = "";
   late Color loginStringColor;
 
 //use Regular Expression to validate the structure
@@ -136,6 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     setState(() {
       cityname = widget.cityName.toString();
+      Province = widget.province.toString();
     });
     Size size = MediaQuery.of(context).size;
     
@@ -414,8 +416,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           'location':
                                               userLocationController.text,
                                           'lname': userLastNameController.text,
-
-
                                         });
                                       }
                                       loginStatus =
@@ -529,7 +529,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             OrDivider(),
                             //==========================================
                             //Google sign in button
-                            GoogleRoundButton(),
+                            GoogleRoundButton(location: cityname.toString(), province: Province.toString(),),
                             //=============================================
                             // Already registered button => take user to login page
                             TextLink(

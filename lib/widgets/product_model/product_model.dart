@@ -18,9 +18,10 @@ class ProductCard extends StatefulWidget {
   final String description;
   final String price;
   final int stockamt;
+  final String category;
 
   ProductCard(this.id, this.imgUrl, this.name, this.description, this.price,
-      this.stockamt);
+      this.stockamt, this.category);
 
   @override
   State<StatefulWidget> createState() {
@@ -64,10 +65,18 @@ class _ProductCard extends State<ProductCard> {
                       widget.description,
                       widget.name,
                       widget.price,
-                      widget.stockamt);
+                      widget.stockamt,
+                      widget.category);
                   //on tap modal pop up
-                  Modal(context, widget.id, widget.imgUrl, widget.name,
-                      widget.description, widget.price, widget.stockamt);
+                  Modal(
+                      context,
+                      widget.id,
+                      widget.imgUrl,
+                      widget.name,
+                      widget.description,
+                      widget.price,
+                      widget.stockamt,
+                      widget.category);
                   DataService().increment(widget.name);
                 },
                 splashColor: Colors.white30,
@@ -136,14 +145,16 @@ class _ProductCard extends State<ProductCard> {
                               widget.description,
                               widget.name,
                               widget.price,
-                              widget.stockamt);
+                              widget.stockamt,
+                              widget.category);
                           HistoryTracker.addToHistory(
                               widget.id,
                               widget.imgUrl,
                               widget.description,
                               widget.name,
                               widget.price,
-                              widget.stockamt);
+                              widget.stockamt,
+                              widget.category);
                         } else
                           Wishlist.removeFromCart(
                               widget.id,
@@ -151,7 +162,8 @@ class _ProductCard extends State<ProductCard> {
                               widget.description,
                               widget.name,
                               widget.price,
-                              widget.stockamt);
+                              widget.stockamt,
+                              widget.category);
                       },
                     ),
                   ),
@@ -171,14 +183,14 @@ class _ProductCard extends State<ProductCard> {
                                       widget.name,
                                       widget.price,
                                       widget.stockamt,
-                                      1);
+                                      1, widget.category);
                                   HistoryTracker.addToHistory(
                                       widget.id,
                                       widget.imgUrl,
                                       widget.description,
                                       widget.name,
                                       widget.price,
-                                      widget.stockamt);
+                                      widget.stockamt, widget.category);
                                   updateCartTotal();
                                 } else
                                   Cart.removeFromCart(
@@ -188,7 +200,7 @@ class _ProductCard extends State<ProductCard> {
                                       widget.name,
                                       widget.price,
                                       widget.stockamt,
-                                      1);
+                                      1, widget.category);
                                 updateCartTotal();
                               },
                               style: ElevatedButton.styleFrom(

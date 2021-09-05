@@ -119,6 +119,7 @@ class SingleCartProduct extends StatefulWidget {
   final cartid;
   final prodindex;
   final stockamt;
+  final category;
 
   SingleCartProduct(
       {this.prodname,
@@ -128,7 +129,8 @@ class SingleCartProduct extends StatefulWidget {
       this.proddescription,
       this.prodindex,
       this.stockamt,
-      this.cartid});
+      this.cartid,
+      this.category});
 
   @override
   _SingleCartProductState createState() => _SingleCartProductState();
@@ -214,7 +216,8 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                           widget.prodname,
                           widget.prodprice,
                           widget.prodquantity,
-                          widget.stockamt);
+                          widget.stockamt,
+                          widget.category);
                       setState(() {
                         g -= double.parse(widget.prodprice);
                         updateCartTotal();
@@ -313,7 +316,8 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                               widget.prodname,
                               widget.prodprice,
                               widget.prodquantity,
-                              widget.stockamt);
+                              widget.stockamt,
+                              widget.category);
                           setState(() {
                             g -= double.parse(widget.prodprice) *
                                 widget.prodquantity;

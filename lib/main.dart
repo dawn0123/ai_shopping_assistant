@@ -1,5 +1,6 @@
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/login/loginscreen.dart';
+import 'package:aishop/utils/DataCollection.dart';
 import 'package:aishop/utils/authentication.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,7 @@ class _MyAppState extends State<MyApp> {
       }
     });
     print(uid);
+    //DataCollection().MakeCSV();
   }
 
   //remove debug banner in the corner
