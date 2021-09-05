@@ -128,7 +128,7 @@ void addToPurchases() {
                               'description': productid.get("description"),
                               'unit price': productid.get("price"),
                               'total': productid.get("total"),
-                              // 'date': date,
+                              'date': date,
                               'qquantity': productid.get("quantity")
                             }),
                             /*FirebaseFirestore.instance
