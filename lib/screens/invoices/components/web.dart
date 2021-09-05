@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
+import 'package:universal_html/html.dart';
 
 Future<void> saveAndLaunch(List<int> bytes, String filename) async {
   AnchorElement(
