@@ -1,4 +1,3 @@
-import 'package:aishop/screens/cart/checkout_page.dart';
 import 'package:aishop/screens/cart/components/order_review.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/utils/cart.dart';
@@ -33,7 +32,7 @@ class SingleCartProduct extends StatefulWidget {
 }
 
 class _SingleCartProductState extends State<SingleCartProduct> {
-  double prd_total = 0;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -44,7 +43,8 @@ class _SingleCartProductState extends State<SingleCartProduct> {
           width: 70.0,
           height: 70.0,
         ),
-        title: new Text(widget.prodname, style: TextStyle(color: white)),
+        title: new Text(widget.prodname.toString(),
+            style: TextStyle(color: white)),
         subtitle: new Column(
           children: <Widget>[
             new Row(
@@ -95,10 +95,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                               }));
 
                       setState(() {
-                        print(g);
-                        g = double.parse(widget.prodtotal) -
-                            double.parse(widget.prodprice);
-                        print(g);
+
                         updateCartTotal();
                       });
                     } else if (widget.prodquantity == 1) {
@@ -113,7 +110,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                         widget.stockamt,
                       );
                       setState(() {
-                        // g -= double.parse(widget.prodprice);
+
                         updateCartTotal();
                       });
                     }
@@ -124,7 +121,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                   width: 10,
                 ),
                 Text(
-                  "${widget.prodquantity}",
+                  "${widget.prodquantity.toString()}",
                   style: TextStyle(fontSize: 10, color: Colors.yellowAccent),
                 ),
                 SizedBox(
@@ -146,7 +143,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                     )),
                   ),
                   onTap: () async {
-                    print(widget.prodtotal.toString());
+
                     // increment product quantity & product total
 
                     await FirebaseFirestore.instance
@@ -166,8 +163,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                             }));
 
                     setState(() {
-                      // g += double.parse(widget.prodprice);
-                      // g = prd_total;
+
                       updateCartTotal();
                     });
                   },
@@ -180,8 +176,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
             new Container(
               alignment: Alignment.bottomRight,
               child: new Text(
-                  // prd_total = double.parse(widget.prodprice) * double.parse(widget.prodquantity),
-                  // gives null val
+
                   "R" +
                       double.parse((double.parse(widget.prodprice) *
                                   (widget.prodquantity))
@@ -216,12 +211,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                             widget.stockamt,
                           );
                           setState(() {
-                            // g -= double.parse(widget.prodprice) *
-                            // widget.prodquantity;
-                            // Navigator.pushReplacement(
-                            //     context,
-                            //     new MaterialPageRoute(
-                            //         builder: (context) => CheckOutPage()));
+
                             updateCartTotal();
                           });
                         },

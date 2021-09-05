@@ -1,30 +1,50 @@
-import 'package:aishop/screens/cart/checkout_page.dart';
 import 'package:aishop/screens/cart/components/edit_cart.dart';
 import 'package:aishop/styles/theme.dart';
-import 'package:aishop/utils/cart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-double g = 0.00;
+double cartTotal = 0.00;
 int sizethis = 0;
 int count = 0;
+double qtyTotal = 0;
+double orderTotal = 0;
 
 void updateCartTotal() async {
   double total = 0;
-  int qty = 0;
-  await FirebaseFirestore.instance
-      .collection('Users')
+  double qty = 0;
+  double ordTotal = 0;
+
+  FirebaseFirestore.instance
+      .collection("Users")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection("Purchases")
+      .get()
+      .then((querySnapshot) {
+    querySnapshot.docs.forEach((result) {
+      ordTotal += result.data()['total'];
+      qty += result.data()['qquantity'];
+    });
+    orderTotal = ordTotal;
+    qtyTotal = qty;
+
+  });
+
+  FirebaseFirestore.instance
+      .collection("Users")
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection("Cart")
       .get()
-      .then((value) {
-    value.docs.forEach((element) {
-      total += double.parse(element.data()['total']);
+      .then((querySnapshot) {
+    querySnapshot.docs.forEach((result) {
+      total += result.data()['total'];
     });
+    cartTotal = total;
+
   });
-  g = total;
 }
+
+
 
 // ignore: must_be_immutable
 class OrderReview extends StatefulWidget {
@@ -45,7 +65,7 @@ class _OrderReviewState extends State<OrderReview> {
   @override
   Widget build(BuildContext context) {
     updateCartTotal();
-
+    print(cartTotal);
     return Scaffold(
         backgroundColor: lightblack,
         appBar: AppBar(
@@ -104,7 +124,7 @@ class _OrderReviewState extends State<OrderReview> {
                   style: TextStyle(color: white),
                 ),
                 subtitle: new Text(
-                  " \n TOTAL :                       R $g",
+                  " \n TOTAL :                       R $cartTotal",
                   style: TextStyle(color: white, fontSize: 19.0),
                 ),
               ))
