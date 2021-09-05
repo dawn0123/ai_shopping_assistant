@@ -18,32 +18,7 @@ class CheckOutAddress extends StatefulWidget {
 }
 
 class _CheckOutAddress extends State<CheckOutAddress> {
-  Future getUserInfofromdb() async {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    CollectionReference _collectionReference = _firestore.collection("Users");
-    DocumentReference _doc = _collectionReference.doc(uid);
-    DocumentReference _documentReference = _doc.collection("info").doc(uid);
-
-    _documentReference.get().then((documentSnapshot) => {
-          if (!documentSnapshot.exists)
-            {
-              print("Sorry, User profile not found."),
-            }
-          else
-            {
-              setState(() {
-                userLocationController.text = documentSnapshot.get("location");
-              })
-            }
-        });
-  }
-
   late TextEditingController userLocationController = TextEditingController();
-
-  void initState() {
-    getUserInfofromdb();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +135,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-                                                      
+
                                                     },
                                                     child: Text(
                                                       "Add",
@@ -222,7 +197,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-                                                      
+
                                                     },
                                                     child: Text(
                                                       "Already Added",
@@ -336,7 +311,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-                                                      
+
                                                     },
                                                     child: Text(
                                                       "Add",
@@ -398,7 +373,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-                                                      
+
                                                     },
                                                     child: Text(
                                                       "Already Added",
@@ -468,5 +443,30 @@ class _CheckOutAddress extends State<CheckOutAddress> {
         ],
       ),
     );
+  }
+
+  Future getUserInfofromdb() async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    CollectionReference _collectionReference = _firestore.collection("Users");
+    DocumentReference _doc = _collectionReference.doc(uid);
+    DocumentReference _documentReference = _doc.collection("info").doc(uid);
+
+    _documentReference.get().then((documentSnapshot) => {
+          if (!documentSnapshot.exists)
+            {
+              print("Sorry, User profile not found."),
+            }
+          else
+            {
+              setState(() {
+                userLocationController.text = documentSnapshot.get("location");
+              })
+            }
+        });
+  }
+
+  void initState() {
+    getUserInfofromdb();
+    super.initState();
   }
 }

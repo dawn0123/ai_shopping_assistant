@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController userForgotP = TextEditingController();
   String longitude = "";
   String latitude = "";
-  late String Province="";
+  late String Province=" ";
   late String cityname = "";
 
   late TextEditingController userPasswordController;
@@ -333,7 +333,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             OrDivider(),
                             //==========================================
                             //Google sign in button
-                            GoogleRoundButton(location: cityname.toString(), province: Province.toString(),),
+                            GoogleRoundButton(),
                             //==========================================
                             TextLink(
                                 key: notRegisteredTextKey,

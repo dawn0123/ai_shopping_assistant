@@ -15,45 +15,8 @@ class SearchState extends State<Search> {
 
   var capitalizedValue = ' ';
 
-  initiateSearch(value) {
-    if (value.length == 0) {
-      setState(() {
-        queryResultSet = [];
-        tempSearchStore = [];
-      });
-    }
-    capitalizedValue = value.substring(0, 1).toUpperCase() + value.substring(1);
-
-    if (queryResultSet.length == 0 && value.length > 0) {
-      SearchService()
-          .searchByName(capitalizedValue)
-          .then((QuerySnapshot mydocs) {
-        for (int i = 0; i < mydocs.docs.length; ++i) {
-          queryResultSet.add(mydocs.docs[i]);
-          setState(() {
-            tempSearchStore.add(queryResultSet[i]);
-          });
-        }
-      });
-    } else {
-      tempSearchStore = [];
-      queryResultSet.forEach((element) {
-        if (element['name'].toLowerCase().contains(value.toLowerCase()) ==
-            true) {
-          if (element["name"].toLowerCase().indexOf(value.toLowerCase()) == 0) {
-            setState(() {
-              tempSearchStore.add(element);
-            });
-          }
-        }
-      });
-    }
-    if (tempSearchStore.length == 0 && value.length > 1) {
-      setState(() {});
-    }
-  }
-
   bool isSearching = false;
+
   int searchvalue = 0;
   @override
   Widget build(BuildContext context) {
@@ -105,8 +68,8 @@ class SearchState extends State<Search> {
                   } else {
                     return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 5,
-                          childAspectRatio: 2 / 3,
+                          crossAxisCount: (MediaQuery.of(context).size.width/250).round(),
+                          childAspectRatio: 2 / 3.5,
                           mainAxisSpacing: 0),
                       itemBuilder: (context, index) {
                         return ProductCard(
@@ -131,8 +94,8 @@ class SearchState extends State<Search> {
                   GridView.count(
                       padding: EdgeInsets.only(
                           left: 10.0, right: 10.0, top: 10.0, bottom: 10),
-                      crossAxisCount: 5,
-                      childAspectRatio: (200 / 300),
+                      crossAxisCount: (MediaQuery.of(context).size.width/250).round(),
+                      childAspectRatio: 2 / 3.5,
                       crossAxisSpacing: 4.0,
                       mainAxisSpacing: 4.0,
                       primary: false,
@@ -145,7 +108,8 @@ class SearchState extends State<Search> {
                             element.data()['description'].toString(),
                             element.data()['price'].toString(),
                             element.data()['stockamt'],
-                        element.date()['category']);
+                        element.data()['category'].toString()
+                        );
                       }).toList())
                 ])
               : tempSearchStore.isEmpty && capitalizedValue.length > 1
@@ -164,5 +128,42 @@ class SearchState extends State<Search> {
                     )
                   : new Text(''),
     );
+  }
+  initiateSearch(value) {
+    if (value.length == 0) {
+      setState(() {
+        queryResultSet = [];
+        tempSearchStore = [];
+      });
+    }
+    capitalizedValue = value.substring(0, 1).toUpperCase() + value.substring(1);
+
+    if (queryResultSet.length == 0 && value.length > 0) {
+      SearchService()
+          .searchByName(capitalizedValue)
+          .then((QuerySnapshot mydocs) {
+        for (int i = 0; i < mydocs.docs.length; ++i) {
+          queryResultSet.add(mydocs.docs[i]);
+          setState(() {
+            tempSearchStore.add(queryResultSet[i]);
+          });
+        }
+      });
+    } else {
+      tempSearchStore = [];
+      queryResultSet.forEach((element) {
+        if (element['name'].toLowerCase().contains(value.toLowerCase()) ==
+            true) {
+          if (element["name"].toLowerCase().indexOf(value.toLowerCase()) == 0) {
+            setState(() {
+              tempSearchStore.add(element);
+            });
+          }
+        }
+      });
+    }
+    if (tempSearchStore.length == 0 && value.length > 1) {
+      setState(() {});
+    }
   }
 }

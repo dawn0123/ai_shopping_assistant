@@ -31,13 +31,14 @@ class Shoes extends StatelessWidget {
                   mainAxisSpacing: 0),
               itemBuilder: (context, index) {
                 return ProductCard(
-                    snapshot.data!.docs[index].id,
-                    snapshot.data!.docs[index].get('url'),
-                    snapshot.data!.docs[index].get('name'),
-                    snapshot.data!.docs[index].get('description'),
-                    snapshot.data!.docs[index].get('price').toString(),
-                    snapshot.data!.docs[index].get('stockamt'),
-                    snapshot.data!.docs[index].get('category'));
+                  snapshot.data!.docs[index].id,
+                  snapshot.data!.docs[index].get('url'),
+                  snapshot.data!.docs[index].get('name'),
+                  snapshot.data!.docs[index].get('description'),
+                  snapshot.data!.docs[index].get('price').toString(),
+                  snapshot.data!.docs[index].get('stockamt'),
+                    snapshot.data!.docs[index].get('category')
+                );
               },
               itemCount: snapshot.data!.docs.length,
             );

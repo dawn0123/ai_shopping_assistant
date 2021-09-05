@@ -1,13 +1,6 @@
  import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DataService {
-  searchByName(String searchField) {
-    return FirebaseFirestore.instance
-        .collection('Products')
-        .where('name', isGreaterThan: searchField)
-        .get();
-  }
-
   increment(String itemname) async {
     FirebaseFirestore.instance.collection('Products')
         .where('name', isEqualTo: itemname)
@@ -17,5 +10,12 @@ class DataService {
         documentSnapshot.reference.update({"clicks" : FieldValue.increment(1)});
       });
     });
+  }
+
+  searchByName(String searchField) {
+    return FirebaseFirestore.instance
+        .collection('Products')
+        .where('name', isGreaterThan: searchField)
+        .get();
   }
 }

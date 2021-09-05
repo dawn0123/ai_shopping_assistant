@@ -6,10 +6,6 @@ import 'package:aishop/utils/authentication.dart';
 import 'package:flutter/material.dart';
 
 class GoogleRoundButton extends StatefulWidget {
-  GoogleRoundButton({this.location, this.province});
-  final location;
-  final province;
-
   @override
   State<StatefulWidget> createState() {
     return _GoogleButtonState();
@@ -41,7 +37,7 @@ class _GoogleButtonState extends State<GoogleRoundButton> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100))),
           onPressed: () async {
-            await signInWithGoogle(widget.location, widget.province).then((result) {
+            await signInWithGoogle().then((result) {
               if (result != null) {
                 Navigator.push(
                   context,

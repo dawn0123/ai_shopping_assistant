@@ -18,9 +18,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool auto = false;
 
-  void initState() {
-    getUserInfo();
-    super.initState();
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: auto == false ? LoginScreen() : HomePage(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 
 //check if user is already logged in in the previous session.
@@ -37,11 +40,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   //remove debug banner in the corner
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: auto == false ? LoginScreen() : HomePage(),
-      debugShowCheckedModeBanner: false,
-    );
+  void initState() {
+    getUserInfo();
+    super.initState();
   }
 }

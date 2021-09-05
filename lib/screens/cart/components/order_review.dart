@@ -5,9 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+int count = 0;
 double g = 0.00;
 int sizethis = 0;
-int count = 0;
 
 void updateCartTotal() async {
   double total = 0;
@@ -31,15 +31,37 @@ class OrderReview extends StatefulWidget {
   _OrderReviewState createState() => _OrderReviewState();
 }
 
+class SingleCartProduct extends StatefulWidget {
+  final prodname;
+  final prodpicture;
+  final prodprice;
+  final prodquantity;
+  final proddescription;
+  final cartid;
+  final prodindex;
+  final stockamt;
+  final category;
+
+  SingleCartProduct(
+      {this.prodname,
+      this.prodpicture,
+      this.prodprice,
+      this.prodquantity,
+      this.proddescription,
+      this.prodindex,
+      this.stockamt,
+      this.cartid,
+      this.category});
+
+  @override
+  _SingleCartProductState createState() => _SingleCartProductState();
+}
+
 class _OrderReviewState extends State<OrderReview> {
   final CollectionReference usersRef = FirebaseFirestore.instance
       .collection('Users')
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection("Cart");
-
-  etdata() async {
-    return usersRef;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,32 +130,10 @@ class _OrderReviewState extends State<OrderReview> {
           ),
         ));
   }
-}
 
-class SingleCartProduct extends StatefulWidget {
-  final prodname;
-  final prodpicture;
-  final prodprice;
-  final prodquantity;
-  final proddescription;
-  final cartid;
-  final prodindex;
-  final stockamt;
-  final category;
-
-  SingleCartProduct(
-      {this.prodname,
-      this.prodpicture,
-      this.prodprice,
-      this.prodquantity,
-      this.proddescription,
-      this.prodindex,
-      this.stockamt,
-      this.cartid,
-      this.category});
-
-  @override
-  _SingleCartProductState createState() => _SingleCartProductState();
+  etdata() async {
+    return usersRef;
+  }
 }
 
 class _SingleCartProductState extends State<SingleCartProduct> {
@@ -217,7 +217,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                           widget.prodprice,
                           widget.prodquantity,
                           widget.stockamt,
-                          widget.category);
+                      widget.category);
                       setState(() {
                         g -= double.parse(widget.prodprice);
                         updateCartTotal();
@@ -317,7 +317,7 @@ class _SingleCartProductState extends State<SingleCartProduct> {
                               widget.prodprice,
                               widget.prodquantity,
                               widget.stockamt,
-                              widget.category);
+                          widget.category);
                           setState(() {
                             g -= double.parse(widget.prodprice) *
                                 widget.prodquantity;

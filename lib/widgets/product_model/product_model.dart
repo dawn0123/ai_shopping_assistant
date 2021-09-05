@@ -68,15 +68,8 @@ class _ProductCard extends State<ProductCard> {
                       widget.stockamt,
                       widget.category);
                   //on tap modal pop up
-                  Modal(
-                      context,
-                      widget.id,
-                      widget.imgUrl,
-                      widget.name,
-                      widget.description,
-                      widget.price,
-                      widget.stockamt,
-                      widget.category);
+                  Modal(context, widget.id, widget.imgUrl, widget.name,
+                      widget.description, widget.price, widget.stockamt, widget.category);
                   DataService().increment(widget.name);
                 },
                 splashColor: Colors.white30,

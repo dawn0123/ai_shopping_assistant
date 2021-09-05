@@ -96,7 +96,7 @@ Future<String> signOut() async {
   }
 }
 
-Future<User?> signInWithGoogle(String location, String province) async {
+Future<User?> signInWithGoogle() async {
   // Initialize Firebase
   await Firebase.initializeApp();
   User? user;
@@ -126,15 +126,13 @@ Future<User?> signInWithGoogle(String location, String province) async {
     {
       if(!documentSnapshot.exists){
         print("user added"),
-        print("hello " + province),
         FirebaseFirestore.instance.collection('Users').doc(uid).collection("info").doc(uid).set(
             {
               'fname': name!.split(" ")[0],
               'lname':name!.split(" ")[1],
               'email':userEmail,
               'bday':"*missing",
-              'location': location,
-              'province': province,
+              'location': "*missing",
             }
         )
       }

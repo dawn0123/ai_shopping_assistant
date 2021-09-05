@@ -5,13 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-User _user = FirebaseAuth.instance.currentUser!;
+var productsoncart = [];
 
 final CollectionReference usersRef = FirebaseFirestore.instance
     .collection('Users')
     .doc(_user.uid)
     .collection("Cart");
-var productsoncart = [];
+User _user = FirebaseAuth.instance.currentUser!;
 
 class CheckOutPage extends StatefulWidget {
   @override
@@ -19,26 +19,6 @@ class CheckOutPage extends StatefulWidget {
 }
 
 class _CheckOutPageState extends State<CheckOutPage> {
-  getdata() async {
-    return usersRef;
-  }
-
-  @override
-  void initState() {
-   
-    getUsers();
-
-    super.initState();
-  }
-
-  getUsers() {
-    usersRef.get().then((QuerySnapshot snapshot) {
-      for (int i = 0; i < snapshot.docs.length; ++i) {
-        productsoncart.add(snapshot.docs[i].data());
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -78,5 +58,25 @@ class _CheckOutPageState extends State<CheckOutPage> {
         ],
       ),
     );
+  }
+
+  getdata() async {
+    return usersRef;
+  }
+
+  getUsers() {
+    usersRef.get().then((QuerySnapshot snapshot) {
+      for (int i = 0; i < snapshot.docs.length; ++i) {
+        productsoncart.add(snapshot.docs[i].data());
+      }
+    });
+  }
+
+  @override
+  void initState() {
+
+    getUsers();
+
+    super.initState();
   }
 }

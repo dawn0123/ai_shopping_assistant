@@ -24,7 +24,7 @@ class wishlistModel extends StatefulWidget {
       this.cartid,
       this.prodquantity,
       required this.stockamt,
-      this.category});
+        this.category});
 
   @override
   _WishlistModel createState() => _WishlistModel();
@@ -46,7 +46,7 @@ class _WishlistModel extends State<wishlistModel> {
                 widget.prodname,
                 widget.prodprice,
                 widget.stockamt,
-            widget.category);
+                widget.category);
           },
           leading: new Image.network(
             widget.prodpicture,
@@ -83,7 +83,7 @@ class _WishlistModel extends State<wishlistModel> {
                       widget.prodname,
                       widget.prodprice,
                       widget.stockamt,
-                  widget.category);
+                      widget.category);
                 },
               ),
             ),
@@ -105,7 +105,7 @@ class _WishlistModel extends State<wishlistModel> {
                             widget.prodprice,
                             widget.prodquantity,
                             widget.stockamt,
-                        widget.category);
+                            widget.category);
                         HistoryTracker.addToHistory(
                             widget.cartid,
                             widget.prodpicture,
@@ -113,7 +113,7 @@ class _WishlistModel extends State<wishlistModel> {
                             widget.prodname,
                             widget.prodprice,
                             widget.stockamt,
-                        widget.category);
+                            widget.category);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.black54,

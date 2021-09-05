@@ -16,41 +16,12 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePage extends State<EditProfilePage> {
-  Future getUserInfofromdb() async {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    CollectionReference _collectionReference = _firestore.collection("Users");
-    DocumentReference _doc = _collectionReference.doc(uid);
-    DocumentReference _documentReference = _doc.collection("info").doc(uid);
-
-    _documentReference.get().then((documentSnapshot) => {
-          if (!documentSnapshot.exists)
-            {
-              print("Sorry, User profile not found."),
-            }
-          else
-            {
-              setState(() {
-                userFirstNameController.text = documentSnapshot.get("fname");
-                userLastNameController.text = documentSnapshot.get("lname");
-                userEmailController.text = documentSnapshot.get("email");
-                userBirthdayController.text = documentSnapshot.get("bday");
-                userLocationController.text = documentSnapshot.get("location");
-              })
-            }
-        });
-  }
-
   late TextEditingController userEmailController = TextEditingController();
+
   late TextEditingController userFirstNameController = TextEditingController();
   late TextEditingController userLastNameController = TextEditingController();
   late TextEditingController userBirthdayController = TextEditingController();
   late TextEditingController userLocationController = TextEditingController();
-
-  void initState() {
-    getUserInfofromdb();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -206,5 +177,34 @@ class _EditProfilePage extends State<EditProfilePage> {
             ],
           ),
         ));
+  }
+
+  Future getUserInfofromdb() async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    CollectionReference _collectionReference = _firestore.collection("Users");
+    DocumentReference _doc = _collectionReference.doc(uid);
+    DocumentReference _documentReference = _doc.collection("info").doc(uid);
+
+    _documentReference.get().then((documentSnapshot) => {
+          if (!documentSnapshot.exists)
+            {
+              print("Sorry, User profile not found."),
+            }
+          else
+            {
+              setState(() {
+                userFirstNameController.text = documentSnapshot.get("fname");
+                userLastNameController.text = documentSnapshot.get("lname");
+                userEmailController.text = documentSnapshot.get("email");
+                userBirthdayController.text = documentSnapshot.get("bday");
+                userLocationController.text = documentSnapshot.get("location");
+              })
+            }
+        });
+  }
+
+  void initState() {
+    getUserInfofromdb();
+    super.initState();
   }
 }
