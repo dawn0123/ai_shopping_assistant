@@ -40,7 +40,7 @@ class _GoogleButtonState extends State<GoogleRoundButton> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100))),
           onPressed: () async {
-            await signInWithGoogle().then((result) {
+            await signInWithGoogle(widget.location, widget.province).then((result) {
               if (result != null) {
                 Navigator.push(
                   context,
