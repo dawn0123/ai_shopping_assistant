@@ -1,4 +1,5 @@
 import 'package:aishop/screens/cart/components/order_review.dart';
+import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/appbar/appbar.dart';
 import 'package:aishop/widgets/product_model/product_model.dart';
@@ -11,6 +12,11 @@ class ShoesScreen extends StatefulWidget {
 }
 
 class _ShoesScreen extends State<ShoesScreen> {
+  late Stream<QuerySnapshot<Map<String, dynamic>>> shoes;
+
+  void initState(){
+    shoes = DatabaseManager().getShoes()!;
+  }
   @override
   Widget build(BuildContext context) {
     updateCartTotal();
@@ -19,7 +25,7 @@ class _ShoesScreen extends State<ShoesScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
         child: MyAppBar(
-          title: Text("Beauty"),
+          title: Text("Shoes"),
           context: context,
         ),
       ),
@@ -36,10 +42,7 @@ class _ShoesScreen extends State<ShoesScreen> {
         Container(
           height: 800,
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Products")
-                .where("category", isEqualTo: "Shoes")
-                .snapshots(),
+            stream: shoes,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return SizedBox(

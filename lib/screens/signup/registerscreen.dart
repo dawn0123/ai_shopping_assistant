@@ -369,6 +369,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     if (result != null) {
                                       setState(() async {
                                         if (userLocationController.text == "") {
+                                          location = widget.cityName.toString();
+                                          province = widget.province.toString();
                                           FirebaseFirestore.instance
                                               .collection('Users')
                                               .doc(uid)
@@ -383,6 +385,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             'province': widget.province.toString()
                                           });
                                         } else {
+                                          location = userLocationController.text;
+                                          province = userProvinceController.text;
                                           FirebaseFirestore.instance
                                               .collection('Users')
                                               .doc(uid)

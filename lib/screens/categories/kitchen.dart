@@ -1,4 +1,5 @@
 import 'package:aishop/screens/cart/components/order_review.dart';
+import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/appbar/appbar.dart';
 import 'package:aishop/widgets/product_model/product_model.dart';
@@ -11,6 +12,11 @@ class KitchenScreen extends StatefulWidget {
 }
 
 class _KitchenScreen extends State<KitchenScreen> {
+  late Stream<QuerySnapshot<Map<String, dynamic>>> kitchen;
+
+  void initState(){
+    kitchen = DatabaseManager().getKitchen()!;
+  }
   @override
   Widget build(BuildContext context) {
     updateCartTotal();
@@ -36,10 +42,7 @@ class _KitchenScreen extends State<KitchenScreen> {
         Container(
           height: 800,
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Products")
-                .where("category", isEqualTo: "Kitchen")
-                .snapshots(),
+            stream: kitchen,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return SizedBox(

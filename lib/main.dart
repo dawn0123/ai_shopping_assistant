@@ -1,6 +1,6 @@
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/login/loginscreen.dart';
-import 'package:aishop/utils/DataCollection.dart';
+import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/utils/authentication.dart';
 import 'package:flutter/material.dart';
 
@@ -36,12 +36,21 @@ class _MyAppState extends State<MyApp> {
       }
     });
     print(uid);
-    //DataCollection().MakeCSV();
+  }
+
+  Future getProducts() async {
+    await DatabaseManager().setBooks();
+    print("books: "+DatabaseManager().getBooks().toString());
+    await DatabaseManager().setClothes();
+    await DatabaseManager().setKitchen();
+    await DatabaseManager().setShoes();
+    await DatabaseManager().setTech();
   }
 
   //remove debug banner in the corner
   void initState() {
     getUserInfo();
+    getProducts();
     super.initState();
   }
 }

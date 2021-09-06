@@ -1,4 +1,5 @@
 import 'package:aishop/screens/cart/components/order_review.dart';
+import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/appbar/appbar.dart';
 import 'package:aishop/widgets/product_model/product_model.dart';
@@ -11,6 +12,12 @@ class TechScreen extends StatefulWidget {
 }
 
 class _TechScreen extends State<TechScreen> {
+  late Stream<QuerySnapshot<Map<String, dynamic>>> tech;
+
+  void initState(){
+    tech = DatabaseManager().getTech()!;
+  }
+
   @override
   Widget build(BuildContext context) {
     updateCartTotal();
@@ -36,10 +43,7 @@ class _TechScreen extends State<TechScreen> {
         Container(
           height: 800,
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Products")
-                .where("category", isEqualTo: "Tech")
-                .snapshots(),
+            stream: tech,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return SizedBox(
