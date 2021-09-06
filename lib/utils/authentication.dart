@@ -12,6 +12,10 @@ String? name;
 String? uid;
 
 String? userEmail;
+
+String? location;
+String? province;
+
 FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future getUser() async {
@@ -84,6 +88,14 @@ Future<User?> signInWithEmailPassword(String email, String password) async {
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('auth', true);
+
+      await FirebaseFirestore.instance
+          .collection('Users').doc(uid).collection('info').doc().get()
+          .then((DocumentSnapshot ds) => {
+        location = ds.get('location'),
+        province = ds.get('province')
+      });
+
     }
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
@@ -96,10 +108,13 @@ Future<User?> signInWithEmailPassword(String email, String password) async {
   return user;
 }
 
-Future<User?> signInWithGoogle(location, province) async {
+Future<User?> signInWithGoogle(loc, prov) async {
   // Initialize Firebase
   await Firebase.initializeApp();
   User? user;
+
+  location = loc;
+  province = prov;
 
   // The `GoogleAuthProvider` can only be used while running on the web
   GoogleAuthProvider authProvider = GoogleAuthProvider();

@@ -10,9 +10,6 @@ class DataCollection{
     DateTime now = new DateTime.now();
     DateTime date =  new DateTime(now.year, now.month, now.day, now.hour, now.minute);
 
-    var location = await getLocation();
-    var province = await getProvince();
-
     var recommend = 'no';
     if(event == 'view' || event == 'wishlist'){
       recommend = 'yes';
@@ -33,35 +30,6 @@ class DataCollection{
       'cost' : price,
       'recommend' : recommend
     });
-  }
-
-  Future <String> getLocation() async {
-    String location = "";
-    await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(uid)
-        .collection('info')
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot ds) {
-          location = ds.get('location');
-        }
-    );
-    return location;
-  }
-  Future <String> getProvince() async {
-    String province = "";
-    await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(uid)
-        .collection('info')
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot ds) => {
-      province = ds.get('province')
-    });
-
-    return province;
   }
 
 //DON'T YOU DARE!!!!!!!!!!!!!!!!!! DO NOT!!!!! UNCOMMENT THIS SECTION!!!
