@@ -1,10 +1,13 @@
+import 'dart:html';
+
 import 'package:aishop/utils/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csv/csv.dart';
 
 class DataCollection{
-  final product_name, product_id, price, event, category, quantity;
+  final product_name, product_id, price, event, category;
 
-  DataCollection(this.product_name, this.product_id, this.price, this.event, this.category, this.quantity);
+  DataCollection(this.product_name, this.product_id, this.price, this.event, this.category);
 
   Future<void> DataCollector() async {
     DateTime now = new DateTime.now();
@@ -63,8 +66,8 @@ class DataCollection{
   }*/
 
 //THIS CODE MUST BE ONLY UNCOMMENTED WHEN YOU WANT TO UPDATE THE CSV FILE.. MAYBE TWICE A WEEK!!!
-/*
-   MakeCSV() async {
+
+MakeCSV() async {
      var Data = await FirebaseFirestore.instance
          .collection("Data")
          .get();
@@ -73,9 +76,9 @@ class DataCollection{
        "Product_Id",
        "Product_Name",
        "Product_Category",
-       "User-Name",
+       "User_ID",
        "User_Location",
-       "User_Province"
+       "User_Province",
        "Event",
        "Cost",
        "Date",
@@ -87,9 +90,9 @@ class DataCollection{
        row.add(ds.get("product_id"));
        row.add(ds.get("product_name"));
        row.add(ds.get("product_category"));
-       row.add(ds.get("name"));
+       row.add(ds.get("uid"));
        row.add(ds.get("location"));
-       row.add(ds.get("province"))
+       row.add(ds.get("province"));
        row.add(ds.get("event"));
        row.add(ds.get("cost"));
        row.add(date);
@@ -102,5 +105,4 @@ class DataCollection{
        ..setAttribute("download", "data.csv")
        ..click();
    }
-    */
 }

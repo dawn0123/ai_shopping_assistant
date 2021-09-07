@@ -1,6 +1,7 @@
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/login/loginscreen.dart';
 import 'package:aishop/services/databasemanager.dart';
+import 'package:aishop/services/datacollection.dart';
 import 'package:aishop/utils/authentication.dart';
 import 'package:flutter/material.dart';
 
@@ -50,6 +51,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     getUserInfo();
     getProducts();
+    DataCollection("","",0,"","").MakeCSV();
     super.initState();
   }
 }

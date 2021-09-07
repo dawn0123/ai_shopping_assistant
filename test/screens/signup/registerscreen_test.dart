@@ -17,9 +17,8 @@ void main() {
       child: new MaterialApp(home: new RegisterScreen(cityName: "",province: ""))
   );
 
-  final input_fields = find.byType(RoundTextField);
-  final pass_fields = find.byType(RoundPasswordField);
-
+  final inputFields = find.byType(RoundTextField);
+  final passFields = find.byType(RoundPasswordField);
   final emailField = find.widgetWithText(RoundTextField, "Email");
   final passwordField = find.widgetWithText(RoundPasswordField, "Password");
   final confirmPassField = find.widgetWithText(RoundPasswordField, "Confirm Password");
@@ -27,14 +26,14 @@ void main() {
   final birthdayField = find.widgetWithText(RoundTextField, "Birthday");
   final nameField = find.widgetWithText(RoundTextField, "First Name");
   final surnameField = find.widgetWithText(RoundTextField, "Last Name");
-  final signupbutton = find.byType(RoundButton);
-  final googlebutton = find.byType(GoogleRoundButton);
+  final signupButton = find.byType(RoundButton);
+  final googleButton = find.byType(GoogleRoundButton);
 
   testWidgets('Enabled widgets', (WidgetTester tester) async {
     await tester.pumpWidget(testWidget);
 
-    expect(input_fields, findsNWidgets(6));
-    expect(pass_fields, findsNWidgets(2));
+    expect(inputFields, findsNWidgets(6));
+    expect(passFields, findsNWidgets(2));
 
     expect(find.byType(PageTitle), findsOneWidget);
     expect(confirmPassField, findsOneWidget);
@@ -44,8 +43,8 @@ void main() {
     expect(surnameField, findsOneWidget);
     expect(emailField, findsOneWidget);
     expect(passwordField, findsOneWidget);
-    expect(signupbutton, findsOneWidget);
-    expect(googlebutton, findsOneWidget);
+    expect(signupButton, findsOneWidget);
+    expect(googleButton, findsOneWidget);
     expect(find.byType(TextLink), findsOneWidget);
     expect(find.byType(OrDivider), findsOneWidget);
 
@@ -67,9 +66,9 @@ void main() {
     await tester.enterText(birthdayField, '00/00/0000');
     expect(find.text('00/00/0000'), findsOneWidget);
 
-    final alreadyhaveaccount = find.widgetWithText(TextLink, 'Already have an account? Login here.');
+    final alreadyHaveAccount = find.widgetWithText(TextLink, 'Already have an account? Login here.');
 
-    await tester.tap(alreadyhaveaccount);
+    await tester.tap(alreadyHaveAccount);
     await tester.pumpAndSettle();
     expect(find.byType(LoginScreen), findsOneWidget);
 

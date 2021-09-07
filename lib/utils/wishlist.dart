@@ -20,7 +20,7 @@ class Wishlist {
       'stockamt': stockamt,
       'category' : category
     });
-    DataCollection(name, id, price, "wishlist", category, 1).DataCollector();
+    DataCollection(name, id, price, "wishlist", category).DataCollector();
   }
 
   Wishlist.removeFromCart(this.id, this.imgUrl, this.description, this.name,

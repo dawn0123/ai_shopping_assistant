@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 class Recommendations extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    
     return _Recommendations();
   }
 }

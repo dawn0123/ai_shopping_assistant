@@ -140,6 +140,6 @@ class HistoryTracker {
                       .update({'index': 0}),
                 }
             });
-    DataCollection(name, id, price, "view", category, 1).DataCollector();
+    DataCollection(name, id, price, "view", category).DataCollector();
   }
 }
