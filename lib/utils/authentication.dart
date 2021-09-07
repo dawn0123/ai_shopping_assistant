@@ -90,7 +90,7 @@ Future<User?> signInWithEmailPassword(String email, String password) async {
       await prefs.setBool('auth', true);
 
       await FirebaseFirestore.instance
-          .collection('Users').doc(uid).collection('info').doc().get()
+          .collection('Users').doc(uid).collection('info').doc(uid).get()
           .then((DocumentSnapshot ds) => {
         location = ds.get('location'),
         province = ds.get('province')

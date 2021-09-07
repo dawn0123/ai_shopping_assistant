@@ -187,6 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       loginStatus =
                                           'You have signed in successfully';
                                       loginStringColor = Colors.green;
+
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(

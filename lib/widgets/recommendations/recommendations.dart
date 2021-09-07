@@ -1,7 +1,6 @@
 import 'dart:math';
-
 import 'package:aishop/utils/authentication.dart';
-import 'package:aishop/widgets/product_model/product_model.dart';
+import 'package:aishop/widgets/product_model/recommendation_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +23,7 @@ class _Recommendations extends State<Recommendations> {
     // ignore: non_constant_identifier_names
     List<DocumentSnapshot> Most_Purchased = [];
     return Container(
-        height: 400,
+        height: 420,
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection("Users")
@@ -126,6 +125,7 @@ class _Recommendations extends State<Recommendations> {
                                   for (var i = 0; i < recommendations.length; i++) {
                                     return GridView.builder(
                                       scrollDirection: Axis.horizontal,
+                                      padding: EdgeInsets.symmetric(vertical: 10),
                                       gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 1,
@@ -133,7 +133,7 @@ class _Recommendations extends State<Recommendations> {
                                           mainAxisSpacing: 0),
                                       itemBuilder: (context, index) {
                                         while (index < recommendations.length) {
-                                          return ProductCard(
+                                          return RecommendationCard(
                                             recommendations[index].id,
                                             recommendations[index].get('url'),
                                             recommendations[index].get('name'),

@@ -40,7 +40,6 @@ class _MyAppState extends State<MyApp> {
 
   Future getProducts() async {
     await DatabaseManager().setBooks();
-    print("books: "+DatabaseManager().getBooks().toString());
     await DatabaseManager().setClothes();
     await DatabaseManager().setKitchen();
     await DatabaseManager().setShoes();

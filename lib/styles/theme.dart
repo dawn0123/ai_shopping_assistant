@@ -10,3 +10,4 @@ const lightgrey =  Color(0xFFF2F2F2);
 const mediumblack = Color(0xFF121212);
 const mediumgrey = Color(0xFFD2D2D2);
 const white = Color(0xFFFFFFFF);
+const accent = Color(0xFFFCAE1E);
