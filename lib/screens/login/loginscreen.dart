@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //declare and initialize the controllers and focus on each field.
 //initialize variable to check if user is editing the specific fiels.
   late TextEditingController userEmailController;
-  late FocusNode textFocusNodeEmail;
+  //late FocusNode textFocusNodeEmail;
   bool _isEditingEmail = false;
   late TextEditingController userForgotP = TextEditingController();
   String longitude = "";
@@ -38,22 +38,22 @@ class _LoginScreenState extends State<LoginScreen> {
   late String cityname = "";
 
   late TextEditingController userPasswordController;
-  late FocusNode textFocusNodePassword;
+  //late FocusNode textFocusNodePassword;
   bool _isEditingpassword = false;
 
-  String loginStatus = "";
-  late Color loginStringColor;
+  //String loginStatus = "";
+  //late Color loginStringColor;
 
   @override
   void initState() {
     getLocationData();
     userEmailController = TextEditingController();
     userEmailController.text = '';
-    textFocusNodeEmail = FocusNode();
+    //textFocusNodeEmail = FocusNode();
 
     userPasswordController = TextEditingController();
     userPasswordController.text = '';
-    textFocusNodePassword = FocusNode();
+    //textFocusNodePassword = FocusNode();
     super.initState();
   }
 
@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             //=============================================
                             //Email text field
                             RoundTextField(
-                              focusNode: textFocusNodeEmail,
+                              //focusNode: textFocusNodeEmail,
                               keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.next,
                               control: userEmailController,
@@ -141,10 +141,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _isEditingEmail = true;
                                 });
                               },
-                              onSubmitted: (value) {
-                                textFocusNodeEmail.unfocus();
+                              //onSubmitted: (value) {
+                                //textFocusNodeEmail.unfocus();
                                 //FocusScope.of(context).requestFocus(textFocusNodePassword);
-                              },
+                              //},
                               errorText: _isEditingEmail
                                   ? _validateEmail(userEmailController.text)
                                   : "",
@@ -164,9 +164,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _isEditingpassword = true;
                                 });
                               },
-                              onSubmitted: (value) {
-                                textFocusNodePassword.unfocus();
-                              },
+                              //onSubmitted: (value) {
+                              //  textFocusNodePassword.unfocus();
+                              //},
                               errorText: _isEditingpassword
                                   ? _validatePassword(
                                       userPasswordController.text)
@@ -184,9 +184,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .then((result) {
                                   if (result != null) {
                                     setState(() {
-                                      loginStatus =
-                                          'You have signed in successfully';
-                                      loginStringColor = Colors.green;
+                                      //loginStatus =
+                                       //   'You have signed in successfully';
+                                      //loginStringColor = Colors.green;
 
                                       Navigator.push(
                                           context,
@@ -271,14 +271,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }).catchError((error) {
                                   print('Sign in Error: $error');
                                   setState(() {
-                                    loginStatus =
-                                        'Error occured while Signing in';
+                                    //loginStatus =
+                                    //    'Error occured while Signing in';
                                     Navigator.push(
                                         context,
                                         new MaterialPageRoute(
                                             builder: (context) =>
                                                 LoginScreen()));
-                                    loginStringColor = Colors.red;
+                                    //loginStringColor = Colors.red;
                                   });
                                 });
                               },
@@ -351,8 +351,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     cityName:
                                                         cityname.toString(),
                                                     province:Province.toString(),
-                                                    longitude: longitude,
-                                                    latitude: latitude,
+                                                    //longitude: longitude,
+                                                    //latitude: latitude,
                                                   )));})
                                     })
                             //=====================================================

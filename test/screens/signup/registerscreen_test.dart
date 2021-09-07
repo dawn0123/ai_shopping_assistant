@@ -14,7 +14,7 @@ import 'package:line_icons/line_icons.dart';
 void main() {
   Widget testWidget = new MediaQuery(
       data: new MediaQueryData(),
-      child: new MaterialApp(home: new RegisterScreen(cityName: "",latitude: "",longitude: "",province: ""))
+      child: new MaterialApp(home: new RegisterScreen(cityName: "",province: ""))
   );
 
   final input_fields = find.byType(RoundTextField);
