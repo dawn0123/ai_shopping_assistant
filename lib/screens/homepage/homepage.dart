@@ -2,6 +2,7 @@ import 'package:aishop/addons/popop_menu_consts.dart';
 import 'package:aishop/icons/icons.dart';
 import 'package:aishop/screens/cart/checkout_page.dart';
 import 'package:aishop/screens/cart/components/order_review.dart';
+import 'package:aishop/screens/invoices/invoices.dart';
 import 'package:aishop/screens/login/loginscreen.dart';
 import 'package:aishop/screens/past_purchases/pastpurchase.dart';
 import 'package:aishop/screens/profile_page/edit_profile.dart';
@@ -42,6 +43,9 @@ class _HomePageState extends State<HomePage> {
       } else if (choice == Constants.orders) {
         Navigator.push(context,
             new MaterialPageRoute(builder: (context) => PastPurchase()));
+      } else if (choice == Constants.invoices) {
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => InvoicesPage()));
       } else if (choice == Constants.signout) {
         signOut().then((response) => {
               if (response == "User signed out")
@@ -117,20 +121,21 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(
                     width: 5,
-                  ),IconButton(
-                          icon: Icon(
-                            AIicons.search,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              this.isSearching = true;
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (BuildContext context) => Search()));
-                            });
-                          },
-                        ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      AIicons.search,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        this.isSearching = true;
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) => Search()));
+                      });
+                    },
+                  ),
                 ],
               ),
               automaticallyImplyLeading: false,

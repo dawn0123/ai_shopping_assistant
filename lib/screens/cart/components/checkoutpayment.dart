@@ -105,7 +105,7 @@ class CheckOutPayment extends StatelessWidget {
                                           bottom: 2.0,
                                           right: 100.0),
                                       child: Text(
-                                          "Order Subtotal           R$g",
+                                          "Order Subtotal           R$cartTotal",
                                           style: new TextStyle(
                                               color: lightblack,
                                               fontWeight: FontWeight.normal,
@@ -189,7 +189,7 @@ class CheckOutPayment extends StatelessWidget {
                                           right: 150.0),
                                       child: Text(
                                           "TOTAL         R" +
-                                              (g + n).toString(),
+                                              (cartTotal + n).toString(),
                                           style: new TextStyle(
                                               color: lightblack,
                                               fontWeight: FontWeight.normal,
@@ -234,14 +234,14 @@ class CheckOutPayment extends StatelessWidget {
                                         context: context,
                                         builder: (BuildContext context) =>
                                             AlertDialog(
-                                          title: const Text('Purchase'),
-                                          content: const Text(
+                                            title: const Text('Purchase'),
+                                            content: const Text(
                                               'Your purchase was  succesful ',
                                               style: TextStyle(
                                                   color: Colors.black54)),
-                                          actions: <Widget>[
-                                            ElevatedButton(
-                                              child: Text('OK',
+                                            actions: <Widget>[
+                                              ElevatedButton(
+                                                child: Text('OK',
                                                   style: TextStyle(
                                                       color: Colors.black)),
                                               style: ElevatedButton.styleFrom(

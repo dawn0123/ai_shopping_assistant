@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AIicons {
-  
   // coverage: false
   AIicons._();
 
@@ -23,4 +22,5 @@ class AIicons {
   static const IconData search = IconData(0xe80d, fontFamily: _kFontFam);
   static const IconData roboshopper = IconData(0xe80e, fontFamily: _kFontFam);
   static const IconData chip = IconData(0xe811, fontFamily: _kFontFam);
+  static const IconData download = IconData(0xe812, fontFamily: _kFontFam);
 }

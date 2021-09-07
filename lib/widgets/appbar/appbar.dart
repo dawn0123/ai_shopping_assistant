@@ -1,6 +1,7 @@
 import 'package:aishop/addons/popop_menu_consts.dart';
 import 'package:aishop/icons/icons.dart';
 import 'package:aishop/screens/cart/checkout_page.dart';
+import 'package:aishop/screens/invoices/invoices.dart';
 import 'package:aishop/screens/login/loginscreen.dart';
 import 'package:aishop/screens/past_purchases/pastpurchase.dart';
 import 'package:aishop/screens/profile_page/edit_profile.dart';
@@ -22,6 +23,9 @@ void choiceAction(String choice) {
   } else if (choice == Constants.orders) {
     Navigator.push(
         contxt, new MaterialPageRoute(builder: (context) => PastPurchase()));
+  } else if (choice == Constants.invoices) {
+    Navigator.push(
+        contxt, new MaterialPageRoute(builder: (context) => InvoicesPage()));
   } else if (choice == Constants.signout) {
     signOut().then((response) => {
           if (response == "User signed out")
@@ -90,7 +94,7 @@ class MyAppBar extends AppBar {
                   ),
                 ),
                 onPressed: () {
-                  // Get.to(W());
+                  // Go to wishlist
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) => WishlistPage()));
                 },
@@ -109,6 +113,7 @@ class MyAppBar extends AppBar {
                       ),
                     ),
                     onPressed: () {
+                      // Go to cart
                       Navigator.push(
                           context,
                           new MaterialPageRoute(

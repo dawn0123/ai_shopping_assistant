@@ -1,17 +1,15 @@
-import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/widgets/category/category.dart';
 import 'package:aishop/widgets/category/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Widget testWidget = new MediaQuery(
-      data: new MediaQueryData(), child: new MaterialApp(home: new HomePage()));
   Widget makeTestableWidget({required Widget child}) {
     return MaterialApp(
       home: child,
     );
   }
+
   testWidgets('category cards visible ...', (tester) async {
     Category cat = Category();
     await tester.pumpWidget(makeTestableWidget(child: cat));
@@ -31,4 +29,3 @@ void main() {
     expect(clothes, findsOneWidget);
   });
 }
-

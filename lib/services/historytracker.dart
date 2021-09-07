@@ -126,8 +126,10 @@ void addToPurchases() {
                               'url': productid.get("url"),
                               'name': productid.get("name"),
                               'description': productid.get("description"),
-                              'price': productid.get("price"),
-                                  'date': date
+                              'unit price': productid.get("price"),
+                              'total': productid.get("total"),
+                              'date': date,
+                              'qquantity': productid.get("quantity")
                             }),
                             /*FirebaseFirestore.instance
                                 .collection('Users')
@@ -147,7 +149,7 @@ void addToPurchases() {
                                   .doc(productid.id)
                                   .update({
                                 'Purchased by': FieldValue.increment(1),
-                                  'date': date
+                                'date': date
                               });
                             })
                           }
@@ -170,8 +172,8 @@ void addToPurchases() {
                                   .collection('Products')
                                   .doc(productid.id)
                                   .update({
-                                'Purchased by': FieldValue.increment(1), 
-                                    'date': date
+                                'Purchased by': FieldValue.increment(1),
+                                'date': date
                               });
                             })
                           },

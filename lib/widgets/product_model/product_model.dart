@@ -16,7 +16,7 @@ class ProductCard extends StatefulWidget {
   final String imgUrl;
   final String name;
   final String description;
-  final String price;
+  final int price;
   final int stockamt;
 
   ProductCard(this.id, this.imgUrl, this.name, this.description, this.price,
@@ -67,7 +67,7 @@ class _ProductCard extends State<ProductCard> {
                       widget.stockamt);
                   //on tap modal pop up
                   Modal(context, widget.id, widget.imgUrl, widget.name,
-                      widget.description, widget.price, widget.stockamt);
+                      widget.description, widget.price.toString(), widget.stockamt);
                   DataService().increment(widget.name);
                 },
                 splashColor: Colors.white30,
@@ -105,7 +105,7 @@ class _ProductCard extends State<ProductCard> {
                             ),
                           ),
                           //price
-                          Text("R " + widget.price,
+                          Text("R " + widget.price.toString(),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 15,

@@ -40,8 +40,8 @@ class _WishlistModel extends State<wishlistModel> {
                 context,
                 widget.cartid,
                 widget.prodpicture,
-                widget.proddescription,
                 widget.prodname,
+                widget.proddescription,
                 widget.prodprice,
                 widget.stockamt);
           },
