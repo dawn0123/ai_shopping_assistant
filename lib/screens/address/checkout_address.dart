@@ -85,7 +85,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                 buttons: [
                                                   DialogButton(
                                                     onPressed: () {
-                                                      if (!(g == 0)) {
+                                                      if (!(cartTotal == 0)) {
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext
@@ -147,7 +147,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                   ),
                                                   DialogButton(
                                                     onPressed: () {
-                                                      if (!(g == 0)) {
+                                                      if (!(cartTotal == 0)) {
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext
@@ -261,7 +261,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                 buttons: [
                                                   DialogButton(
                                                     onPressed: () {
-                                                      if (!(g == 0)) {
+                                                      if (!(cartTotal == 0)) {
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext
@@ -323,7 +323,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                   ),
                                                   DialogButton(
                                                     onPressed: () {
-                                                      if (!(g == 0)) {
+                                                      if (!(cartTotal == 0)) {
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext

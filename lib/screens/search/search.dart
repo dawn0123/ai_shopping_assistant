@@ -15,8 +15,45 @@ class SearchState extends State<Search> {
 
   var capitalizedValue = ' ';
 
-  bool isSearching = false;
+  initiateSearch(value) {
+    if (value.length == 0) {
+      setState(() {
+        queryResultSet = [];
+        tempSearchStore = [];
+      });
+    }
+    capitalizedValue = value.substring(0, 1).toUpperCase() + value.substring(1);
 
+    if (queryResultSet.length == 0 && value.length > 0) {
+      SearchService()
+          .searchByName(capitalizedValue)
+          .then((QuerySnapshot mydocs) {
+        for (int i = 0; i < mydocs.docs.length; ++i) {
+          queryResultSet.add(mydocs.docs[i]);
+          setState(() {
+            tempSearchStore.add(queryResultSet[i]);
+          });
+        }
+      });
+    } else {
+      tempSearchStore = [];
+      queryResultSet.forEach((element) {
+        if (element['name'].toLowerCase().contains(value.toLowerCase()) ==
+            true) {
+          if (element["name"].toLowerCase().indexOf(value.toLowerCase()) == 0) {
+            setState(() {
+              tempSearchStore.add(element);
+            });
+          }
+        }
+      });
+    }
+    if (tempSearchStore.length == 0 && value.length > 1) {
+      setState(() {});
+    }
+  }
+
+  bool isSearching = false;
   int searchvalue = 0;
   @override
   Widget build(BuildContext context) {
@@ -77,7 +114,7 @@ class SearchState extends State<Search> {
                           snapshot.data!.docs[index].get('url'),
                           snapshot.data!.docs[index].get('name'),
                           snapshot.data!.docs[index].get('description'),
-                          snapshot.data!.docs[index].get('price').toString(),
+                          snapshot.data!.docs[index].get('price'),
                           snapshot.data!.docs[index].get('stockamt'),
                             snapshot.data!.docs[index].get('category')
                         );
@@ -106,7 +143,7 @@ class SearchState extends State<Search> {
                             element.data()['url'].toString(),
                             element.data()['name'].toString(),
                             element.data()['description'].toString(),
-                            element.data()['price'].toString(),
+                            element.data()['price'],
                             element.data()['stockamt'],
                         element.data()['category'].toString()
                         );
@@ -128,42 +165,5 @@ class SearchState extends State<Search> {
                     )
                   : new Text(''),
     );
-  }
-  initiateSearch(value) {
-    if (value.length == 0) {
-      setState(() {
-        queryResultSet = [];
-        tempSearchStore = [];
-      });
-    }
-    capitalizedValue = value.substring(0, 1).toUpperCase() + value.substring(1);
-
-    if (queryResultSet.length == 0 && value.length > 0) {
-      SearchService()
-          .searchByName(capitalizedValue)
-          .then((QuerySnapshot mydocs) {
-        for (int i = 0; i < mydocs.docs.length; ++i) {
-          queryResultSet.add(mydocs.docs[i]);
-          setState(() {
-            tempSearchStore.add(queryResultSet[i]);
-          });
-        }
-      });
-    } else {
-      tempSearchStore = [];
-      queryResultSet.forEach((element) {
-        if (element['name'].toLowerCase().contains(value.toLowerCase()) ==
-            true) {
-          if (element["name"].toLowerCase().indexOf(value.toLowerCase()) == 0) {
-            setState(() {
-              tempSearchStore.add(element);
-            });
-          }
-        }
-      });
-    }
-    if (tempSearchStore.length == 0 && value.length > 1) {
-      setState(() {});
-    }
   }
 }

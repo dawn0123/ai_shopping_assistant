@@ -92,7 +92,7 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                 buttons: [
                                                   DialogButton(
                                                     onPressed: () {
-                                                      if (!(g == 0)) {
+                                                      if (!(cartTotal == 0)) {
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext
@@ -154,7 +154,7 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                   ),
                                                   DialogButton(
                                                     onPressed: () {
-                                                      if (!(g == 0)) {
+                                                      if (!(cartTotal == 0)) {
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext
@@ -268,7 +268,7 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                 buttons: [
                                                   DialogButton(
                                                     onPressed: () {
-                                                      if (!(g == 0)) {
+                                                      if (!(cartTotal == 0)) {
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext
@@ -330,7 +330,7 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                   ),
                                                   DialogButton(
                                                     onPressed: () {
-                                                      if (!(g == 0)) {
+                                                      if (!(cartTotal == 0)) {
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext

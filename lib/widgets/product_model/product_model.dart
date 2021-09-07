@@ -16,7 +16,7 @@ class ProductCard extends StatefulWidget {
   final String imgUrl;
   final String name;
   final String description;
-  final String price;
+  final int price;
   final int stockamt;
   final String category;
 
@@ -70,7 +70,8 @@ class _ProductCard extends State<ProductCard> {
                   //on tap modal pop up
                   Modal(context, widget.id, widget.imgUrl, widget.name,
                       widget.description, widget.price, widget.stockamt, widget.category);
-                  DatabaseManager().increment(widget.name);
+                  DataService().increment(widget.name);
+                  //DatabaseManager().increment(widget.name);
                 },
                 splashColor: Colors.white30,
                 customBorder: RoundedRectangleBorder(
@@ -107,7 +108,7 @@ class _ProductCard extends State<ProductCard> {
                             ),
                           ),
                           //price
-                          Text("R " + widget.price,
+                          Text("R " + widget.price.toString(),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 15,

@@ -24,9 +24,11 @@ void addToPurchases() {
                 'url': productid.get("url"),
                 'name': productid.get("name"),
                 'description': productid.get("description"),
-                'price': productid.get("price"),
                 'category': productid.get('category'),
-                'date': date
+                'unit price': productid.get("price"),
+                'total': productid.get("total"),
+                'date': date,
+                'qquantity': productid.get("quantity")
               });
               FirebaseFirestore.instance
                   .collection('Products')
