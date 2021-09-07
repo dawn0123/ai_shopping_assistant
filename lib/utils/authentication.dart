@@ -136,7 +136,7 @@ Future<User?> signInWithGoogle(loc, prov) async {
 
     FirebaseFirestore.instance
         .collection('Users')
-        .doc(uid).get()
+        .doc(uid).collection('info').doc(uid).get()
         .then((DocumentSnapshot documentSnapshot) =>
     {
       if(!documentSnapshot.exists){
