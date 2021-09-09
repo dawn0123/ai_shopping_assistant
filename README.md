@@ -1,8 +1,8 @@
 # AI-Shopping-System-v2
 We don't byte
 
-[![Build Status](https://app.travis-ci.com/waffles-code/AI-Shopping-System-v2.svg?branch=dev)](https://app.travis-ci.com/waffles-code/AI-Shopping-System-v2)
-[![Coverage Status](https://coveralls.io/repos/github/waffles-code/AI-Shopping-System-v2/badge.svg?branch=dev)](https://coveralls.io/github/waffles-code/AI-Shopping-System-v2?branch=dev)
+[![Build Status](https://app.travis-ci.com/mmasehume/AI-Shopping-System-v2.svg?branch=dev)](https://app.travis-ci.com/mmasehume/AI-Shopping-System-v2)
+[![Coverage Status](https://coveralls.io/repos/github/mmasehume/AI-Shopping-System-v2/badge.svg?branch=dev)](https://coveralls.io/github/mmasehume/AI-Shopping-System-v2?branch=dev)
 
 <!-- [![CI](https://github.com/Hardi-hood/AI-Shopping-System/actions/workflows/main.yml/badge.svg)](https://github.com/Hardi-hood/AI-Shopping-System/actions/workflows/main.yml) -->
 
