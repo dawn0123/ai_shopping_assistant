@@ -1,8 +1,5 @@
-import 'dart:html';
-
 import 'package:aishop/utils/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csv/csv.dart';
 
 class DataCollection{
   final product_name, product_id, price, event, category;
@@ -13,9 +10,14 @@ class DataCollection{
     DateTime now = new DateTime.now();
     DateTime date =  new DateTime(now.year, now.month, now.day, now.hour, now.minute);
 
-    var recommend = 'no';
+    var recommend_product = 'no';
+    var recommend_category = 'no';
+
     if(event == 'view' || event == 'wishlist'){
-      recommend = 'yes';
+      recommend_product = 'yes';
+    }
+    if(event == 'view' || event == 'cart'){
+      recommend_category = 'yes';
     }
 
     FirebaseFirestore.instance
@@ -31,7 +33,8 @@ class DataCollection{
       'location' : location,
       'province' : province,
       'cost' : price,
-      'recommend' : recommend
+      'recommend_product' : recommend_product,
+      'recommend_category' : recommend_category
     });
   }
 
@@ -59,7 +62,8 @@ class DataCollection{
                'location' : null,
                'province' : null,
                'cost' : ds.get('price'),
-               'recommend': 'yes'
+               'recommend_product': 'yes',
+               'recommend_category': 'no'
              });
            })
      });
@@ -67,7 +71,7 @@ class DataCollection{
 
 //THIS CODE MUST BE ONLY UNCOMMENTED WHEN YOU WANT TO UPDATE THE CSV FILE.. MAYBE TWICE A WEEK!!!
 
-MakeCSV() async {
+/*MakeCSV() async {
      var Data = await FirebaseFirestore.instance
          .collection("Data")
          .get();
@@ -82,7 +86,8 @@ MakeCSV() async {
        "Event",
        "Cost",
        "Date",
-       "Recommend"
+       "Recommend_product",
+       "Recommend_category"
      ]);
      Data.docs.forEach((DocumentSnapshot ds) {
        DateTime date = ds.get("date").toDate();
@@ -96,7 +101,8 @@ MakeCSV() async {
        row.add(ds.get("event"));
        row.add(ds.get("cost"));
        row.add(date);
-       row.add(ds.get("recommend"));
+       row.add(ds.get("recommend_product"));
+       row.add(ds.get("recommend_category"));
        table.add(row);
      });
      String csvfile = ListToCsvConverter().convert(table);
@@ -104,5 +110,5 @@ MakeCSV() async {
      new AnchorElement(href: "data:text/plain;charset=utf-8, $csvfile")
        ..setAttribute("download", "data.csv")
        ..click();
-   }
+   }*/
 }
