@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
   //remove debug banner in the corner
   void initState() {
     getUserInfo();
-    getProducts();
+    //getProducts();
     super.initState();
   }
 }

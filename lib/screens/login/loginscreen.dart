@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:aishop/services/databasemanager.dart';
 import 'dart:async';
 
 class LoginScreen extends StatefulWidget {
@@ -47,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     getLocationData();
+    getProducts();
     userEmailController = TextEditingController();
     userEmailController.text = '';
     //textFocusNodeEmail = FocusNode();
@@ -55,6 +57,14 @@ class _LoginScreenState extends State<LoginScreen> {
     userPasswordController.text = '';
     //textFocusNodePassword = FocusNode();
     super.initState();
+  }
+
+  Future getProducts() async {
+    await DatabaseManager().setBooks();
+    await DatabaseManager().setClothes();
+    await DatabaseManager().setKitchen();
+    await DatabaseManager().setShoes();
+    await DatabaseManager().setTech();
   }
 
   String? _validateEmail(String value) {
