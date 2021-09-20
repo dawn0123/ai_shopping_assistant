@@ -16,11 +16,11 @@ import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({this.cityName,this.longitude,this.latitude});
+  RegisterScreen({this.cityName,this.longitude,this.latitude,this.province});
   final cityName;
   final longitude;
   final latitude;
-
+  final province;
   @override
   State<StatefulWidget> createState() {
     return _RegisterScreenState();
@@ -398,7 +398,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           'location': widget.cityName,
                                           'lname': userLastNameController.text,
                                           'longitude':widget.longitude,
-                                          'latitude':widget.latitude
+                                          'latitude':widget.latitude,
+                                          'province':widget.province
                                         });
                                       } else {
                                         _firestore
@@ -413,6 +414,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           'location':
                                               userLocationController.text,
                                           'lname': userLastNameController.text,
+
 
                                         });
                                       }

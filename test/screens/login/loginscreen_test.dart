@@ -147,7 +147,7 @@ void main() {
     final noAccountLink = find.widgetWithText(TextLink, "Not Registered?");
 
     await tester.tap(noAccountLink);
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(Duration(seconds: 3));
     expect(find.byType(RegisterScreen), findsOneWidget);
 
     print('======================');
