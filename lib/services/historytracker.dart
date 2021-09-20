@@ -1,8 +1,6 @@
 import 'package:aishop/utils/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'datacollection.dart';
-
 void addToPurchases() {
   DateTime now = new DateTime.now();
   DateTime date =
@@ -140,6 +138,5 @@ class HistoryTracker {
                       .update({'index': 0}),
                 }
             });
-    DataCollection(name, id, price, "view", category).DataCollector();
   }
 }

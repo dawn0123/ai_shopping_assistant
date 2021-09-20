@@ -1,6 +1,6 @@
 import 'package:aishop/utils/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'DataCollection.dart';
 
 var cart_total;
 
@@ -9,7 +9,6 @@ class Cart  {
 
   Cart.addToCart(this.id, this.imgUrl, this.description, this.name, this.price,
       this.quantity, this.stockamt, this.category) {
-    double t = 0;
     FirebaseFirestore.instance
         .collection('Users')
         .doc(uid)
@@ -24,7 +23,7 @@ class Cart  {
       'stockamt': stockamt,
       'total': price
     });
-
+    DataCollection(name, id, price, "wishlist", category).DataCollector();
   }
 
   Cart.removeFromCart(this.id, this.imgUrl, this.description, this.name,

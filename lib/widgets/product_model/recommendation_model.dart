@@ -4,6 +4,7 @@
 import 'package:aishop/icons/icons.dart';
 import 'package:aishop/screens/cart/components/order_review.dart';
 import 'package:aishop/services/databasemanager.dart';
+import 'package:aishop/services/datacollection.dart';
 import 'package:aishop/services/historytracker.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/utils/cart.dart';
@@ -71,6 +72,7 @@ class _RecommendationCard extends State<RecommendationCard> {
                   Modal(context, widget.id, widget.imgUrl, widget.name,
                       widget.description, widget.price, widget.stockamt, widget.category);
                   DatabaseManager().increment(widget.name);
+                  DataCollection(widget.name, widget.id, widget.price, "view", widget.category).DataCollector();
                 },
                 splashColor: accent,
                 customBorder: RoundedRectangleBorder(
