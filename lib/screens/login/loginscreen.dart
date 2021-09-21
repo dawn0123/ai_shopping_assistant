@@ -30,20 +30,16 @@ class _LoginScreenState extends State<LoginScreen> {
 //declare and initialize the controllers and focus on each field.
 //initialize variable to check if user is editing the specific fiels.
   late TextEditingController userEmailController;
-  //late FocusNode textFocusNodeEmail;
   bool _isEditingEmail = false;
   late TextEditingController userForgotP = TextEditingController();
   String longitude = "";
   String latitude = "";
-  late String Province=" ";
+  late String Province="";
   late String cityname = "";
 
   late TextEditingController userPasswordController;
-  //late FocusNode textFocusNodePassword;
-  bool _isEditingpassword = false;
 
-  //String loginStatus = "";
-  //late Color loginStringColor;
+  bool _isEditingpassword = false;
 
   @override
   void initState() {
@@ -51,11 +47,9 @@ class _LoginScreenState extends State<LoginScreen> {
     getProducts();
     userEmailController = TextEditingController();
     userEmailController.text = '';
-    //textFocusNodeEmail = FocusNode();
 
     userPasswordController = TextEditingController();
     userPasswordController.text = '';
-    //textFocusNodePassword = FocusNode();
     super.initState();
   }
 
@@ -84,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String? _validatePassword(String value) {
     value = value.trim();
-//make sure user creates a strong password
+//makesure user creates a strong password
     if (userPasswordController.text.isNotEmpty) {
       if (value.isEmpty) {
         return 'Please enter password';
@@ -97,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void getLocationData() async {
     print("running location data function");
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
     print("done with Geolocator+${position.longitude}");
     longitude = await position.longitude.toString();
     latitude = await position.latitude.toString();
@@ -106,7 +100,6 @@ class _LoginScreenState extends State<LoginScreen> {
     await networkHelper.getData();
     cityname = networkHelper.cityname;
     Province=networkHelper.Province;
-
   }
 
 //test keys
@@ -139,7 +132,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             //=============================================
                             //Email text field
                             RoundTextField(
-                              //focusNode: textFocusNodeEmail,
                               keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.next,
                               control: userEmailController,
@@ -151,10 +143,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _isEditingEmail = true;
                                 });
                               },
-                              //onSubmitted: (value) {
-                                //textFocusNodeEmail.unfocus();
-                                //FocusScope.of(context).requestFocus(textFocusNodePassword);
-                              //},
                               errorText: _isEditingEmail
                                   ? _validateEmail(userEmailController.text)
                                   : "",
@@ -174,9 +162,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _isEditingpassword = true;
                                 });
                               },
-                              //onSubmitted: (value) {
-                              //  textFocusNodePassword.unfocus();
-                              //},
                               errorText: _isEditingpassword
                                   ? _validatePassword(
                                       userPasswordController.text)
@@ -194,10 +179,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .then((result) {
                                   if (result != null) {
                                     setState(() {
-                                      //loginStatus =
-                                       //   'You have signed in successfully';
-                                      //loginStringColor = Colors.green;
-
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(
@@ -281,14 +262,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }).catchError((error) {
                                   print('Sign in Error: $error');
                                   setState(() {
-                                    //loginStatus =
-                                    //    'Error occured while Signing in';
                                     Navigator.push(
                                         context,
                                         new MaterialPageRoute(
                                             builder: (context) =>
                                                 LoginScreen()));
-                                    //loginStringColor = Colors.red;
                                   });
                                 });
                               },
@@ -352,7 +330,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 align: Alignment.center,
                                 press: () => {
                                       print(cityname),
-                                  Timer(Duration(seconds: 2), () {
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(
@@ -360,10 +337,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   RegisterScreen(
                                                     cityName:
                                                         cityname.toString(),
-                                                    province:Province.toString(),
-                                                    //longitude: longitude,
-                                                    //latitude: latitude,
-                                                  )));})
+                                                  ))),
                                     })
                             //=====================================================
                           ])))

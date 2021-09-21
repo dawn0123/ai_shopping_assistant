@@ -16,11 +16,10 @@ import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final cityName;
-  //final longitude;
-  //final latitude;
-  final province;
   RegisterScreen({this.cityName,this.province});
+  final cityName;
+  final province;
+
   @override
   State<StatefulWidget> createState() {
     return _RegisterScreenState();
@@ -31,36 +30,20 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
 //declare and initial the cfield controllers, the focus and check if user is editing the field.
   late TextEditingController userEmailController;
-  //late FocusNode textFocusNodeEmail = FocusNode();
   bool _isEditingEmail = false;
 
   late TextEditingController userPasswordController;
-  //late FocusNode textFocusNodePassword = FocusNode();
   bool _isEditingpassword = false;
 
   String cityname = "";
   String loginStatus = "";
-  //late Color loginStringColor;
-
-//use Regular Expression to validate the structure
 
   late TextEditingController userConfirmPasswordController;
-  //late FocusNode textFocusNodeConfirmPassword = FocusNode();
-
   late TextEditingController userFirstNameController;
-  //late FocusNode textFocusNodeFirstName = FocusNode();
-
   late TextEditingController userLastNameController;
-  //late FocusNode textFocusNodeLastName = FocusNode();
-
   late TextEditingController userBirthdayController;
-  //late FocusNode textFocusNodeBirthday = FocusNode();
-
   late TextEditingController userLocationController;
-  //late FocusNode textFocusNodeLocation = FocusNode();
-
   late TextEditingController userProvinceController;
-  //late FocusNode textFocusNodeProvince = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -101,12 +84,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
                                     control: userFirstNameController,
                                     text: "First Name",
-                                    //focusNode: textFocusNodeFirstName,
-                                    //onSubmitted: (value) {
-                                    //  textFocusNodeFirstName.unfocus();
-                                    //  FocusScope.of(context)
-                                    //      .requestFocus(textFocusNodeLastName);
-                                    //},
                                   )),
                                   //====================================================================================row
                                   Expanded(
@@ -116,12 +93,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                                     control: userLastNameController,
                                     text: "Last Name",
-                                    // focusNode: textFocusNodeLastName,
-                                    // onSubmitted: (value) {
-                                    //   textFocusNodeLastName.unfocus();
-                                    //   FocusScope.of(context)
-                                    //       .requestFocus(textFocusNodeEmail);
-                                    // },
                                   ))
                                 ]
                                 //====================================================================================rowEnded
@@ -137,7 +108,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         preicon: Icon(LineIcons.at),
                                         margin:
                                             EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                        //focusNode: textFocusNodeEmail,
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         textInputAction: TextInputAction.next,
@@ -149,11 +119,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             _isEditingEmail = true;
                                           });
                                         },
-                                        // onSubmitted: (value) {
-                                        //   textFocusNodeEmail.unfocus();
-                                        //   FocusScope.of(context).requestFocus(
-                                        //       textFocusNodeBirthday);
-                                        // },
                                         errorText: _isEditingEmail
                                             ? _validateEmail(
                                                 userEmailController.text)
@@ -166,13 +131,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       flex: 1,
                                       child: RoundTextField(
                                           autofocus: false,
-                                          // focusNode: textFocusNodeBirthday,
-                                          //
-                                          // onSubmitted: (value) {
-                                          //   textFocusNodeBirthday.unfocus();
-                                          //   FocusScope.of(context).requestFocus(
-                                          //       textFocusNodePassword);
-                                          // },
                                           preicon: Icon(LineIcons.birthdayCake),
                                           margin:
                                               EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -236,12 +194,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     text: "Password",
                                     autofocus: false,
                                     control: userPasswordController,
-                                    // focusNode: textFocusNodePassword,
-                                    // onSubmitted: (value) {
-                                    //   textFocusNodePassword.unfocus();
-                                    //   FocusScope.of(context).requestFocus(
-                                    //       textFocusNodeConfirmPassword);
-                                    // },
                                     onChanged: (value) {
                                       setState(() {
                                         _isEditingpassword = true;
@@ -262,12 +214,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                                     text: "Confirm Password",
                                     control: userConfirmPasswordController,
-                                    // focusNode: textFocusNodeConfirmPassword,
-                                    // onSubmitted: (value) {
-                                    //   textFocusNodeConfirmPassword.unfocus();
-                                    //   FocusScope.of(context)
-                                    //       .requestFocus(textFocusNodePassword);
-                                    // },
                                     onChanged: (value) {
                                       setState(() {
                                         _isEditingpassword = true;
@@ -287,7 +233,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               text: (!widget.cityName.toString().contains(new RegExp(r'[a-zA-Z]')))
                                   ? "Location"
                                   : "${widget.cityName.toString()}",
-                              //focusNode: textFocusNodeLocation,
                               autofocus: false,
                               control: userLocationController,
                               preicon: Icon(LineIcons.mapMarker),
@@ -296,7 +241,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               text: (!widget.province.toString().contains(new RegExp(r'[a-zA-Z]')))
                                   ? "Province"
                                   : "${widget.province.toString()}",
-                              //focusNode: textFocusNodeProvince,
                               autofocus: false,
                               control: userProvinceController,
                               preicon: Icon(LineIcons.mapMarker),
