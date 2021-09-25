@@ -14,7 +14,6 @@ from termcolor import colored
 from sklearn.model_selection import train_test_split
 import json
 from sklearn.tree import DecisionTreeClassifier
-from nbconvert import PythonExporter
 from sklearn import metrics
 import firebase_admin
 from firebase_admin import credentials,storage
@@ -56,7 +55,6 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 clf = DecisionTreeClassifier(criterion="entropy")
 clf = clf.fit(X_train,y_train)
 
-
 #We Create two json objects provinceJson and categoryJson to map our provinces and categories, respectively, to numerical values 
 #that the model can be able to train and make neccessary calculations with
 provinceJson =  '{ "Limpopo" : 1,"Gauteng" : 2,"Free State" : 3,"Western Cape" : 4,"KwaZulu-Natal" : 5,"North West" : 6,"Northern Cape" : 7,"Eastern Cape" : 8,"Mpumalanga" : 9}'
@@ -66,7 +64,6 @@ categoryJson =  '{"Books" : 1, "Shoes" : 2, "Clothing" : 3, "Tech" : 4, "Kitchen
 loadProvinceJ = json.loads(provinceJson)
    
 loadCategoryJ = json.loads(categoryJson)
-
 
 #Here we keep track of all trained entries for later purposes...(Avoid testing the exact entries we've trained)
 # thus avoiding returning large lists as well......
@@ -97,20 +94,18 @@ recommended_products = []
 all_products = []
 
 uid = 'joobEt92Q1O1WXlaWIcZUVdeqMf2'
-#For all users in our users' document do the following
-
     
 province = ''
     
 #Get User information--- 
 userDoc1 = users_ref.document(uid)
-userColl1 = userDoc1.collection('info')
-userColl2 = userDoc1.collection('Wishlist')
-colDocs1 = userColl1.get()
-s = False
-colDocs2 = userColl2.list_documents()#Items in wishlist
-info = userColl1.get()
-    
+colDocs1 = userDoc1.collection('info').get()
+colDocs2 = userDoc1.collection('Wishlist').list_documents()#Items in wishlist
+
+tempList = []
+
+for x in colDocs2:
+        tempList.append(x.id)
 #    Province
 #
 #Load the json value
@@ -129,15 +124,16 @@ else:
     for prod_doc in Products_docs:  
         pid = prod_doc.id  #product Id
 
-        s = pid in colDocs2   #Returning true if the item is in the wishlist.....
+        s = pid in tempList   #Returning true if the item is in the wishlist.....
                 ###
                 # Wishlist
                 ####
         if s :            
             wishlist = 1
+            
         else:
-            wishlist = 0    
-                
+            wishlist = 0   
+            
         noOfClicks = 1    #To avoid null errors and a lot other unnecessary errors we give each product at least one click....
             #
             #   Clicks
@@ -161,17 +157,16 @@ else:
             y_predict = clf.predict(test_data[feature_cols]) #Get our 1(recommend) or 0(Do not recommend)
 
             if(y_predict == 1):
-                str = pid    #Using a pipe delimeter
+                str = pid   
                 recommended_products.append(str) #appending to recommendation list
                 all_products.append(str)
                 str = colored(pid, 'green')
                 print(str)
-                print(y_predict)
+               
             else:
                 all_products.append(pid)
                 str = colored(pid, 'red')
                 print(str)
-                print(y_predict)
 
     #Shows the total number of products to be recommended to the user compared to the original number of products...              
     print(len(all_products))
@@ -203,7 +198,7 @@ print("\n-----------------------------------------------------------------------
 # saved under the assests folder in our project... 
 r = export_text(clf, feature_names=feature_cols)
 
-print(colored(r, 'red'))
+print(colored(r, 'blue'))
 
 dot_data = StringIO()
 
@@ -237,7 +232,10 @@ print("\n-----------------------------------------------------------------------
 
 r = export_text(clf, feature_names=feature_cols)
 
-print(colored(r, 'green'))
+if(AccuracyBeforePruning <= AccuracyAfterPruning):
+    print(colored(r, 'green'))
+else:
+    print(colored(r, 'red'))
 
 dot_data = StringIO()
 
