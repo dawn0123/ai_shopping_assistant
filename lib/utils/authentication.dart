@@ -14,6 +14,9 @@ late GoogleSignIn googleSignIn = GoogleSignIn();
 String? name;
 String? imageUrl;
 
+String? location;
+String? province;
+
 Future<User?> registerWithEmailPassword(String email, String password) async {
   await Firebase.initializeApp();
   User? user;
@@ -96,10 +99,13 @@ Future<String> signOut() async {
   }
 }
 
-Future<User?> signInWithGoogle() async {
+Future<User?> signInWithGoogle(loc, prov) async {
   // Initialize Firebase
   await Firebase.initializeApp();
   User? user;
+
+  location = loc;
+  province = prov;
 
   // The `GoogleAuthProvider` can only be used while running on the web
   GoogleAuthProvider authProvider = GoogleAuthProvider();
@@ -132,7 +138,8 @@ Future<User?> signInWithGoogle() async {
               'lname':name!.split(" ")[1],
               'email':userEmail,
               'bday':"*missing",
-              'location': "*missing",
+              'location': location,
+              'province' : province
             }
         )
       }
@@ -140,7 +147,6 @@ Future<User?> signInWithGoogle() async {
         print("user exists in database")
       }
     });
-
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('auth', true);

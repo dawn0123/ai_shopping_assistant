@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               errorText: _isEditingpassword
                                   ? _validatePassword(
-                                      userPasswordController.text)
+                                  userPasswordController.text)
                                   : "",
                               errorstyle: TextStyle(color: Colors.black54),
                             ),
@@ -179,13 +179,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: "LOGIN",
                               press: () async {
                                 await signInWithEmailPassword(
-                                        userEmailController.text,
-                                        userPasswordController.text)
+                                    userEmailController.text,
+                                    userPasswordController.text)
                                     .then((result) {
                                   if (result != null) {
                                     setState(() {
                                       loginStatus =
-                                          'You have signed in successfully';
+                                      'You have signed in successfully';
                                       loginStringColor = Colors.green;
                                       Navigator.push(
                                           context,
@@ -202,15 +202,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(32.0))),
                                             contentPadding:
-                                                EdgeInsets.only(top: 10.0),
+                                            EdgeInsets.only(top: 10.0),
                                             content: Container(
                                               width: 300.0,
                                               // height: 30,
                                               child: Column(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
+                                                CrossAxisAlignment.stretch,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: <Widget>[
                                                   SizedBox(
@@ -218,10 +218,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   ),
                                                   Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
                                                     mainAxisSize:
-                                                        MainAxisSize.min,
+                                                    MainAxisSize.min,
                                                     children: <Widget>[
                                                       Text(
                                                         "Error has occured",
@@ -235,10 +235,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   ),
                                                   Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
                                                     mainAxisSize:
-                                                        MainAxisSize.min,
+                                                    MainAxisSize.min,
                                                     children: <Widget>[
                                                       Text(
                                                         "Your Password/Email is incorrect",
@@ -255,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     child: Text('OK',
                                                         style: TextStyle(
                                                             color:
-                                                                Colors.black)),
+                                                            Colors.black)),
                                                     onPressed: () {
                                                       Navigator.of(context)
                                                           .pop();
@@ -271,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   print('Sign in Error: $error');
                                   setState(() {
                                     loginStatus =
-                                        'Error occured while Signing in';
+                                    'Error occured while Signing in';
                                     Navigator.push(
                                         context,
                                         new MaterialPageRoute(
@@ -287,47 +287,47 @@ class _LoginScreenState extends State<LoginScreen> {
                                 text: "Forgot Password?",
                                 align: Alignment.centerRight,
                                 press: () => {
-                                      Alert(
-                                          context: context,
-                                          title:
-                                              "Enter email for password reset",
-                                          content: Column(
-                                            children: <Widget>[
-                                              TextField(
-                                                decoration: InputDecoration(
-                                                  icon: Icon(LineIcons.user),
-                                                  labelText: 'E-mail',
-                                                ),
-                                                controller: userForgotP,
-                                              ),
-                                            ],
-                                          ),
-                                          buttons: [
-                                            DialogButton(
-                                              onPressed: () {
-                                                resetPassword(userForgotP.text);
-
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                "Send email",
-                                                style: TextStyle(
-                                                    color: white, fontSize: 20),
-                                              ),
-                                              color: lightblack,
+                                  Alert(
+                                      context: context,
+                                      title:
+                                      "Enter email for password reset",
+                                      content: Column(
+                                        children: <Widget>[
+                                          TextField(
+                                            decoration: InputDecoration(
+                                              icon: Icon(LineIcons.user),
+                                              labelText: 'E-mail',
                                             ),
-                                            DialogButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                              child: Text(
-                                                "Cancel",
-                                                style: TextStyle(
-                                                    color: white, fontSize: 20),
-                                              ),
-                                              color: lightblack,
-                                            )
-                                          ]).show(),
-                                    }),
+                                            controller: userForgotP,
+                                          ),
+                                        ],
+                                      ),
+                                      buttons: [
+                                        DialogButton(
+                                          onPressed: () {
+                                            resetPassword(userForgotP.text);
+
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            "Send email",
+                                            style: TextStyle(
+                                                color: white, fontSize: 20),
+                                          ),
+                                          color: lightblack,
+                                        ),
+                                        DialogButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text(
+                                            "Cancel",
+                                            style: TextStyle(
+                                                color: white, fontSize: 20),
+                                          ),
+                                          color: lightblack,
+                                        )
+                                      ]).show(),
+                                }),
                             //=========================================
                             //or dividers
                             OrDivider(),
@@ -340,20 +340,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                 text: "Not Registered?",
                                 align: Alignment.center,
                                 press: () => {
-                                      print(cityname),
+                                  print(cityname),
                                   Timer(Duration(seconds: 2), () {
-                                      Navigator.push(
-                                          context,
-                                          new MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RegisterScreen(
-                                                    cityName:
-                                                        cityname.toString(),
-                                                    province:Province.toString(),
-                                                    longitude: longitude,
-                                                    latitude: latitude,
-                                                  )));})
-                                    })
+                                    Navigator.push(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegisterScreen(
+                                                  cityName:
+                                                  cityname.toString(),
+                                                  province:Province.toString(),
+                                                  /*longitude: longitude,
+                                                  latitude: latitude,*/
+                                                )));})
+                                })
                             //=====================================================
                           ])))
             ])));
