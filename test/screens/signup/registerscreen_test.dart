@@ -33,7 +33,7 @@ void main() {
   testWidgets('Enabled widgets', (WidgetTester tester) async {
     await tester.pumpWidget(testWidget);
 
-    expect(input_fields, findsNWidgets(5));
+    expect(input_fields, findsNWidgets(6));
     expect(pass_fields, findsNWidgets(2));
 
     expect(find.byType(PageTitle), findsOneWidget);
