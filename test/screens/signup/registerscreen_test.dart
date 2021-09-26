@@ -24,7 +24,7 @@ void main() {
   final passwordField = find.widgetWithText(RoundPasswordField, "Password");
   final confirmPassField = find.widgetWithText(RoundPasswordField, "Confirm Password");
   final locationField = find.byIcon(LineIcons.mapMarker);
-  final provinceField = find.byIcon(LineIcons.mapMarker);
+  final provinceField = find.byIcon(Icons.location_on_outlined);
   final birthdayField = find.widgetWithText(RoundTextField, "Birthday");
   final nameField = find.widgetWithText(RoundTextField, "First Name");
   final surnameField = find.widgetWithText(RoundTextField, "Last Name");

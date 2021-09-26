@@ -250,6 +250,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               autofocus: false,
                               control: userLocationController,
                               preicon: Icon(LineIcons.mapMarker),
+
                             ),
                             RoundTextField(
                               text: (!widget.province.toString().contains(
@@ -258,7 +259,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   : "${widget.province.toString()}",
                               autofocus: false,
                               control: userProvinceController,
-                              preicon: Icon(LineIcons.mapMarker),
+                              preicon: Icon(Icons.location_on_outlined),
                             ),
 
                             //=============================================
