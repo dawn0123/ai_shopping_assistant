@@ -72,7 +72,7 @@ void main() {
 
     await tester.tap(signupbutton);
     await tester.pump();
-    expect(dialog, findsNothing);
+    expect(dialog, findsWidgets);
 
     final alreadyhaveaccount = find.widgetWithText(TextLink, 'Already have an account? Login here.');
 
