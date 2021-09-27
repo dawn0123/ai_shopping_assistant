@@ -77,8 +77,8 @@ void main() {
     final alreadyhaveaccount = find.widgetWithText(TextLink, 'Already have an account? Login here.');
 
     await tester.tap(alreadyhaveaccount);
-    await tester.pump();
-    expect(find.byType(LoginScreen),findsOneWidget);
+    await tester.pumpAndSettle(Duration(seconds: 3));
+    expect(find.byType(LoginScreen), findsOneWidget);
 
     print('======================');
     print('');
