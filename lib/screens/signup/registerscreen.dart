@@ -498,7 +498,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             //=============================================
                             // Already registered button => take user to login page
-                            TextLink(
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 200),
+                                child:TextLink(
                                 align: Alignment.center,
                                 text: 'Already have an account? Login here.',
                                 press: () =>
@@ -508,7 +510,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       new MaterialPageRoute(
                                           builder: (context) =>
                                               LoginScreen()))
-                                })
+                                }))
                           ])))
             ])));
   }
