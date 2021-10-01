@@ -98,11 +98,23 @@ class HistoryTracker {
 
 void addToPurchases() {
   DateTime now = new DateTime.now();
-  DateTime date =
-      new DateTime(now.year, now.month, now.day, now.hour, now.minute);
+  DateTime date = new DateTime(now.year, now.month, now.day, now.hour, now.minute);
 
-  FirebaseFirestore.instance
-      .collection('Users')
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  // String address;
+  // var address = firestore
+  //     .collection("Users")
+  //     .doc(uid)
+  //     .collection("info")
+  //     .get()
+  //     .then((querySnapshot) {
+  //   querySnapshot.docs.forEach((result) {
+  //     return result.data()['Address'];
+  //   });
+  // });
+
+      firestore.collection('Users')
       .doc(uid)
       .collection('Cart')
       .get()
@@ -129,7 +141,8 @@ void addToPurchases() {
                               'unit price': productid.get("price"),
                               'total': productid.get("total"),
                               'date': date,
-                              'qquantity': productid.get("quantity")
+                              'quantity': productid.get("quantity"),
+                              // 'address' : address
                             }),
                             /*FirebaseFirestore.instance
                                 .collection('Users')

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 var n = 0;
 
 class CheckOutDelivery extends StatefulWidget {
-  //User _user = FirebaseAuth.instance.currentUser!;
   @override
   _CheckOutDelivery createState() => _CheckOutDelivery();
 }
