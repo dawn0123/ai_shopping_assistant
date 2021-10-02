@@ -14,7 +14,7 @@ class SearchService {
         .where('name', isEqualTo: itemname)
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((documentSnapshot) {
+           querySnapshot.docs.forEach((documentSnapshot) {
         documentSnapshot.reference.update({"clicks": FieldValue.increment(1)});
       });
     });
