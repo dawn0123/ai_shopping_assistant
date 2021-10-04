@@ -6,10 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 
-
 String? uid;
-
 String? userEmail;
+
 late GoogleSignIn googleSignIn = GoogleSignIn();
 
 String? name;
@@ -85,6 +84,7 @@ Future<User?> signInWithEmailPassword(String email, String password) async {
 
   return user;
 }
+
 Future<String> signOut() async {
   try {
     await _auth.signOut().then((value) => {
@@ -155,6 +155,7 @@ Future<User?> signInWithGoogle(loc, prov) async {
         print("user exists in database")
       }
     });
+
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('auth', true);

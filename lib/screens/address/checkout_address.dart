@@ -169,7 +169,6 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-
                                                     },
                                                     child: Text(
                                                       "Add",
@@ -231,7 +230,6 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-
                                                     },
                                                     child: Text(
                                                       "Already Added",
@@ -298,6 +296,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                 buttons: [
                                                   DialogButton(
                                                     onPressed: () {
+
                                                       if (!(cartTotal == 0)) {
                                                         NewAddress().workaddress(WorkAddress, uid);
                                                         Navigator.of(context).push(
@@ -349,7 +348,6 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-
                                                     },
                                                     child: Text(
                                                       "Add",
@@ -411,7 +409,6 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-
                                                     },
                                                     child: Text(
                                                       "Already Added",
@@ -482,4 +479,4 @@ class _CheckOutAddress extends State<CheckOutAddress> {
       ),
     );
   }
-  }
+}
