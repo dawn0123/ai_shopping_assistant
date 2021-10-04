@@ -30,7 +30,6 @@ void main() {
   final surnameField = find.widgetWithText(RoundTextField, "Last Name");
   final signupbutton = find.byType(RoundButton);
   final googlebutton = find.byType(GoogleRoundButton);
-
   testWidgets('Enabled widgets', (WidgetTester tester) async {
     await tester.pumpWidget(testWidget);
 
@@ -50,7 +49,6 @@ void main() {
     expect(googlebutton, findsOneWidget);
     expect(find.byType(TextLink), findsOneWidget);
     expect(find.byType(OrDivider), findsOneWidget);
-
     await tester.enterText(nameField, 'name');
     expect(find.text('name'), findsOneWidget);
 
@@ -74,13 +72,12 @@ void main() {
     await tester.pump();
     expect(dialog, findsWidgets);
 
-    final alreadyhaveaccount = find.widgetWithText(TextLink, 'Already have an account? Login here.');
-
+    /*final alreadyhaveaccount = find.widgetWithText(TextLink, 'Already have an account? Login here.');
     await tester.ensureVisible(alreadyhaveaccount);
     await tester.tap(alreadyhaveaccount);
     await tester.pumpAndSettle();
     expect(find.byType(LoginScreen),findsOneWidget);
-
+*/
     print('======================');
     print('');
   });

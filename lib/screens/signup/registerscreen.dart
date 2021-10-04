@@ -55,8 +55,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .of(context)
         .size;
 
-    return new Scaffold(
-        body: Container(
+    return Scaffold(
+        body:Container(
             width: size.width,
             height: size.height,
             color: lightblack,
@@ -64,11 +64,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Widget>[
               Expanded(child: SidePanel()),
               Expanded(
-                  child: Container(
+                      child:Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: 60, vertical: 30),
                       decoration: BoxDecoration(color: white),
-                      child: Column(
+                     child:Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             //=============================================
@@ -498,7 +498,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             //=============================================
                             // Already registered button => take user to login page
-                           TextLink(
+                         TextLink(
                                 align: Alignment.center,
                                 text: 'Already have an account? Login here.',
                                 press: () =>
@@ -508,9 +508,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       new MaterialPageRoute(
                                           builder: (context) =>
                                               LoginScreen()))
-                                })
-                          ])))
-            ])));
+                                }),
+                          ]))
+              )])));
   }
 
   @override
@@ -527,7 +527,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     userBirthdayController = TextEditingController();
     userLocationController = TextEditingController();
     userProvinceController = TextEditingController();
-
     super.initState();
   }
 
