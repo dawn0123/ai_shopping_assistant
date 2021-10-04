@@ -59,7 +59,8 @@ class DataCollection{
                'location' : null,
                'province' : null,
                'cost' : ds.get('price'),
-               'recommend': 'yes'
+               'recommend_product': 'yes'
+               'recommend_category': 'no'
              });
            })
      });
@@ -72,10 +73,13 @@ class DataCollection{
     var location = await getLocation();
     var province = await getProvince();
 
-    var recommend = 'no';
+    var recommend_product = 'no';
+    var recommend_category = 'no';
     if(event == 'view' || event == 'wishlist'){
-      recommend = 'yes';
+      recommend_product = 'yes';
     }
+    else if(event == 'cart')
+      recommend_category = 'yes';
 
     FirebaseFirestore.instance
         .collection('Data')
@@ -90,7 +94,8 @@ class DataCollection{
       'location' : location,
       'province' : province,
       'cost' : price,
-      'recommend' : recommend
+      'recommend_product' : recommend_product,
+      'recommend_category' : recommend_category
     });
   }
 //THIS CODE MUST BE ONLY UNCOMMENTED WHEN YOU WANT TO UPDATE THE CSV FILE.. MAYBE TWICE A WEEK!!!
@@ -110,7 +115,8 @@ class DataCollection{
        "Event",
        "Cost",
        "Date",
-       "Recommend"
+       "Recommend_product",
+       "recommend_category"
      ]);
      Data.docs.forEach((DocumentSnapshot ds) {
        DateTime date = ds.get("date").toDate();
@@ -124,7 +130,8 @@ class DataCollection{
        row.add(ds.get("event"));
        row.add(ds.get("cost"));
        row.add(date);
-       row.add(ds.get("recommend"));
+       row.add(ds.get("recommend_product"));
+       row.add(ds.get("recommend_category"));
        table.add(row);
      });
      String csvfile = ListToCsvConverter().convert(table);
