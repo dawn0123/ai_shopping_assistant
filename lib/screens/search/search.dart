@@ -105,8 +105,8 @@ class SearchState extends State<Search> {
                   } else {
                     return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 5,
-                          childAspectRatio: 2 / 3,
+                          crossAxisCount: (MediaQuery.of(context).size.width/250).round(),
+                          childAspectRatio: 2 / 3.5,
                           mainAxisSpacing: 0),
                       itemBuilder: (context, index) {
                         return ProductCard(
@@ -116,6 +116,7 @@ class SearchState extends State<Search> {
                           snapshot.data!.docs[index].get('description'),
                           snapshot.data!.docs[index].get('price'),
                           snapshot.data!.docs[index].get('stockamt'),
+                            snapshot.data!.docs[index].get('category')
                         );
                       },
                       itemCount: snapshot.data!.docs.length,
@@ -130,8 +131,8 @@ class SearchState extends State<Search> {
                   GridView.count(
                       padding: EdgeInsets.only(
                           left: 10.0, right: 10.0, top: 10.0, bottom: 10),
-                      crossAxisCount: 5,
-                      childAspectRatio: (200 / 300),
+                      crossAxisCount: (MediaQuery.of(context).size.width/250).round(),
+                      childAspectRatio: 2 / 3.5,
                       crossAxisSpacing: 4.0,
                       mainAxisSpacing: 4.0,
                       primary: false,
@@ -143,7 +144,9 @@ class SearchState extends State<Search> {
                             element.data()['name'].toString(),
                             element.data()['description'].toString(),
                             element.data()['price'],
-                            element.data()['stockamt']);
+                            element.data()['stockamt'],
+                        element.data()['category'].toString()
+                        );
                       }).toList())
                 ])
               : tempSearchStore.isEmpty && capitalizedValue.length > 1

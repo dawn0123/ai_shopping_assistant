@@ -7,6 +7,7 @@ class NetworkHelper {
   NetworkHelper(this.url);
 
   final String url;
+
   String cityname="";
   String Province="";
 

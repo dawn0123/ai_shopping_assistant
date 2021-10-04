@@ -1,21 +1,26 @@
 //kitchen model
+import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/product_model/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+late Stream<QuerySnapshot<Map<String, dynamic>>> kitchen;
+
+getKitchen () {
+  kitchen = DatabaseManager().getKitchen()!;
+}
+
 class Kitchen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    getKitchen();
     return Container(
       width: 0,
       height: 400,
       child: StreamBuilder<QuerySnapshot>(
         //query database products collection by Kitchen category
-        stream: FirebaseFirestore.instance
-            .collection("Products")
-            .where("category", isEqualTo: "Kitchen")
-            .snapshots(),
+        stream: kitchen,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return SizedBox(
@@ -38,9 +43,9 @@ class Kitchen extends StatelessWidget {
                     snapshot.data!.docs[index].get('url'),
                     snapshot.data!.docs[index].get('name'),
                     snapshot.data!.docs[index].get('description'),
-                    snapshot.data!.docs[index].get('price')
-                    ,
-                    snapshot.data!.docs[index].get('stockamt'));
+                    snapshot.data!.docs[index].get('price'),
+                    snapshot.data!.docs[index].get('stockamt'),
+                    snapshot.data!.docs[index].get('category'));
               },
               itemCount: snapshot.data!.docs.length,
             );

@@ -22,20 +22,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
   get birthday => birthday;
   get email => email;
   get firstname => firstname;
-  get location => location;
   get lastname => lastname;
-
-  @override
-  void initState() {
-    user = auth.currentUser!;
-    user.sendEmailVerification();
-
-    timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      checkVerification();
-    });
-    super.initState();
-  }
-
+  get location => location;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +50,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
     );
   }
 
+
   Future<void> checkVerification() async {
     user = auth.currentUser!;
     await user.reload();
@@ -73,5 +62,16 @@ class _VerifyScreenState extends State<VerifyScreen> {
               builder: (context) =>
                   HomePage()));
     }
+  }
+
+  @override
+  void initState() {
+    user = auth.currentUser!;
+    user.sendEmailVerification();
+
+    timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      checkVerification();
+    });
+    super.initState();
   }
 }

@@ -170,7 +170,7 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                           ),
                                                         );
                                                       }
-                                                      
+
                                                     },
                                                     child: Text(
                                                       "Add",
@@ -232,7 +232,7 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                           ),
                                                         );
                                                       }
-                                                      
+
                                                     },
                                                     child: Text(
                                                       "Already Added",
@@ -346,7 +346,7 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                           ),
                                                         );
                                                       }
-                                                      
+
                                                     },
                                                     child: Text(
                                                       "Add",
@@ -408,7 +408,7 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                           ),
                                                         );
                                                       }
-                                                      
+
                                                     },
                                                     child: Text(
                                                       "Already Added",

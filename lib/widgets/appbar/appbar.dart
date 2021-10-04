@@ -13,6 +13,8 @@ import 'package:aishop/utils/prod_num_badges.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
+BuildContext contxt = "" as BuildContext;
+
 void choiceAction(String choice) {
   if (choice == Constants.profile) {
     Navigator.push(
@@ -72,8 +74,6 @@ void choiceAction(String choice) {
         });
   }
 }
-
-BuildContext contxt = "" as BuildContext;
 
 class MyAppBar extends AppBar {
   MyAppBar({Key? key, Widget? title, required BuildContext context})

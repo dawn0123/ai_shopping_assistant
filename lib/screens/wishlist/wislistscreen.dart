@@ -16,10 +16,6 @@ class _Wishlist extends State<WishlistPage> {
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection("Wishlist");
 
-  etdata() async {
-    return usersRef;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +54,10 @@ class _Wishlist extends State<WishlistPage> {
         },
       ),
     );
+  }
+
+  etdata() async {
+    return usersRef;
   }
 }
 
