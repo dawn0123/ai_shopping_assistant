@@ -4,11 +4,12 @@ import 'package:http/http.dart';
 
 class NetworkHelper {
 
+  NetworkHelper(this.url);
+
   final String url;
 
   String cityname="";
   String Province="";
-  NetworkHelper(this.url);
 
    getData() async{
     Uri myUri = Uri.parse(url);

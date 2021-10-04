@@ -49,10 +49,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     setState(() {
       cityname = widget.cityName.toString();
+      province = widget.province.toString();
     });
     Size size = MediaQuery.of(context).size;
 
-    return new Scaffold(
+    return Scaffold(
         body: Container(
             width: size.width,
             height: size.height,
@@ -251,6 +252,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             RoundButton(
                               text: "SIGNUP",
                               press: () async {
+                                userProvinceController.text=widget.province.toString();
+                                userLocationController.text=widget.cityName.toString();
                                 if(userEmailController.text == ""
                                 || userBirthdayController.text == ""
                                 || userConfirmPasswordController.text == ""
@@ -362,6 +365,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                             .text,
                                                         userLastNameController
                                                             .text)));*/
+                                        print('before pushing to homepage');
                                         Navigator.push(context,
                                             new MaterialPageRoute(builder:
                                                 (context) => HomePage()));

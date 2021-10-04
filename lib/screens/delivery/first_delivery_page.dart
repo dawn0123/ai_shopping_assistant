@@ -1,3 +1,4 @@
+import 'package:aishop/screens/address/newaddress.dart';
 import 'package:aishop/screens/cart/components/order_review.dart';
 import 'package:aishop/screens/delivery/checkoutdelivery.dart';
 import 'package:aishop/screens/homepage/homepage.dart';
@@ -18,7 +19,34 @@ class FirstDelivaryPage extends StatefulWidget {
 }
 
 class _FirstDelivaryPage extends State<FirstDelivaryPage> {
+  Future getUserInfofromdb() async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    CollectionReference _collectionReference = _firestore.collection("Users");
+    DocumentReference _doc = _collectionReference.doc(uid);
+    DocumentReference _documentReference = _doc.collection("info").doc(uid);
+
+    _documentReference.get().then((documentSnapshot) => {
+          if (!documentSnapshot.exists)
+            {
+              print("Sorry, User profile not found."),
+            }
+          else
+            {
+              setState(() {
+                userLocationController.text = documentSnapshot.get("location");
+              })
+            }
+        });
+  }
+
   late TextEditingController userLocationController = TextEditingController();
+
+  void initState() {
+    getUserInfofromdb();
+    super.initState();
+  }
+
+  late String name,streetAdd,house,city,province,zipcode;
 
   @override
   Widget build(BuildContext context) {
@@ -432,6 +460,9 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                           width: 450,
                           height: 50,
                           child: TextFormField(
+                            onChanged: (othername) {
+                              name = othername;
+                            },
                             decoration: InputDecoration(
                               fillColor: black,
                               hintText: 'new Address',
@@ -474,6 +505,9 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                           width: 450,
                           height: 50,
                           child: TextFormField(
+                            onChanged: (otherstreetAdd) {
+                              streetAdd = otherstreetAdd;
+                            },
                             decoration: InputDecoration(
                               fillColor: black,
                               hintText: 'Street and number / P.O. box',
@@ -547,6 +581,9 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                           width: 450,
                           height: 50,
                           child: TextFormField(
+                            onChanged: (othercity) {
+                              city = othercity;
+                            },
                             decoration: InputDecoration(
                               fillColor: black,
                               hintText: ' ',
@@ -589,6 +626,9 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                           width: 450,
                           height: 50,
                           child: TextFormField(
+                            onChanged: (otherprovince) {
+                              province = otherprovince;
+                            },
                             decoration: InputDecoration(
                               fillColor: black,
                               hintText: ' ',
@@ -631,6 +671,9 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                           width: 450,
                           height: 50,
                           child: TextFormField(
+                            onChanged: (otherzipcode) {
+                              zipcode = otherzipcode;
+                            },
                             decoration: InputDecoration(
                               fillColor: white,
                               hintText: '',
@@ -693,15 +736,16 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                       AlertDialog(
                                     title: const Text('Save Address'),
                                     content: const Text(
-                                        'Your new address is succesfully added',
+                                        'Are you sure?',
                                         style: TextStyle(
                                             color: Colors.greenAccent)),
                                     actions: <Widget>[
                                       TextButton(
-                                        child: Text('OK',
+                                        child: Text('Confirm',
                                             style:
                                                 TextStyle(color: Colors.black)),
                                         onPressed: () {
+                                          NewAddress().otheraddress(name, streetAdd, house, city, province, zipcode, uid);
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder:
@@ -788,30 +832,5 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
         ],
       ),
     );
-  }
-
-  Future getUserInfofromdb() async {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    CollectionReference _collectionReference = _firestore.collection("Users");
-    DocumentReference _doc = _collectionReference.doc(uid);
-    DocumentReference _documentReference = _doc.collection("info").doc(uid);
-
-    _documentReference.get().then((documentSnapshot) => {
-          if (!documentSnapshot.exists)
-            {
-              print("Sorry, User profile not found."),
-            }
-          else
-            {
-              setState(() {
-                userLocationController.text = documentSnapshot.get("location");
-              })
-            }
-        });
-  }
-
-  void initState() {
-    getUserInfofromdb();
-    super.initState();
   }
 }
