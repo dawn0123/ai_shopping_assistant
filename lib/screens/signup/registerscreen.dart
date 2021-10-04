@@ -259,7 +259,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   : "${widget.province.toString()}",
                               autofocus: false,
                               control: userProvinceController,
-                              preicon: Icon(Icons.location_on_outlined),
+                              preicon: Icon(LineIcons.mapMarker),
                             ),
 
                             //=============================================
@@ -329,7 +329,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       userPasswordController.text)
                                       .then((result) {
                                     if (result != null) {
-                                      setState(() {
+                                      setState(() async {
                                         if (userLocationController.text == "") {
                                           location = widget.cityName.toString();
                                           province = widget.province.toString();
@@ -508,9 +508,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       new MaterialPageRoute(
                                           builder: (context) =>
                                               LoginScreen()))
-                                }),
-                          ]))
-              )])));
+                                    })
+                          ])))
+            ])));
   }
 
   @override

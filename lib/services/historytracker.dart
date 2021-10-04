@@ -1,10 +1,54 @@
 import 'package:aishop/utils/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+void addToPurchases() {
+  DateTime now = new DateTime.now();
+  DateTime date =
+      new DateTime(now.year, now.month, now.day, now.hour, now.minute);
+
+  FirebaseFirestore.instance
+      .collection('Users')
+      .doc(uid)
+      .collection('Cart')
+      .get()
+      .then((snapshots) => {
+            snapshots.docs.forEach((productid) {
+              FirebaseFirestore.instance
+                  .collection('Users')
+                  .doc(uid)
+                  .collection("Purchases")
+                  .doc()
+                  .set({
+                'url': productid.get("url"),
+                'name': productid.get("name"),
+                'description': productid.get("description"),
+                'category': productid.get('category'),
+                'unit price': productid.get("price"),
+                'total': productid.get("total"),
+                'date': date,
+                'qquantity': productid.get("quantity")
+              });
+              FirebaseFirestore.instance
+                  .collection('Products')
+                  .doc(productid.id)
+                  .get()
+                  .then((prodshot) {
+              FirebaseFirestore.instance
+                  .collection('Products')
+                  .doc(productid.id)
+                  .update({
+              'Purchased by': FieldValue.increment(1),
+              });
+              });
+              productid.reference.delete();
+            })
+          });
+}
+
 class HistoryTracker {
-  final id, imgUrl, description, name, price, stockamt;
+  final id, imgUrl, description, name, price, stockamt, category;
   HistoryTracker.addToHistory(this.id, this.imgUrl, this.description, this.name,
-      this.price, this.stockamt) {
+      this.price, this.stockamt, this.category) {
     int index;
     FirebaseFirestore.instance
         .collection('Users')
@@ -46,7 +90,8 @@ class HistoryTracker {
                     'price': price,
                     'click count': 1,
                     'index': 0,
-                    'stockamt': stockamt
+                    'stockamt': stockamt,
+                    'category': category
                   }),
                 }
               else if (snapshot.get('click count') < 5)
@@ -94,104 +139,4 @@ class HistoryTracker {
                 }
             });
   }
-}
-
-void addToPurchases() {
-  DateTime now = new DateTime.now();
-  DateTime date = new DateTime(now.year, now.month, now.day, now.hour, now.minute);
-
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  // String address;
-  // var address = firestore
-  //     .collection("Users")
-  //     .doc(uid)
-  //     .collection("info")
-  //     .get()
-  //     .then((querySnapshot) {
-  //   querySnapshot.docs.forEach((result) {
-  //     return result.data()['Address'];
-  //   });
-  // });
-
-      firestore.collection('Users')
-      .doc(uid)
-      .collection('Cart')
-      .get()
-      .then((snapshots) => {
-            snapshots.docs.forEach((productid) {
-              FirebaseFirestore.instance
-                  .collection('Users')
-                  .doc(uid)
-                  .collection('Purchases')
-                  .doc(productid.id)
-                  .get()
-                  .then((snapshot) => {
-                        if (snapshot.data() == null || !snapshot.exists)
-                          {
-                            FirebaseFirestore.instance
-                                .collection('Users')
-                                .doc(uid)
-                                .collection("Purchases")
-                                .doc(productid.id)
-                                .set({
-                              'url': productid.get("url"),
-                              'name': productid.get("name"),
-                              'description': productid.get("description"),
-                              'unit price': productid.get("price"),
-                              'total': productid.get("total"),
-                              'date': date,
-                              'quantity': productid.get("quantity"),
-                              // 'address' : address
-                            }),
-                            /*FirebaseFirestore.instance
-                                .collection('Users')
-                                .doc(uid)
-                                .collection("Purchases")
-                                .doc(productid.id)
-                                .collection("info")
-                                .doc(date.toString())
-                                .set({'quantity': 1, 'date': date}),*/
-                            FirebaseFirestore.instance
-                                .collection('Products')
-                                .doc(productid.id)
-                                .get()
-                                .then((prodshot) {
-                              FirebaseFirestore.instance
-                                  .collection('Products')
-                                  .doc(productid.id)
-                                  .update({
-                                'Purchased by': FieldValue.increment(1),
-                                'date': date
-                              });
-                            })
-                          }
-                        else
-                          {
-                            /*FirebaseFirestore.instance
-                                .collection('Users')
-                                .doc(uid)
-                                .collection("Purchases")
-                                .doc(productid.id)
-                                .collection("info")
-                                .doc(date.toString())
-                                .set({'quantity': 1, 'date': date}),*/
-                            FirebaseFirestore.instance
-                                .collection('Products')
-                                .doc(productid.id)
-                                .get()
-                                .then((prodshot) {
-                              FirebaseFirestore.instance
-                                  .collection('Products')
-                                  .doc(productid.id)
-                                  .update({
-                                'Purchased by': FieldValue.increment(1),
-                                'date': date
-                              });
-                            })
-                          },
-                        productid.reference.delete()
-                      });
-            })
-          });
 }

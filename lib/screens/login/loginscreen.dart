@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:aishop/services/databasemanager.dart';
 import 'dart:async';
 
 class LoginScreen extends StatefulWidget {
@@ -29,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
 //declare and initialize the controllers and focus on each field.
 //initialize variable to check if user is editing the specific fiels.
   late TextEditingController userEmailController;
-  late FocusNode textFocusNodeEmail;
   bool _isEditingEmail = false;
   late TextEditingController userForgotP = TextEditingController();
   String longitude = "";
@@ -38,23 +38,27 @@ class _LoginScreenState extends State<LoginScreen> {
   late String cityname = "";
 
   late TextEditingController userPasswordController;
-  late FocusNode textFocusNodePassword;
-  bool _isEditingpassword = false;
 
-  String loginStatus = "";
-  late Color loginStringColor;
+  bool _isEditingpassword = false;
 
   @override
   void initState() {
     getLocationData();
+    getProducts();
     userEmailController = TextEditingController();
     userEmailController.text = '';
-    textFocusNodeEmail = FocusNode();
 
     userPasswordController = TextEditingController();
     userPasswordController.text = '';
-    textFocusNodePassword = FocusNode();
     super.initState();
+  }
+
+  Future getProducts() async {
+    await DatabaseManager().setBooks();
+    await DatabaseManager().setClothes();
+    await DatabaseManager().setKitchen();
+    await DatabaseManager().setShoes();
+    await DatabaseManager().setTech();
   }
 
   String? _validateEmail(String value) {
@@ -87,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void getLocationData() async {
     print("running location data function");
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
     print("done with Geolocator+${position.longitude}");
     longitude = await position.longitude.toString();
     latitude = await position.latitude.toString();
@@ -129,7 +133,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             //=============================================
                             //Email text field
                             RoundTextField(
-                              focusNode: textFocusNodeEmail,
                               keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.next,
                               control: userEmailController,
@@ -140,10 +143,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 setState(() {
                                   _isEditingEmail = true;
                                 });
-                              },
-                              onSubmitted: (value) {
-                                textFocusNodeEmail.unfocus();
-                                //FocusScope.of(context).requestFocus(textFocusNodePassword);
                               },
                               errorText: _isEditingEmail
                                   ? _validateEmail(userEmailController.text)
@@ -164,9 +163,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _isEditingpassword = true;
                                 });
                               },
-                              onSubmitted: (value) {
-                                textFocusNodePassword.unfocus();
-                              },
                               errorText: _isEditingpassword
                                   ? _validatePassword(
                                   userPasswordController.text)
@@ -184,9 +180,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .then((result) {
                                   if (result != null) {
                                     setState(() {
-                                      loginStatus =
-                                      'You have signed in successfully';
-                                      loginStringColor = Colors.green;
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(
@@ -270,14 +263,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }).catchError((error) {
                                   print('Sign in Error: $error');
                                   setState(() {
-                                    loginStatus =
-                                    'Error occured while Signing in';
                                     Navigator.push(
                                         context,
                                         new MaterialPageRoute(
                                             builder: (context) =>
                                                 LoginScreen()));
-                                    loginStringColor = Colors.red;
                                   });
                                 });
                               },
@@ -341,7 +331,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 align: Alignment.center,
                                 press: () => {
                                   print(cityname),
-                                  Timer(Duration(seconds: 2), () {
                                     Navigator.push(
                                         context,
                                         new MaterialPageRoute(
@@ -349,10 +338,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 RegisterScreen(
                                                   cityName:
                                                   cityname.toString(),
-                                                  province:Province.toString(),
-                                                  /*longitude: longitude,
-                                                  latitude: latitude,*/
-                                                )));})
+                                                  ))),
                                 })
                             //=====================================================
                           ])))

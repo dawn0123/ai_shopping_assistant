@@ -19,6 +19,7 @@ class CheckOutAddress extends StatefulWidget {
 }
 
 class _CheckOutAddress extends State<CheckOutAddress> {
+
   Future getUserInfofromdb() async {
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     CollectionReference _collectionReference = _firestore.collection("Users");
@@ -295,6 +296,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                 buttons: [
                                                   DialogButton(
                                                     onPressed: () {
+
                                                       if (!(cartTotal == 0)) {
                                                         NewAddress().workaddress(WorkAddress, uid);
                                                         Navigator.of(context).push(
