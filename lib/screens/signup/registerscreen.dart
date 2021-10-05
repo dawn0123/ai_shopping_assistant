@@ -244,7 +244,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   : "${widget.province.toString()}",
                               autofocus: false,
                               control: userProvinceController,
-                              preicon: Icon(LineIcons.mapMarker),
+                              preicon: Icon(LineIcons.mapPin),
                             ),
 
                             //=============================================
