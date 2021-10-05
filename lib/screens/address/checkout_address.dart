@@ -1,4 +1,5 @@
 import 'package:aishop/screens/cart/components/order_review.dart';
+import 'package:aishop/screens/address/newaddress.dart';
 import 'package:aishop/screens/delivery/checkoutdelivery.dart';
 import 'package:aishop/screens/delivery/first_delivery_page.dart';
 import 'package:aishop/screens/homepage/homepage.dart';
@@ -18,6 +19,7 @@ class CheckOutAddress extends StatefulWidget {
 }
 
 class _CheckOutAddress extends State<CheckOutAddress> {
+
   Future getUserInfofromdb() async {
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     CollectionReference _collectionReference = _firestore.collection("Users");
@@ -45,6 +47,9 @@ class _CheckOutAddress extends State<CheckOutAddress> {
     super.initState();
   }
 
+  late String UsedAddress;
+  late String HomeAddress;
+  late String WorkAddress;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +104,9 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                   children: <Widget>[
                                                     RoundTextField(
                                                       autofocus: false,
+                                                      onChanged: (Haddress) {
+                                                        HomeAddress = Haddress;
+                                                      },
                                                       preicon: Icon(
                                                           Icons.location_pin),
                                                       text: "Location",
@@ -111,6 +119,7 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                   DialogButton(
                                                     onPressed: () {
                                                       if (!(cartTotal == 0)) {
+                                                        NewAddress().homeaddress(HomeAddress,uid);
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext
@@ -160,7 +169,6 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-                                                      
                                                     },
                                                     child: Text(
                                                       "Add",
@@ -222,7 +230,6 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-                                                      
                                                     },
                                                     child: Text(
                                                       "Already Added",
@@ -275,6 +282,9 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                   children: <Widget>[
                                                     RoundTextField(
                                                       autofocus: false,
+                                                      onChanged: (Waddress) {
+                                                        WorkAddress = Waddress;
+                                                      },
                                                       preicon: Icon(
                                                           Icons.location_pin),
                                                       text: "Location",
@@ -286,7 +296,9 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                 buttons: [
                                                   DialogButton(
                                                     onPressed: () {
+
                                                       if (!(cartTotal == 0)) {
+                                                        NewAddress().workaddress(WorkAddress, uid);
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder: (BuildContext
@@ -336,7 +348,6 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-                                                      
                                                     },
                                                     child: Text(
                                                       "Add",
@@ -398,7 +409,6 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                           ),
                                                         );
                                                       }
-                                                      
                                                     },
                                                     child: Text(
                                                       "Already Added",

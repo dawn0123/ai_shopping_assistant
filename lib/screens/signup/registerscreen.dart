@@ -52,12 +52,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() {
       cityname = widget.cityName.toString();
     });
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-        body:Container(
+        body: Container(
             width: size.width,
             height: size.height,
             color: lightblack,
@@ -68,8 +66,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child:Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: 60, vertical: 10),
+
                       decoration: BoxDecoration(color: white),
-                     child:Column(
+                      child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             //=============================================
@@ -79,34 +78,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                             Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 //====================================================================================row
                                 children: [
                                   Expanded(
                                       child: RoundTextField(
-                                        preicon: Icon(LineIcons.user),
-                                        autofocus: false,
-                                        margin: EdgeInsets.fromLTRB(
-                                            0, 0, 10, 0),
-                                        control: userFirstNameController,
-                                        text: "First Name",
-                                      )),
+                                    preicon: Icon(LineIcons.user),
+                                    autofocus: false,
+                                    margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                    control: userFirstNameController,
+                                    text: "First Name",
+                                  )),
                                   //====================================================================================row
                                   Expanded(
                                       child: RoundTextField(
-                                        autofocus: false,
-                                        preicon: Icon(LineIcons.user),
-                                        margin: EdgeInsets.fromLTRB(
-                                            10, 0, 0, 0),
-                                        control: userLastNameController,
-                                        text: "Last Name",
-                                      ))
+                                    autofocus: false,
+                                    preicon: Icon(LineIcons.user),
+                                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    control: userLastNameController,
+                                    text: "Last Name",
+                                  ))
                                 ]
-                              //====================================================================================rowEnded
-                            ),
+                                //====================================================================================rowEnded
+                                ),
                             Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 //====================================================================================row
                                 children: <Widget>[
                                   Expanded(
@@ -114,9 +111,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       child: RoundTextField(
                                         preicon: Icon(LineIcons.at),
                                         margin:
-                                        EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                            EdgeInsets.fromLTRB(0, 0, 10, 0),
                                         keyboardType:
-                                        TextInputType.emailAddress,
+                                            TextInputType.emailAddress,
                                         textInputAction: TextInputAction.next,
                                         control: userEmailController,
                                         text: "Email",
@@ -128,10 +125,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         },
                                         errorText: _isEditingEmail
                                             ? _validateEmail(
-                                            userEmailController.text)
+                                                userEmailController.text)
                                             : null,
                                         errorstyle:
-                                        TextStyle(color: Colors.black54),
+                                            TextStyle(color: Colors.black54),
                                       )),
                                   //====================================================================================row
                                   Expanded(
@@ -140,126 +137,120 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           autofocus: false,
                                           preicon: Icon(LineIcons.birthdayCake),
                                           margin:
-                                          EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                              EdgeInsets.fromLTRB(10, 0, 0, 0),
                                           control: userBirthdayController,
                                           text: "Birthday",
-                                          tap: () =>
-                                          {
-                                            FocusScope.of(context)
-                                                .unfocus(),
-                                            showDatePicker(
-                                                context: context,
-                                                initialDate: DateTime.now(),
-                                                firstDate: DateTime(
-                                                    DateTime
-                                                        .now()
-                                                        .year -
-                                                        100,
-                                                    01),
-                                                lastDate: DateTime.now(),
-                                                builder:
-                                                    (BuildContext context,
-                                                    picker) {
-                                                  return Theme(
-                                                    // change colors
-                                                      data: ThemeData.dark()
-                                                          .copyWith(
-                                                        colorScheme:
-                                                        ColorScheme
-                                                            .dark(
-                                                          primary:
-                                                          lightgrey,
-                                                          //highlighter
-                                                          onPrimary:
-                                                          black,
-                                                          //text highlighted
-                                                          surface:
-                                                          mediumblack,
-                                                          onSurface: white,
-                                                        ),
-                                                        dialogBackgroundColor:
-                                                        lightblack,
-                                                      ),
-                                                      child: (picker)!);
-                                                }).then((pickedDate) {
-                                              if (pickedDate != null) {
-                                                String formattedDate =
-                                                DateFormat('yyyy-MM-dd')
-                                                    .format(pickedDate);
-                                                userBirthdayController
-                                                    .text = formattedDate;
-                                              }
-                                            })
-                                          }))
+                                          tap: () => {
+                                                FocusScope.of(context)
+                                                    .unfocus(),
+                                                showDatePicker(
+                                                    context: context,
+                                                    initialDate: DateTime.now(),
+                                                    firstDate: DateTime(
+                                                        DateTime.now().year -
+                                                            100,
+                                                        01),
+                                                    lastDate: DateTime.now(),
+                                                    builder:
+                                                        (BuildContext context,
+                                                            picker) {
+                                                      return Theme(
+                                                          // change colors
+                                                          data: ThemeData.dark()
+                                                              .copyWith(
+                                                            colorScheme:
+                                                                ColorScheme
+                                                                    .dark(
+                                                              primary:
+                                                                  lightgrey, //highlighter
+                                                              onPrimary:
+                                                                  black, //text highlighted
+                                                              surface:
+                                                                  mediumblack,
+                                                              onSurface: white,
+                                                            ),
+                                                            dialogBackgroundColor:
+                                                                lightblack,
+                                                          ),
+                                                          child: (picker)!);
+                                                    }).then((pickedDate) {
+                                                  if (pickedDate != null) {
+                                                    String formattedDate =
+                                                        DateFormat('yyyy-MM-dd')
+                                                            .format(pickedDate);
+                                                    userBirthdayController
+                                                        .text = formattedDate;
+                                                  }
+                                                })
+                                              }))
                                 ]
-                              //====================================================================================rowEnded
-                            ),
+                                //====================================================================================rowEnded
+                                ),
                             Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 //====================================================================================row
                                 children: <Widget>[
                                   Expanded(
                                       child: RoundPasswordField(
-                                        icon: Icon(LineIcons.key),
-                                        margin: EdgeInsets.fromLTRB(
-                                            0, 0, 10, 0),
-                                        text: "Password",
-                                        autofocus: false,
-                                        control: userPasswordController,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _isEditingpassword = true;
-                                          });
-                                        },
-                                        errorText: _isEditingpassword
-                                            ? _validatePassword(
+                                    icon: Icon(LineIcons.key),
+                                    margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                    text: "Password",
+                                    autofocus: false,
+                                    control: userPasswordController,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _isEditingpassword = true;
+                                      });
+                                    },
+                                    errorText: _isEditingpassword
+                                        ? _validatePassword(
                                             userPasswordController.text)
-                                            : " ",
-                                        errorstyle:
+                                        : " ",
+                                    errorstyle:
                                         TextStyle(color: Colors.black54),
-                                      )),
+                                  )),
                                   //====================================================================================row
                                   Expanded(
                                       child: RoundPasswordField(
-                                        autofocus: false,
-                                        icon: Icon(LineIcons.key),
-                                        margin: EdgeInsets.fromLTRB(
-                                            10, 0, 0, 0),
-                                        text: "Confirm Password",
-                                        control: userConfirmPasswordController,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _isEditingpassword = true;
-                                          });
-                                        },
-                                        errorText: _isEditingpassword
-                                            ? _checkRepeatedPassword(
+                                    autofocus: false,
+                                    icon: Icon(LineIcons.key),
+                                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    text: "Confirm Password",
+                                    control: userConfirmPasswordController,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _isEditingpassword = true;
+                                      });
+                                    },
+                                    errorText: _isEditingpassword
+                                        ? _checkRepeatedPassword(
                                             userConfirmPasswordController.text)
-                                            : " ",
-                                        errorstyle:
+                                        : " ",
+                                    errorstyle:
                                         TextStyle(color: Colors.black54),
-                                      ))
+                                  ))
                                 ]),
                             //==================================================
                             //location
                             RoundTextField(
-                              text: (!widget.cityName.toString().contains(
-                                  new RegExp(r'[a-zA-Z]')))
+                              text: (!widget.cityName.toString().contains(new RegExp(r'[a-zA-Z]')))
                                   ? "Location"
                                   : "${widget.cityName.toString()}",
                               autofocus: false,
                               control: userLocationController,
                               preicon: Icon(LineIcons.mapMarker),
                             ),
+
                             /*RoundTextField(
                               text: (!widget.province.toString().contains(
                                   new RegExp(r'[a-zA-Z]')))
+
                                   ? "Province"
                                   : "${widget.province.toString()}",
                               autofocus: false,
                               control: userProvinceController,
-                              preicon: Icon(Icons.location_on_outlined),
+                              preicon: Icon(LineIcons.mapPin),
                             ),
                              */
                             FormField<String>(
@@ -299,6 +290,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             //login button
                             RoundButton(
                               text: "SIGNUP",
+
                               press: () async{
                                 userProvinceController.text=province;
                                 //userLocationController.text=widget.cityName.toString();
@@ -311,7 +303,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     || dropdownvalue==" "
                                     || userPasswordController.text == ""
                                     || userProvinceController.text == " ") {
-                                  showDialog(
+                    showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
@@ -363,8 +355,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       userPasswordController.text)
                                       .then((result) {
                                     if (result != null) {
+
                                       setState(() {
                                         if (userLocationController.text=="") {
+
                                           location = widget.cityName.toString();
                                           FirebaseFirestore.instance
                                               .collection('Users')
@@ -374,9 +368,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               .set({
                                             'bday': userBirthdayController.text,
                                             'email': userEmailController.text,
-                                            'fname': userFirstNameController
-                                                .text,
+                                            'fname': userFirstNameController.text,
                                             'location': widget.cityName,
+
                                             'lname': userLastNameController
                                                 .text,
                                             'province': province
@@ -385,6 +379,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         } else {
                                           location =
                                               userLocationController.text;
+
                                           FirebaseFirestore.instance
                                               .collection('Users')
                                               .doc(uid)
@@ -393,13 +388,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               .set({
                                             'bday': userBirthdayController.text,
                                             'email': userEmailController.text,
+
                                             'fname': userFirstNameController
                                                 .text,
                                             'location': userLocationController.text,
                                             'lname': userLastNameController
                                                 .text,
                                             'province': province
-                                          });
+                             });
                                         }
                                         //loginStatus =
                                         //'You have registered successfully';
@@ -527,19 +523,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             //=============================================
                             // Already registered button => take user to login page
-                         TextLink(
+                            TextLink(
                                 align: Alignment.center,
                                 text: 'Already have an account? Login here.',
-                                press: () =>
-                                {
-                                  Navigator.push(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) =>
-                                              LoginScreen()))
-                                }),
-                          ]))
-              )])));
+                                press: () => {
+                                      Navigator.push(
+                                          context,
+                                          new MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginScreen()))
+                                    })
+                          ])))
+            ])));
   }
 
   @override
@@ -556,6 +551,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     userBirthdayController = TextEditingController();
     userLocationController = TextEditingController();
     userProvinceController = TextEditingController();
+
     super.initState();
   }
 
@@ -593,6 +589,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (userPasswordController.text.isNotEmpty) {
       if (value.isEmpty) {
         return 'Please enter password';
+
       } else {
         if (!value.contains(new RegExp(r'[0-9]'))) {
           return ' Password must contain atleast one digit ';
@@ -606,7 +603,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }
 
         if (!value.contains(new RegExp(r'[A-Z]'))) {
-          return 'Password must contain at least one upper case letter';
+           return 'Password must contain at least one upper case letter';
         }
       }
     }

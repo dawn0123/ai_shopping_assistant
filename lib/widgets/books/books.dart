@@ -1,18 +1,24 @@
+import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/product_model/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+late Stream<QuerySnapshot<Map<String, dynamic>>> books;
+
+getBooks () {
+  books = DatabaseManager().getBooks()!;
+}
+
 class Books extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    getBooks();
     return Container(
       height: 400,
       child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection("Products")
-            .where("category", isEqualTo: "Books")
-            .snapshots(),
+        stream: books,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return SizedBox(
@@ -35,7 +41,8 @@ class Books extends StatelessWidget {
                     snapshot.data!.docs[index].get('name'),
                     snapshot.data!.docs[index].get('description'),
                     snapshot.data!.docs[index].get('price'),
-                    snapshot.data!.docs[index].get('stockamt'));
+                    snapshot.data!.docs[index].get('stockamt'),
+                    snapshot.data!.docs[index].get('category'));
               },
               itemCount: snapshot.data!.docs.length,
             );

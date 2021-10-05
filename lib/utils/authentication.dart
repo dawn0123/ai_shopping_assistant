@@ -13,9 +13,10 @@ late GoogleSignIn googleSignIn = GoogleSignIn();
 
 String? name;
 String? imageUrl;
-
 String? location;
 String? province;
+
+
 
 Future<User?> registerWithEmailPassword(String email, String password) async {
   await Firebase.initializeApp();
@@ -64,6 +65,14 @@ Future<User?> signInWithEmailPassword(String email, String password) async {
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('auth', true);
+
+      await FirebaseFirestore.instance
+          .collection('Users').doc(uid).collection('info').doc(uid).get()
+          .then((DocumentSnapshot ds) => {
+        location = ds.get('location'),
+        province = ds.get('province')
+      });
+
     }
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
@@ -79,26 +88,25 @@ Future<User?> signInWithEmailPassword(String email, String password) async {
 Future<String> signOut() async {
   try {
     await _auth.signOut().then((value) => {
-    if(uid != null)
-      uid = null,
-    if(userEmail != null)
-      userEmail = null,
-    if(name != null)
-      name = null,
-    if(imageUrl != null)
-      imageUrl = null
-  });
+      if(uid != null)
+        uid = null,
+      if(userEmail != null)
+        userEmail = null,
+      if(name != null)
+        name = null,
+      if(imageUrl != null)
+        imageUrl = null
+    });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('auth', false);
-  return 'User signed out';
+    return 'User signed out';
   }
   catch (e) {
     print("Sign out error: $e");
     return 'Error signing out. Try again.';
   }
 }
-
 Future<User?> signInWithGoogle(loc, prov) async {
   // Initialize Firebase
   await Firebase.initializeApp();
@@ -148,12 +156,15 @@ Future<User?> signInWithGoogle(loc, prov) async {
       }
     });
 
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('auth', true);
   }
 
   return user;
 }
+
+
 
 void signOutGoogle() async {
   await googleSignIn.signOut();
