@@ -16,11 +16,10 @@ import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({this.cityName,this.province});
+  RegisterScreen({this.cityName});
   final cityName;
-  final province;
 
-  @override
+
   State<StatefulWidget> createState() {
     return _RegisterScreenState();
   }
@@ -31,13 +30,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 //declare and initial the cfield controllers, the focus and check if user is editing the field.
   late TextEditingController userEmailController;
   bool _isEditingEmail = false;
+  var dropDownItems=[" ","Limpopo" ,"Gauteng" ,"Free State" ,"Western Cape" ,"KwaZulu-Natal" ,"North West" ,"Northern Cape" ,"Eastern Cape" ,"Mpumalanga" ];
 
+
+  @override
   late TextEditingController userPasswordController;
   bool _isEditingpassword = false;
-
+  late String dropdownvalue=" ";
   String cityname = "";
   String loginStatus = "";
-
+  String province=" ";
   late TextEditingController userConfirmPasswordController;
   late TextEditingController userFirstNameController;
   late TextEditingController userLastNameController;
@@ -49,7 +51,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     setState(() {
       cityname = widget.cityName.toString();
-      province = widget.province.toString();
     });
     Size size = MediaQuery.of(context).size;
 
@@ -62,8 +63,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Widget>[
               Expanded(child: SidePanel()),
               Expanded(
-                  child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 60, vertical: 30),
+                      child:Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 60, vertical: 10),
+
                       decoration: BoxDecoration(color: white),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,31 +241,69 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               control: userLocationController,
                               preicon: Icon(LineIcons.mapMarker),
                             ),
-                            RoundTextField(
-                              text: (!widget.province.toString().contains(new RegExp(r'[a-zA-Z]')))
+
+                            /*RoundTextField(
+                              text: (!widget.province.toString().contains(
+                                  new RegExp(r'[a-zA-Z]')))
+
                                   ? "Province"
                                   : "${widget.province.toString()}",
                               autofocus: false,
                               control: userProvinceController,
                               preicon: Icon(LineIcons.mapPin),
                             ),
+                             */
+                            FormField<String>(
+                              builder: (FormFieldState<String> state) {
+                                return InputDecorator(
+                                  decoration: InputDecoration(
+                                      errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                                      hintText: 'Please select province',
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+                                  isEmpty: dropdownvalue == ' ',
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      key: Key('dropdown'),
+                                      value:dropdownvalue,
+                                      isDense: true,
+                                      onChanged: ( newValue) {
+                                        setState(() {
+                                          dropdownvalue = newValue.toString();
+                                          province=dropdownvalue;
+                                          state.didChange(newValue);
+                                        });
+                                      },
+
+                                      items: dropDownItems.map((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
 
                             //=============================================
                             //login button
                             RoundButton(
                               text: "SIGNUP",
-                              press: () async {
-                                userProvinceController.text=widget.province.toString();
-                                userLocationController.text=widget.cityName.toString();
-                                if(userEmailController.text == ""
-                                || userBirthdayController.text == ""
-                                || userConfirmPasswordController.text == ""
-                                || userFirstNameController.text == ""
-                                || userLastNameController.text == ""
-                                || userLocationController.text == ""
-                                || userPasswordController.text == ""
-                                || userProvinceController.text == ""){
-                                  showDialog(
+
+                              press: () async{
+                                userProvinceController.text=province;
+                                //userLocationController.text=widget.cityName.toString();
+                                if (userEmailController.text == ""
+                                    || userBirthdayController.text == ""
+                                    || userConfirmPasswordController.text == ""
+                                    || userFirstNameController.text == ""
+                                    || userLastNameController.text == ""
+                                    //|| userLocationController.text == ""
+                                    || dropdownvalue==" "
+                                    || userPasswordController.text == ""
+                                    || userProvinceController.text == " ") {
+                    showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
@@ -314,10 +355,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       userPasswordController.text)
                                       .then((result) {
                                     if (result != null) {
-                                      setState(() async {
-                                        if (userLocationController.text == "") {
+
+                                      setState(() {
+                                        if (userLocationController.text=="") {
+
                                           location = widget.cityName.toString();
-                                          province = widget.province.toString();
                                           FirebaseFirestore.instance
                                               .collection('Users')
                                               .doc(uid)
@@ -328,12 +370,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             'email': userEmailController.text,
                                             'fname': userFirstNameController.text,
                                             'location': widget.cityName,
-                                            'lname': userLastNameController.text,
-                                            'province': widget.province.toString()
+
+                                            'lname': userLastNameController
+                                                .text,
+                                            'province': province
+
                                           });
                                         } else {
-                                          location = userLocationController.text;
-                                          province = userProvinceController.text;
+                                          location =
+                                              userLocationController.text;
+
                                           FirebaseFirestore.instance
                                               .collection('Users')
                                               .doc(uid)
@@ -342,11 +388,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               .set({
                                             'bday': userBirthdayController.text,
                                             'email': userEmailController.text,
-                                            'fname': userFirstNameController.text,
+
+                                            'fname': userFirstNameController
+                                                .text,
                                             'location': userLocationController.text,
-                                            'lname': userLastNameController.text,
-                                            'province': userProvinceController.text
-                                          });
+                                            'lname': userLastNameController
+                                                .text,
+                                            'province': province
+                             });
                                         }
                                         //loginStatus =
                                         //'You have registered successfully';
@@ -470,7 +519,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             //Google sign in button
                             GoogleRoundButton(
                                 location: widget.cityName.toString(),
-                                province: widget.province.toString()
+                                province: province
                             ),
                             //=============================================
                             // Already registered button => take user to login page

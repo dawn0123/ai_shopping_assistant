@@ -30,12 +30,15 @@ void main() {
 
   final input_fields = find.byType(RoundTextField);
   final pass_fields = find.byType(RoundPasswordField);
+  //final dropdown=find.byType(DropdownButton);
 
   final emailField = find.widgetWithText(RoundTextField, "Email");
   final passwordField = find.widgetWithText(RoundPasswordField, "Password");
   final confirmPassField = find.widgetWithText(RoundPasswordField, "Confirm Password");
   final locationField = find.byIcon(LineIcons.mapMarker);
-  final provinceField = find.byIcon(LineIcons.mapPin);
+
+  //final provinceField = find.byKey(Key('dropdown'));
+
   final birthdayField = find.widgetWithText(RoundTextField, "Birthday");
   final nameField = find.widgetWithText(RoundTextField, "First Name");
   final surnameField = find.widgetWithText(RoundTextField, "Last Name");
@@ -44,13 +47,14 @@ void main() {
   testWidgets('Enabled widgets', (WidgetTester tester) async {
     await tester.pumpWidget(testWidget);
 
-    expect(input_fields, findsNWidgets(6));
+    expect(input_fields, findsNWidgets(5));
     expect(pass_fields, findsNWidgets(2));
+    //expect(dropdown,findsNWidgets(1));
 
     expect(find.byType(PageTitle), findsOneWidget);
     expect(confirmPassField, findsOneWidget);
     expect(locationField, findsOneWidget);
-    expect(provinceField, findsOneWidget);
+   // expect(provinceField, findsOneWidget);
     expect(birthdayField, findsOneWidget);
     expect(nameField, findsOneWidget);
     expect(surnameField, findsOneWidget);
@@ -89,6 +93,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(LoginScreen),findsOneWidget);
 */
+
     print('======================');
     print('');
   });

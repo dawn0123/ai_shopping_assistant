@@ -120,7 +120,7 @@ class _Recommendations extends State<Recommendations> {
                                 }
 
                                 if (recommendations.length != 0) {
-                                  //recommendations..shuffle();
+                                  recommendations.shuffle();
                                   for (var i = 0; i < recommendations.length; i++) {
                                     return GridView.builder(
                                       scrollDirection: Axis.horizontal,

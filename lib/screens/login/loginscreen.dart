@@ -329,16 +329,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                 text: "Not Registered?",
                                 align: Alignment.center,
                                 press: () => {
-                                      print(cityname),
-                                      Navigator.push(
-                                          context,
-                                          new MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RegisterScreen(
-                                                    cityName:
-                                                        cityname.toString(),
-                                                  ))),
-                                    })
+                                  print(cityname),
+                                  Timer(Duration(seconds: 2), () {
+                                    Navigator.push(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegisterScreen(
+                                                  cityName:
+                                                  cityname.toString(),
+                                                  /*longitude: longitude,
+                                                  latitude: latitude,*/
+                                                )));})
+                                })
+
+
                             //=====================================================
                           ])))
             ])));
