@@ -1,4 +1,3 @@
-import 'package:aishop/screens/login/loginscreen.dart';
 import 'package:aishop/screens/signup/registerscreen.dart';
 import 'package:aishop/styles/google_round_button.dart';
 import 'package:aishop/styles/or_divider.dart';
@@ -7,11 +6,23 @@ import 'package:aishop/styles/round_passwordfield.dart';
 import 'package:aishop/styles/round_textfield.dart';
 import 'package:aishop/styles/textlink.dart';
 import 'package:aishop/styles/title.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart' show AlertDialog, MaterialApp, MediaQuery, MediaQueryData, Widget;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:line_icons/line_icons.dart';
 
+import '../../Mocks/mock.dart';
+
 void main() {
+
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setupFirebaseAuthMocks();
+
+  setUpAll(() async {
+    await Firebase.initializeApp();
+  });
+
   Widget testWidget = new MediaQuery(
       data: new MediaQueryData(),
       child: new MaterialApp(home: new RegisterScreen())
@@ -24,7 +35,7 @@ void main() {
   final passwordField = find.widgetWithText(RoundPasswordField, "Password");
   final confirmPassField = find.widgetWithText(RoundPasswordField, "Confirm Password");
   final locationField = find.byIcon(LineIcons.mapMarker);
-  final provinceField = find.byIcon(Icons.location_on_outlined);
+  final provinceField = find.byIcon(LineIcons.mapPin);
   final birthdayField = find.widgetWithText(RoundTextField, "Birthday");
   final nameField = find.widgetWithText(RoundTextField, "First Name");
   final surnameField = find.widgetWithText(RoundTextField, "Last Name");

@@ -7,10 +7,23 @@ import 'package:aishop/styles/round_passwordfield.dart';
 import 'package:aishop/styles/round_textfield.dart';
 import 'package:aishop/styles/textlink.dart';
 import 'package:aishop/styles/title.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart' show MediaQuery, MediaQueryData, Widget;
 import 'package:flutter_test/flutter_test.dart';
 
-void main() {
+import '../../Mocks/mock.dart';
+
+main() async {
+
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setupFirebaseAuthMocks();
+
+  setUpAll(() async {
+    await Firebase.initializeApp();
+  });
+
   Widget testWidget = new MediaQuery(
       data: new MediaQueryData(),
       child: new MaterialApp(home: new LoginScreen())
