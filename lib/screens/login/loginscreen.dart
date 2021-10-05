@@ -349,7 +349,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 RegisterScreen(
                                                   cityName:
                                                   cityname.toString(),
-                                                  province:Province.toString(),
                                                   /*longitude: longitude,
                                                   latitude: latitude,*/
                                                 )));})
