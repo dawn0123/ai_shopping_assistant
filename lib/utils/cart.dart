@@ -18,6 +18,7 @@ class Cart  {
       'url': imgUrl,
       'name': name,
       'description': description,
+      'category': category,
       'price': price,
       'quantity': 1,
       'stockamt': stockamt,

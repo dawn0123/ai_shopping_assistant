@@ -70,7 +70,7 @@ class _ProductCard extends State<ProductCard> {
                       widget.category);
                   //on tap modal pop up
                   Modal(context, widget.id, widget.imgUrl, widget.name,
-                      widget.description, widget.price, widget.stockamt, widget.category);
+                      widget.description, widget.price.toString(), widget.stockamt, widget.category);
                   //DataService().increment(widget.name);
                   DatabaseManager().increment(widget.name);
                   DataCollection(widget.name, widget.id, widget.price, "view", widget.category).DataCollector();
