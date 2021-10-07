@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/login/loginscreen.dart';
 import 'package:aishop/services/databasemanager.dart';
@@ -21,10 +23,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: MyCustomScrollBehavior(),
       home: auto == false ? LoginScreen() : HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
+
+
 
 //check if user is already logged in in the previous session.
   //get user info if logged in.
@@ -51,4 +56,14 @@ class _MyAppState extends State<MyApp> {
     getUserInfo();
     super.initState();
   }
+}
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    // etc.
+  };
 }
