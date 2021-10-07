@@ -10,70 +10,11 @@ import 'package:aishop/screens/wishlist/wislistscreen.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/utils/authentication.dart';
 import 'package:aishop/utils/prod_num_badges.dart';
+import 'package:aishop/widgets/appbar/choice_action.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 BuildContext contxt = "" as BuildContext;
-
-void choiceAction(String choice) {
-  if (choice == Constants.profile) {
-    Navigator.push(
-        contxt, new MaterialPageRoute(builder: (context) => EditProfilePage()));
-  } else if (choice == Constants.settings) {
-    Navigator.push(
-        contxt, new MaterialPageRoute(builder: (context) => SettingsPage()));
-  } else if (choice == Constants.orders) {
-    Navigator.push(
-        contxt, new MaterialPageRoute(builder: (context) => PastPurchase()));
-  } else if (choice == Constants.invoices) {
-    Navigator.push(
-        contxt, new MaterialPageRoute(builder: (context) => InvoicesPage()));
-  } else if (choice == Constants.signout) {
-    signOut().then((response) => {
-          if (response == "User signed out")
-            {
-              showDialog(
-                context: contxt,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: new Text("Success!"),
-                    content: new Text(response),
-                    actions: <Widget>[
-                      ElevatedButton(
-                        child: new Text("OK"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  LoginScreen()));
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
-            }
-          else
-            showDialog(
-              context: contxt,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: new Text("Error!!"),
-                  content: new Text(response),
-                  actions: <Widget>[
-                    ElevatedButton(
-                      child: new Text("OK"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            )
-        });
-  }
-}
 
 class MyAppBar extends AppBar {
   MyAppBar({Key? key, Widget? title, required BuildContext context})
