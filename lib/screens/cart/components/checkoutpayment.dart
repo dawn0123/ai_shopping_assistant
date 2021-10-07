@@ -4,6 +4,7 @@ import 'package:aishop/screens/delivery/checkoutdelivery.dart';
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/past_purchases/pastpurchase.dart';
 import 'package:aishop/services/historytracker.dart';
+import 'package:aishop/services/orders.dart';
 import 'package:aishop/styles/textlink.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/appbar/appbar.dart';
@@ -234,14 +235,14 @@ class CheckOutPayment extends StatelessWidget {
                                         context: context,
                                         builder: (BuildContext context) =>
                                             AlertDialog(
-                                            title: const Text('Purchase'),
-                                            content: const Text(
+                                          title: const Text('Purchase'),
+                                          content: const Text(
                                               'Your purchase was  succesful ',
                                               style: TextStyle(
                                                   color: Colors.black54)),
-                                            actions: <Widget>[
-                                              ElevatedButton(
-                                                child: Text('OK',
+                                          actions: <Widget>[
+                                            ElevatedButton(
+                                              child: Text('OK',
                                                   style: TextStyle(
                                                       color: Colors.black)),
                                               style: ElevatedButton.styleFrom(
@@ -249,6 +250,7 @@ class CheckOutPayment extends StatelessWidget {
                                               ),
                                               onPressed: () {
                                                 addToPurchases();
+                                                addToOrders();
                                                 Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                         builder: (BuildContext
