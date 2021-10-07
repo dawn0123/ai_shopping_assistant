@@ -376,6 +376,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             'province': province
 
                                           });
+                                          FirebaseFirestore.instance
+                                              .collection('users')
+                                              .doc(uid)
+                                              .set({
+                                            'uid': uid,
+                                            'bday': userBirthdayController.text,
+                                            'email': userEmailController.text,
+                                            'fname':
+                                                userFirstNameController.text,
+                                            'location': widget.cityName,
+                                            'lname':
+                                                userLastNameController.text,
+                                            'province': province,
+                                          });
                                         } else {
                                           location =
                                               userLocationController.text;
