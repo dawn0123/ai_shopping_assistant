@@ -19,7 +19,6 @@ class RegisterScreen extends StatefulWidget {
   RegisterScreen({this.cityName});
   final cityName;
 
-
   State<StatefulWidget> createState() {
     return _RegisterScreenState();
   }
@@ -30,16 +29,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
 //declare and initial the cfield controllers, the focus and check if user is editing the field.
   late TextEditingController userEmailController;
   bool _isEditingEmail = false;
-  var dropDownItems=[" ","Limpopo" ,"Gauteng" ,"Free State" ,"Western Cape" ,"KwaZulu-Natal" ,"North West" ,"Northern Cape" ,"Eastern Cape" ,"Mpumalanga" ];
-
+  var dropDownItems = [
+    " ",
+    "Limpopo",
+    "Gauteng",
+    "Free State",
+    "Western Cape",
+    "KwaZulu-Natal",
+    "North West",
+    "Northern Cape",
+    "Eastern Cape",
+    "Mpumalanga"
+  ];
 
   @override
   late TextEditingController userPasswordController;
   bool _isEditingpassword = false;
-  late String dropdownvalue=" ";
+  late String dropdownvalue = " ";
   String cityname = "";
   String loginStatus = "";
-  String province=" ";
+  String province = " ";
   late TextEditingController userConfirmPasswordController;
   late TextEditingController userFirstNameController;
   late TextEditingController userLastNameController;
@@ -63,10 +72,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Widget>[
               Expanded(child: SidePanel()),
               Expanded(
-                      child:Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 60, vertical: 10),
-
+                  child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 60, vertical: 10),
                       decoration: BoxDecoration(color: white),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -234,7 +242,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             //==================================================
                             //location
                             RoundTextField(
-                              text: (!widget.cityName.toString().contains(new RegExp(r'[a-zA-Z]')))
+                              text: (!widget.cityName
+                                      .toString()
+                                      .contains(new RegExp(r'[a-zA-Z]')))
                                   ? "Location"
                                   : "${widget.cityName.toString()}",
                               autofocus: false,
@@ -257,23 +267,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               builder: (FormFieldState<String> state) {
                                 return InputDecorator(
                                   decoration: InputDecoration(
-                                      errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                                      errorStyle: TextStyle(
+                                          color: Colors.redAccent,
+                                          fontSize: 16.0),
                                       hintText: 'Please select province',
-                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0))),
                                   isEmpty: dropdownvalue == ' ',
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton<String>(
                                       key: Key('dropdown'),
-                                      value:dropdownvalue,
+                                      value: dropdownvalue,
                                       isDense: true,
-                                      onChanged: ( newValue) {
+                                      onChanged: (newValue) {
                                         setState(() {
                                           dropdownvalue = newValue.toString();
-                                          province=dropdownvalue;
+                                          province = dropdownvalue;
                                           state.didChange(newValue);
                                         });
                                       },
-
                                       items: dropDownItems.map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
@@ -290,20 +303,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             //login button
                             RoundButton(
                               text: "SIGNUP",
-
-                              press: () async{
-                                userProvinceController.text=province;
+                              press: () async {
+                                userProvinceController.text = province;
                                 //userLocationController.text=widget.cityName.toString();
-                                if (userEmailController.text == ""
-                                    || userBirthdayController.text == ""
-                                    || userConfirmPasswordController.text == ""
-                                    || userFirstNameController.text == ""
-                                    || userLastNameController.text == ""
+                                if (userEmailController.text == "" ||
+                                    userBirthdayController.text == "" ||
+                                    userConfirmPasswordController.text == "" ||
+                                    userFirstNameController.text == "" ||
+                                    userLastNameController.text == ""
                                     //|| userLocationController.text == ""
-                                    || dropdownvalue==" "
-                                    || userPasswordController.text == ""
-                                    || userProvinceController.text == " ") {
-                    showDialog(
+                                    ||
+                                    dropdownvalue == " " ||
+                                    userPasswordController.text == "" ||
+                                    userProvinceController.text == " ") {
+                                  showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
@@ -311,15 +324,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(32.0))),
                                           contentPadding:
-                                          EdgeInsets.only(top: 10.0),
+                                              EdgeInsets.only(top: 10.0),
                                           content: Container(
                                             width: 370.0,
                                             // height: 30,
                                             child: Column(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                                  MainAxisAlignment.start,
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
+                                                  CrossAxisAlignment.stretch,
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 SizedBox(
@@ -327,8 +340,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 ),
                                                 Text(
                                                   "Please fill in all the fields.",
-                                                  style: TextStyle(
-                                                      fontSize: 24.0),
+                                                  style:
+                                                      TextStyle(fontSize: 24.0),
                                                 ),
                                                 SizedBox(
                                                   height: 15,
@@ -336,11 +349,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 TextButton(
                                                   child: Text('OK',
                                                       style: TextStyle(
-                                                          color:
-                                                          Colors.black)),
+                                                          color: Colors.black)),
                                                   onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pop();
+                                                    Navigator.of(context).pop();
                                                   },
                                                 ),
                                               ],
@@ -348,17 +359,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           ),
                                         );
                                       });
-                                }
-                                else {
+                                } else {
                                   await registerWithEmailPassword(
-                                      userEmailController.text,
-                                      userPasswordController.text)
+                                          userEmailController.text,
+                                          userPasswordController.text)
                                       .then((result) {
                                     if (result != null) {
-
                                       setState(() {
-                                        if (userLocationController.text=="") {
-
+                                        if (userLocationController.text == "") {
                                           location = widget.cityName.toString();
                                           FirebaseFirestore.instance
                                               .collection('Users')
@@ -368,13 +376,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               .set({
                                             'bday': userBirthdayController.text,
                                             'email': userEmailController.text,
-                                            'fname': userFirstNameController.text,
+                                            'fname':
+                                                userFirstNameController.text,
                                             'location': widget.cityName,
-
-                                            'lname': userLastNameController
-                                                .text,
+                                            'lname':
+                                                userLastNameController.text,
                                             'province': province
-
                                           });
                                           FirebaseFirestore.instance
                                               .collection('users')
@@ -402,14 +409,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               .set({
                                             'bday': userBirthdayController.text,
                                             'email': userEmailController.text,
-
-                                            'fname': userFirstNameController
-                                                .text,
-                                            'location': userLocationController.text,
-                                            'lname': userLastNameController
-                                                .text,
+                                            'fname':
+                                                userFirstNameController.text,
+                                            'location':
+                                                userLocationController.text,
+                                            'lname':
+                                                userLastNameController.text,
                                             'province': province
-                             });
+                                          });
+                                          FirebaseFirestore.instance
+                                              .collection('users')
+                                              .doc(uid)
+                                              .set({
+                                            'uid': uid,
+                                            'bday': userBirthdayController.text,
+                                            'email': userEmailController.text,
+                                            'fname':
+                                                userFirstNameController.text,
+                                            'location': widget.cityName,
+                                            'lname':
+                                                userLastNameController.text,
+                                            'province': province,
+                                          });
                                         }
                                         //loginStatus =
                                         //'You have registered successfully';
@@ -429,9 +450,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                         userLastNameController
                                                             .text)));*/
                                         print('before pushing to homepage');
-                                        Navigator.push(context,
-                                            new MaterialPageRoute(builder:
-                                                (context) => HomePage()));
+                                        Navigator.push(
+                                            context,
+                                            new MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePage()));
                                       });
                                     } else {
                                       showDialog(
@@ -439,31 +462,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           builder: (BuildContext context) {
                                             return AlertDialog(
                                               shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius
-                                                      .all(
-                                                      Radius.circular(32.0))),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              32.0))),
                                               contentPadding:
-                                              EdgeInsets.only(top: 10.0),
+                                                  EdgeInsets.only(top: 10.0),
                                               content: Container(
                                                 width: 370.0,
                                                 // height: 30,
                                                 child: Column(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                                      MainAxisAlignment.start,
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment.stretch,
-                                                  mainAxisSize: MainAxisSize
-                                                      .min,
+                                                      CrossAxisAlignment
+                                                          .stretch,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: <Widget>[
                                                     SizedBox(
                                                       height: 3,
                                                     ),
                                                     Row(
                                                       mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
                                                       mainAxisSize:
-                                                      MainAxisSize.min,
+                                                          MainAxisSize.min,
                                                       children: <Widget>[
                                                         Text(
                                                           "Error has occured !",
@@ -477,17 +502,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                     ),
                                                     Row(
                                                       mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
                                                       mainAxisSize:
-                                                      MainAxisSize.min,
+                                                          MainAxisSize.min,
                                                       children: <Widget>[
                                                         Text(
                                                           "This account already exist/There's something wrong",
                                                           style: TextStyle(
                                                               fontSize: 15.0,
-                                                              color: Colors
-                                                                  .red),
+                                                              color:
+                                                                  Colors.red),
                                                         ),
                                                       ],
                                                     ),
@@ -497,8 +522,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                     TextButton(
                                                       child: Text('OK',
                                                           style: TextStyle(
-                                                              color:
-                                                              Colors.black)),
+                                                              color: Colors
+                                                                  .black)),
                                                       onPressed: () {
                                                         Navigator.of(context)
                                                             .pop();
@@ -514,7 +539,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     print('Sign in Error: $error');
                                     setState(() {
                                       loginStatus =
-                                      'Error occured while Signing in';
+                                          'Error occured while Signing in';
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(
@@ -533,8 +558,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             //Google sign in button
                             GoogleRoundButton(
                                 location: widget.cityName.toString(),
-                                province: province
-                            ),
+                                province: province),
                             //=============================================
                             // Already registered button => take user to login page
                             TextLink(
@@ -603,7 +627,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (userPasswordController.text.isNotEmpty) {
       if (value.isEmpty) {
         return 'Please enter password';
-
       } else {
         if (!value.contains(new RegExp(r'[0-9]'))) {
           return ' Password must contain atleast one digit ';
@@ -617,7 +640,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }
 
         if (!value.contains(new RegExp(r'[A-Z]'))) {
-           return 'Password must contain at least one upper case letter';
+          return 'Password must contain at least one upper case letter';
         }
       }
     }
