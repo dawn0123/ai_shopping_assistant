@@ -85,7 +85,7 @@ app that will feed the customers eyes what they are most interested. It recommen
   * The user can navigate to their settings by clicking on the settings icon.
   * The user can sign out from the web app by clicking on the signout button.
 
-### FUTURE SCOPE
+## FUTURE SCOPE
 
   * Make the settings's page work.
   * Make the App more secure.
