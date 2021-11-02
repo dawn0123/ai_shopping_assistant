@@ -19,8 +19,8 @@ app that will feed the customers eyes what they are most interested. It recommen
 ## DOCUMENTATION
 [Documentation](https://docs.google.com/document/d/1fOcOD5PfAJeSOr_vy4FCrDGsdkLrttcEqX3IggBki58/edit?usp=sharing)
 
-### Project Wiki
-[Github wiki](https://github.com/mmasehume/AI-Shopping-System-v2/wiki)
+### Project Wiki's
+[Github wiki](https://github.com/mmasehume/AI-Shopping-System-v2/wiki) \
 [Tiaga wiki](https://tree.taiga.io/project/waffles-ai-shopping-system-v2/wiki/home)
 
 # FEATURES
