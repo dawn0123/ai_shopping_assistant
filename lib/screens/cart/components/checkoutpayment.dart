@@ -1,9 +1,12 @@
 // ignore: must_be_immutable
+import 'package:aishop/navigation/locator.dart';
+import 'package:aishop/navigation/routing/route_names.dart';
 import 'package:aishop/screens/cart/components/order_review.dart';
 import 'package:aishop/screens/delivery/checkoutdelivery.dart';
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/past_purchases/pastpurchase.dart';
 import 'package:aishop/services/historytracker.dart';
+import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/services/orders.dart';
 import 'package:aishop/styles/textlink.dart';
 import 'package:aishop/styles/theme.dart';
@@ -63,9 +66,11 @@ class CheckOutPayment extends StatelessWidget {
                                 text: 'Past Transactions',
                                 align: Alignment.center,
                                 press: () => {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          PastPurchase()))
+                                  locator<NavigationService>()
+                                        .globalNavigateTo(PastPurchasesRoute, context)
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (BuildContext context) =>
+                                  //         PastPurchase()))
                                 },
                               ),
                             ),
@@ -251,11 +256,13 @@ class CheckOutPayment extends StatelessWidget {
                                               onPressed: () {
                                                 addToPurchases();
                                                 addToOrders();
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            HomePage()));
+                                                locator<NavigationService>()
+                                        .globalNavigateTo(HomeRoute, context);
+                                                // Navigator.of(context).push(
+                                                //     MaterialPageRoute(
+                                                //         builder: (BuildContext
+                                                //                 context) =>
+                                                //             HomePage()));
                                               },
                                             ),
                                             TextButton(
