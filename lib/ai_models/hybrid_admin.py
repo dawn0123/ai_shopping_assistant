@@ -32,7 +32,7 @@ num_R = 3
 
 def readData():
     df = pd.read_csv ('data1.csv')
-    df = df.drop(['Product_Name', 'Product_Category', 'User_Location', 'User_Province', 'Cost', 'Date', 'recommend_product', 'recommend_category'], axis=1)
+    df = df.drop(['Product_Name', 'Product_Category', 'User_Location', 'User_Province', 'Cost', 'Date'], axis=1)
     df.User_ID = df.User_ID.replace(np.nan, '?')
     df['Event'] = df['Event'].replace(['view', 'wishlist', 'cart'],[1, 3, 5])
     df.rename(columns={'Product_Id':'items', 'User_ID':'users', 'Event':'rating'}, inplace=True)
@@ -240,25 +240,24 @@ def getRecommendations(unrated_products, s, hybrid):
         t = []
         t.append(unrated_products[item])
         for a in hybrid.iloc[item]:
-            t.append(a/s[0][item])
+            t.append(a/(s[0][item]))
         reliability.append(t)
     
     reliability = pd.DataFrame(reliability).set_index(0)
-
     return reliability.idxmax(axis=1)
 
 
 # In[18]:
 
 
-def getAccuracy(test, recommend):
+def getAccuracy(test, recommend, test_RecProduct):
     count_correct = 0
     for p in range(len(test)):
         for prod in range(len(recommend)):
             if recommend.index[prod] == test.index[p]:
-                if(recommend[prod] == test['rating'][p]):
-                    count_correct = count_correct + 1
-    accuracy = (count_correct + (recommend.size - test.size))/recommend.size    
+                if(test_RecProduct.index[p] == 'yes' or recommend[prod] == test['rating'][p]):
+                    count_correct = count_correct + num_R + 1
+    accuracy = (count_correct +(recommend.size - test.size)*((num_R-1)/num_R))/recommend.size
     return accuracy
 
 
@@ -268,9 +267,9 @@ def getAccuracy(test, recommend):
 def writeTo_txt(accuracy):
     accuracy = accuracy*100
     
-    file1 = open("Accuracy.txt","w")
+    file1 = open("Accuracy.txt","a")
 
-    file1.writelines(accuracy.astype(str)+"\n")
+    file1.write(accuracy.astype(str)+"\n")
 
     file1.close()
 
@@ -283,9 +282,9 @@ def start(user_id):
     df = readData()
     
     #Split data into training and testing
-    train = df.sample(frac=0.7,random_state=1)
+    train = df.sample(frac=0.7)
     test = df.drop(train.index)
-
+    
     user_in_training = True
 
     if (train[train['users'] == user_id].count()['users'] == 0):
@@ -294,6 +293,12 @@ def start(user_id):
     if user_in_training == False:
         train = train.append(test.loc[test['users'] == user_id], ignore_index=True)
         test = test.drop(test.loc[test['users'] == user_id].index)
+    
+    test_RecProduct = test['recommend_product']
+    test_RecCategory = test['recommend_category']
+    
+    test = test.drop(['recommend_product', 'recommend_category'], axis = 1)
+    train = train.drop(['recommend_product', 'recommend_category'], axis = 1)
     
     #generate ratings matrix
     rating_matrix = train.pivot_table(columns='items', index='users', values='rating').fillna('*')
@@ -328,7 +333,7 @@ def start(user_id):
 
     recommend = getRecommendations(unrated_products, s, hybrid)
 
-    return getAccuracy(test, recommend)
+    return getAccuracy(test, recommend, test_RecProduct)
 
 
 # In[21]:
@@ -356,6 +361,18 @@ def main():
 if __name__ == "__main__":
     print("working...")
     main()
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
