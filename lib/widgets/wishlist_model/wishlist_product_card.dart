@@ -24,7 +24,7 @@ class wishlistModel extends StatefulWidget {
       this.cartid,
       this.prodquantity,
       required this.stockamt,
-        this.category});
+      this.category});
 
   @override
   _WishlistModel createState() => _WishlistModel();

@@ -1,5 +1,8 @@
+import 'package:aishop/navigation/locator.dart';
+import 'package:aishop/navigation/routing/route_names.dart';
 import 'package:aishop/screens/cart/checkout_page.dart';
 import 'package:aishop/screens/settings/settings.dart';
+import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/styles/icon_button.dart';
 import 'package:aishop/styles/round_button.dart';
 import 'package:aishop/styles/round_textfield.dart';
@@ -135,19 +138,23 @@ class _EditProfilePage extends State<EditProfilePage> {
                             icon: Icons.shopping_cart,
                             press: () => {
                               Navigator.pop(context),
-                              Navigator.push(
-                                  context,
-                                  new MaterialPageRoute(
-                                      builder: (context) => CheckOutPage()))
+                              locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutRoute, context)
+                              // Navigator.push(
+                              //     context,
+                              //     new MaterialPageRoute(
+                              //         builder: (context) => CheckOutPage()))
                             }),
                         CustomIconButton(
                             icon: Icons.settings,
                             press: () => {
                               Navigator.pop(context),
-                              Navigator.push(
-                                  context,
-                                  new MaterialPageRoute(
-                                      builder: (context) => SettingsPage()))
+                              locator<NavigationService>()
+                                        .globalNavigateTo(SettingsRoute, context)
+                              // Navigator.push(
+                              //     context,
+                              //     new MaterialPageRoute(
+                              //         builder: (context) => SettingsPage()))
                             }),
                       ],
                     ),
@@ -199,7 +206,7 @@ class _EditProfilePage extends State<EditProfilePage> {
                           ),
                           Padding(
                               padding: const EdgeInsets.symmetric(vertical: 2.0),
-                              child: RaisedButton(
+                              child: ElevatedButton(
                                 onPressed: () => updateProfileData(),
                                 child: Text(
                                   "Edit Profile Picture",

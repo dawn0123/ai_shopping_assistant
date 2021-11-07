@@ -1,14 +1,8 @@
 import 'package:aishop/addons/popop_menu_consts.dart';
 import 'package:aishop/icons/icons.dart';
 import 'package:aishop/screens/cart/checkout_page.dart';
-import 'package:aishop/screens/invoices/invoices.dart';
-import 'package:aishop/screens/login/loginscreen.dart';
-import 'package:aishop/screens/past_purchases/pastpurchase.dart';
-import 'package:aishop/screens/profile_page/edit_profile.dart';
-import 'package:aishop/screens/settings/settings.dart';
 import 'package:aishop/screens/wishlist/wislistscreen.dart';
 import 'package:aishop/styles/theme.dart';
-import 'package:aishop/utils/authentication.dart';
 import 'package:aishop/utils/prod_num_badges.dart';
 import 'package:aishop/widgets/appbar/choice_action.dart';
 import 'package:badges/badges.dart';

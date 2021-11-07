@@ -1,5 +1,7 @@
 import 'package:aishop/addons/popop_menu_consts.dart';
 import 'package:aishop/icons/icons.dart';
+import 'package:aishop/navigation/locator.dart';
+import 'package:aishop/navigation/routing/route_names.dart';
 import 'package:aishop/screens/cart/checkout_page.dart';
 import 'package:aishop/screens/cart/components/order_review.dart';
 import 'package:aishop/screens/invoices/invoices.dart';
@@ -9,6 +11,7 @@ import 'package:aishop/screens/profile_page/edit_profile.dart';
 import 'package:aishop/screens/search/search.dart';
 import 'package:aishop/screens/settings/settings.dart';
 import 'package:aishop/screens/wishlist/wislistscreen.dart';
+import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/utils/authentication.dart';
 import 'package:aishop/utils/prod_num_badges.dart';
@@ -35,17 +38,25 @@ class _HomePageState extends State<HomePage> {
     updateCartTotal();
     void choiceAction(String choice) {
       if (choice == Constants.profile) {
-        Navigator.push(context,
-            new MaterialPageRoute(builder: (context) => EditProfilePage()));
+        locator<NavigationService>()
+                                        .globalNavigateTo(ProfileRoute, context);
+        // Navigator.push(context,
+        //     new MaterialPageRoute(builder: (context) => EditProfilePage()));
       } else if (choice == Constants.settings) {
-        Navigator.push(context,
-            new MaterialPageRoute(builder: (context) => SettingsPage()));
+        locator<NavigationService>()
+                                        .globalNavigateTo(SettingsRoute, context);
+        // Navigator.push(context,
+        //     new MaterialPageRoute(builder: (context) => SettingsPage()));
       } else if (choice == Constants.orders) {
-        Navigator.push(context,
-            new MaterialPageRoute(builder: (context) => PastPurchase()));
+        locator<NavigationService>()
+                                        .globalNavigateTo(PastPurchasesRoute, context);
+        // Navigator.push(context,
+        //     new MaterialPageRoute(builder: (context) => PastPurchase()));
       } else if (choice == Constants.invoices) {
-        Navigator.push(context,
-            new MaterialPageRoute(builder: (context) => InvoicesPage()));
+        locator<NavigationService>()
+                                        .globalNavigateTo(InvoicesRoute, context);
+        // Navigator.push(context,
+        //     new MaterialPageRoute(builder: (context) => InvoicesPage()));
       } else if (choice == Constants.signout) {
         signOut().then((response) => {
               if (response == "User signed out")
@@ -61,9 +72,11 @@ class _HomePageState extends State<HomePage> {
                             child: new Text("OK"),
                             onPressed: () {
                               Navigator.of(context).pop();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      LoginScreen()));
+                              locator<NavigationService>()
+                                        .globalNavigateTo(LoginRoute, context);
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (BuildContext context) =>
+                              //         LoginScreen()));
                             },
                           ),
                         ],
@@ -131,8 +144,10 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       setState(() {
                         this.isSearching = true;
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => Search()));
+                        locator<NavigationService>()
+                                        .globalNavigateTo(SearchRoute, context);
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (BuildContext context) => Search()));
                       });
                     },
                   ),
@@ -152,8 +167,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => WishlistPage()));
+                    locator<NavigationService>()
+                                        .globalNavigateTo(WishlistRoute, context);
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (BuildContext context) => WishlistPage()));
                   },
                 ),
                 Padding(
@@ -170,10 +187,12 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (context) => CheckOutPage()));
+                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutRoute, context);
+                        // Navigator.push(
+                        //     context,
+                        //     new MaterialPageRoute(
+                        //         builder: (context) => CheckOutPage()));
                       },
                     )),
                 Padding(
