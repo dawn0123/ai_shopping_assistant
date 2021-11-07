@@ -1,7 +1,10 @@
+import 'package:aishop/navigation/locator.dart';
+import 'package:aishop/navigation/routing/route_names.dart';
 import 'package:aishop/screens/address/newaddress.dart';
 import 'package:aishop/screens/cart/components/order_review.dart';
 import 'package:aishop/screens/delivery/checkoutdelivery.dart';
 import 'package:aishop/screens/homepage/homepage.dart';
+import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/styles/round_textfield.dart';
 import 'package:aishop/styles/textlink.dart';
 import 'package:aishop/styles/theme.dart';
@@ -121,11 +124,13 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                   DialogButton(
                                                     onPressed: () {
                                                       if (!(cartTotal == 0)) {
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    CheckOutDelivery()));
+                                                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutDeliveryRoute, context);
+                                                        // Navigator.of(context).push(
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (BuildContext
+                                                        //                 context) =>
+                                                        //             CheckOutDelivery()));
                                                       } else {
                                                         showDialog<String>(
                                                           context: context,
@@ -209,11 +214,13 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                                         color: Colors
                                                                             .black)),
                                                                 onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .push(MaterialPageRoute(
-                                                                          builder: (BuildContext context) =>
-                                                                              HomePage()));
+                                                                  locator<NavigationService>()
+                                        .globalNavigateTo(HomeRoute, context);
+                                                                  // Navigator.of(
+                                                                  //         context)
+                                                                  //     .push(MaterialPageRoute(
+                                                                  //         builder: (BuildContext context) =>
+                                                                  //             HomePage()));
                                                                 },
                                                               ),
                                                               TextButton(
@@ -297,11 +304,13 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                   DialogButton(
                                                     onPressed: () {
                                                       if (!(cartTotal == 0)) {
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    CheckOutDelivery()));
+                                                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutDeliveryRoute, context);
+                                                        // Navigator.of(context).push(
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (BuildContext
+                                                        //                 context) =>
+                                                        //             CheckOutDelivery()));
                                                       } else {
                                                         showDialog<String>(
                                                           context: context,
@@ -323,11 +332,13 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                                         color: Colors
                                                                             .black)),
                                                                 onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .push(MaterialPageRoute(
-                                                                          builder: (BuildContext context) =>
-                                                                              HomePage()));
+                                                                  locator<NavigationService>()
+                                        .globalNavigateTo(HomeRoute, context);
+                                                                  // Navigator.of(
+                                                                  //         context)
+                                                                  //     .push(MaterialPageRoute(
+                                                                  //         builder: (BuildContext context) =>
+                                                                  //             HomePage()));
                                                                 },
                                                               ),
                                                               TextButton(
@@ -359,11 +370,13 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                   DialogButton(
                                                     onPressed: () {
                                                       if (!(cartTotal == 0)) {
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    CheckOutDelivery()));
+                                                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutDeliveryRoute, context);
+                                                        // Navigator.of(context).push(
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (BuildContext
+                                                        //                 context) =>
+                                                        //             CheckOutDelivery()));
                                                       } else {
                                                         showDialog<String>(
                                                           context: context,
@@ -385,11 +398,13 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                                         color: Colors
                                                                             .black)),
                                                                 onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .push(MaterialPageRoute(
-                                                                          builder: (BuildContext context) =>
-                                                                              HomePage()));
+                                                                  locator<NavigationService>()
+                                        .globalNavigateTo(HomeRoute, context);
+                                                                  // Navigator.of(
+                                                                      //     context)
+                                                                      // .push(MaterialPageRoute(
+                                                                      //     builder: (BuildContext context) =>
+                                                                      //         HomePage()));
                                                                 },
                                                               ),
                                                               TextButton(
@@ -746,11 +761,13 @@ class _FirstDelivaryPage extends State<FirstDelivaryPage> {
                                                 TextStyle(color: Colors.black)),
                                         onPressed: () {
                                           NewAddress().otheraddress(name, streetAdd, house, city, province, zipcode, uid);
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          CheckOutDelivery()));
+                                          locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutDeliveryRoute, context);
+                                          // Navigator.of(context).push(
+                                          //     MaterialPageRoute(
+                                          //         builder:
+                                          //             (BuildContext context) =>
+                                          //                 CheckOutDelivery()));
                                         },
                                       ),
                                       TextButton(

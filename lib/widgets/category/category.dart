@@ -1,9 +1,12 @@
 import 'package:aishop/icons/icons.dart';
+import 'package:aishop/navigation/locator.dart';
+import 'package:aishop/navigation/routing/route_names.dart';
 import 'package:aishop/screens/categories/books.dart';
 import 'package:aishop/screens/categories/clothes.dart';
 import 'package:aishop/screens/categories/kitchen.dart';
 import 'package:aishop/screens/categories/shoes.dart';
 import 'package:aishop/screens/categories/tech.dart';
+import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/widgets/category/category_card.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +25,10 @@ class Category extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => BooksScreen()));
+                      locator<NavigationService>()
+                                        .globalNavigateTo(BooksRoute, context);
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (BuildContext context) => BooksScreen()));
                     },
                     splashColor: Colors.white30,
                     customBorder: RoundedRectangleBorder(
@@ -40,8 +45,10 @@ class Category extends StatelessWidget {
                 Material(
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => ClothesScreen()));
+                      locator<NavigationService>()
+                                        .globalNavigateTo(ClothesRoute, context);
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (BuildContext context) => ClothesScreen()));
                     },
                     splashColor: Colors.white30,
                     customBorder: RoundedRectangleBorder(
@@ -58,8 +65,10 @@ class Category extends StatelessWidget {
                 Material(
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => ShoesScreen()));
+                      locator<NavigationService>()
+                                        .globalNavigateTo(ShoesRoute, context);
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (BuildContext context) => ShoesScreen()));
                     },
                     splashColor: Colors.white30,
                     customBorder: RoundedRectangleBorder(
@@ -76,8 +85,10 @@ class Category extends StatelessWidget {
                 Material(
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => KitchenScreen()));
+                      locator<NavigationService>()
+                                        .globalNavigateTo(KitchenRoute, context);
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (BuildContext context) => KitchenScreen()));
                     },
                     splashColor: Colors.white30,
                     customBorder: RoundedRectangleBorder(
@@ -94,8 +105,10 @@ class Category extends StatelessWidget {
                 Material(
                   child: InkWell(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TechScreen()));
+                        locator<NavigationService>()
+                                        .globalNavigateTo(TechRoute, context);
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (BuildContext context) => TechScreen()));
                       },
                       splashColor: Colors.white30,
                       customBorder: RoundedRectangleBorder(

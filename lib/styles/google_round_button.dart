@@ -1,7 +1,10 @@
 //this class is used to design the google button with a white background and a black border
 
 
+import 'package:aishop/navigation/locator.dart';
+import 'package:aishop/navigation/routing/route_names.dart';
 import 'package:aishop/screens/homepage/homepage.dart';
+import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/utils/authentication.dart';
 import 'package:flutter/material.dart';
@@ -43,10 +46,12 @@ class _GoogleButtonState extends State<GoogleRoundButton> {
           onPressed: () async {
             await signInWithGoogle(widget.location, widget.province).then((result) {
               if (result != null) {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(builder: (context) => HomePage()),
-                );
+                locator<NavigationService>()
+                                        .globalNavigateTo(HomeRoute, context);
+                // Navigator.push(
+                //   context,
+                //   new MaterialPageRoute(builder: (context) => HomePage()),
+                // );
               }
             }).catchError((error) {
               print('Registration Error: $error');

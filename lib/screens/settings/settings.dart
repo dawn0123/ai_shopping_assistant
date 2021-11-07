@@ -1,4 +1,6 @@
-import 'package:aishop/screens/cart/checkout_page.dart';
+import 'package:aishop/navigation/locator.dart';
+import 'package:aishop/navigation/routing/route_names.dart';
+import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/styles/icon_button.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/utils/authentication.dart';
@@ -54,19 +56,23 @@ class _SettingsPageState extends State<SettingsPage> {
                             icon: Icons.shopping_cart,
                             press: () => {
                                   Navigator.pop(context),
-                                  Navigator.push(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) => CheckOutPage()))
+                                  locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutRoute, context)
+                                  // Navigator.push(
+                                  //     context,
+                                  //     new MaterialPageRoute(
+                                  //         builder: (context) => CheckOutPage()))
                                 }),
                         CustomIconButton(
                             icon: Icons.settings,
                             press: () => {
                                   Navigator.pop(context),
-                                  Navigator.push(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) => SettingsPage()))
+                                  locator<NavigationService>()
+                                        .globalNavigateTo(SettingsRoute, context)
+                                  // Navigator.push(
+                                  //     context,
+                                  //     new MaterialPageRoute(
+                                  //         builder: (context) => SettingsPage()))
                                 }),
                       ],
                     ),

@@ -1,4 +1,7 @@
+import 'package:aishop/navigation/locator.dart';
+import 'package:aishop/navigation/routing/route_names.dart';
 import 'package:aishop/screens/cart/components/checkoutpayment.dart';
+import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/appbar/appbar.dart';
 import 'package:flutter/material.dart';
@@ -126,9 +129,11 @@ class _CheckOutDelivery extends State<CheckOutDelivery> {
                         setState(() {
                           n = 250;
                         });
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                CheckOutPayment()));
+                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutPaymentRoute, context);
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (BuildContext context) =>
+                        //         CheckOutPayment()));
                       },
                       child: new Padding(
                           padding: EdgeInsets.fromLTRB(5, 25, 3, 0),
@@ -198,9 +203,11 @@ class _CheckOutDelivery extends State<CheckOutDelivery> {
                       setState(() {
                         n = 200;
                       });
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              CheckOutPayment()));
+                      locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutPaymentRoute, context);
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (BuildContext context) =>
+                      //         CheckOutPayment()));
                     },
                     child: new Padding(
                         padding: EdgeInsets.fromLTRB(5, 25, 3, 0),
@@ -268,9 +275,11 @@ class _CheckOutDelivery extends State<CheckOutDelivery> {
                         setState(() {
                           n = 500;
                         });
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                CheckOutPayment()));
+                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutPaymentRoute, context);
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (BuildContext context) =>
+                        //         CheckOutPayment()));
                       },
                       child: new Padding(
                           padding: EdgeInsets.fromLTRB(5, 25, 3, 0),

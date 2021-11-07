@@ -23,11 +23,10 @@ void updateCartTotal() async {
       .then((querySnapshot) {
     querySnapshot.docs.forEach((result) {
       ordTotal += result.data()['total'];
-      qty += result.data()['qquantity'];
+      qty += result.data()['quantity'];
     });
     orderTotal = ordTotal;
     qtyTotal = qty;
-
   });
 
   FirebaseFirestore.instance
@@ -40,11 +39,8 @@ void updateCartTotal() async {
       total += result.data()['total'];
     });
     cartTotal = total;
-
   });
 }
-
-
 
 // ignore: must_be_immutable
 class OrderReview extends StatefulWidget {

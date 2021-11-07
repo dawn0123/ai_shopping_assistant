@@ -1,8 +1,11 @@
+import 'package:aishop/navigation/locator.dart';
+import 'package:aishop/navigation/routing/route_names.dart';
 import 'package:aishop/screens/cart/components/order_review.dart';
 import 'package:aishop/screens/address/newaddress.dart';
 import 'package:aishop/screens/delivery/checkoutdelivery.dart';
 import 'package:aishop/screens/delivery/first_delivery_page.dart';
 import 'package:aishop/screens/homepage/homepage.dart';
+import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/styles/round_textfield.dart';
 import 'package:aishop/styles/textlink.dart';
 import 'package:aishop/styles/theme.dart';
@@ -120,11 +123,13 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                     onPressed: () {
                                                       if (!(cartTotal == 0)) {
                                                         NewAddress().homeaddress(HomeAddress,uid);
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    CheckOutDelivery()));
+                                                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutRoute, context);
+                                                        // Navigator.of(context).push(
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (BuildContext
+                                                        //                 context) =>
+                                                        //             CheckOutDelivery()));
                                                       } else {
                                                         showDialog<String>(
                                                           context: context,
@@ -146,11 +151,13 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                                         color: Colors
                                                                             .black)),
                                                                 onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .push(MaterialPageRoute(
-                                                                          builder: (BuildContext context) =>
-                                                                              HomePage()));
+                                                                  locator<NavigationService>()
+                                        .globalNavigateTo(HomeRoute, context);
+                                                                  // Navigator.of(
+                                                                  //         context)
+                                                                  //     .push(MaterialPageRoute(
+                                                                  //         builder: (BuildContext context) =>
+                                                                  //             HomePage()));
                                                                 },
                                                               ),
                                                               TextButton(
@@ -181,11 +188,13 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                   DialogButton(
                                                     onPressed: () {
                                                       if (!(cartTotal == 0)) {
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    CheckOutDelivery()));
+                                                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutRoute, context);
+                                                        // Navigator.of(context).push(
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (BuildContext
+                                                        //                 context) =>
+                                                        //             CheckOutDelivery()));
                                                       } else {
                                                         showDialog<String>(
                                                           context: context,
@@ -207,11 +216,13 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                                         color: Colors
                                                                             .black)),
                                                                 onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .push(MaterialPageRoute(
-                                                                          builder: (BuildContext context) =>
-                                                                              HomePage()));
+                                                                  locator<NavigationService>()
+                                        .globalNavigateTo(HomeRoute, context);
+                                                                  // Navigator.of(
+                                                                  //         context)
+                                                                  //     .push(MaterialPageRoute(
+                                                                  //         builder: (BuildContext context) =>
+                                                                  //             HomePage()));
                                                                 },
                                                               ),
                                                               TextButton(
@@ -299,11 +310,13 @@ class _CheckOutAddress extends State<CheckOutAddress> {
 
                                                       if (!(cartTotal == 0)) {
                                                         NewAddress().workaddress(WorkAddress, uid);
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    CheckOutDelivery()));
+                                                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutRoute, context);
+                                                        // Navigator.of(context).push(
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (BuildContext
+                                                        //                 context) =>
+                                                        //             CheckOutDelivery()));
                                                       } else {
                                                         showDialog<String>(
                                                           context: context,
@@ -360,11 +373,13 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                   DialogButton(
                                                     onPressed: () {
                                                       if (!(cartTotal == 0)) {
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    CheckOutDelivery()));
+                                                        locator<NavigationService>()
+                                        .globalNavigateTo(CheckOutRoute, context);
+                                                        // Navigator.of(context).push(
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (BuildContext
+                                                        //                 context) =>
+                                                        //             CheckOutDelivery()));
                                                       } else {
                                                         showDialog<String>(
                                                           context: context,
@@ -386,11 +401,13 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                                                         color: Colors
                                                                             .black)),
                                                                 onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .push(MaterialPageRoute(
-                                                                          builder: (BuildContext context) =>
-                                                                              HomePage()));
+                                                                  locator<NavigationService>()
+                                        .globalNavigateTo(HomeRoute, context);
+                                                                  // Navigator.of(
+                                                                  //         context)
+                                                                  //     .push(MaterialPageRoute(
+                                                                  //         builder: (BuildContext context) =>
+                                                                  //             HomePage()));
                                                                 },
                                                               ),
                                                               TextButton(
@@ -454,10 +471,12 @@ class _CheckOutAddress extends State<CheckOutAddress> {
                                     text: " Add Address ",
                                     align: Alignment.center,
                                     press: () => {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  FirstDelivaryPage()))
+                                      locator<NavigationService>()
+                                        .globalNavigateTo(FirstDeliveryRoute, context)
+                                      // Navigator.of(context).push(
+                                      //     MaterialPageRoute(
+                                      //         builder: (BuildContext context) =>
+                                      //             FirstDelivaryPage()))
                                     },
                                   ),
                                 ),
