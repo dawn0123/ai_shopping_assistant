@@ -9,19 +9,20 @@ Developed by : We don't byte
 A complete Flutter application written in dart with firebase implementation and trained machine learning models.
 
 
-## DESCRIPTION
+# DESCRIPTION 
 
 AI Shopping System(AISH) implemented by "We don't byte" group is an e-commerce Web Application that allows users to shop online. 
 shoppers may purchase different types of items from the comfort of their home or any other place without physically
 visiting those stores. It allows Users to buy items from multiple stores despite their location. Aish is an artificial intelligent
 app that will feed the customers eyes what they are most interested. It recommends products that the user might be interested in, using machine learning algorithms.
 
-## DOCUMENTATION
-[Documentation](https://docs.google.com/document/d/1fOcOD5PfAJeSOr_vy4FCrDGsdkLrttcEqX3IggBki58/edit?usp=sharing)
+# DOCUMENTATION 
+* [Requirements Analysis Document](https://docs.google.com/document/d/1fOcOD5PfAJeSOr_vy4FCrDGsdkLrttcEqX3IggBki58/edit?usp=sharing)
+* [UML Diagrams](https://docs.google.com/document/d/1fOcOD5PfAJeSOr_vy4FCrDGsdkLrttcEqX3IggBki58/edit?usp=sharing)
+* [Daily Scrum](https://third-safflower-7c4.notion.site/Software-Design-Project-Daily-Scrum-d467bcafe4ad453a9ed90791aa2e3ff7)
+* [Tiaga wiki](https://tree.taiga.io/project/waffles-ai-shopping-system-v2/wiki/home)
+* [Github wiki](https://github.com/mmasehume/AI-Shopping-System-v2/wiki)
 
-### Project Wiki's
-[Github wiki](https://github.com/mmasehume/AI-Shopping-System-v2/wiki) \
-[Tiaga wiki](https://tree.taiga.io/project/waffles-ai-shopping-system-v2/wiki/home)
 
 # FEATURES
 ## User Site
@@ -45,7 +46,7 @@ app that will feed the customers eyes what they are most interested. It recommen
   * Machine learning trained user curated product recommendations
  
  ## Admin Site
- [Admin Site](https://github.com/mmasehume/AI-Shopping-System-Admin)
+ * [Admin Site](https://github.com/mmasehume/AI-Shopping-System-Admin)
  
 # HOW TO USE THE USER WEBSITE 
 
