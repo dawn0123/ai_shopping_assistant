@@ -69,123 +69,60 @@ class _CheckOutPaymentState extends State<CheckOutPayment> {
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               return Container(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: ListView(children: <Widget>[
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Container(
-                            child: Center(
-                              child: TextLink(
-                                text: 'Past Transactions',
-                                align: Alignment.center,
+                  child: Row( children: <Widget>[
+                      Expanded( child: ListView(children: <Widget>[
+                          SizedBox(height: 30),
+                          Container( child: Center(
+                              child: TextLink( text: 'Past Transactions', align: Alignment.center,
                                 press: () => {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          PastPurchase()))
+                                  Navigator.of(context).push(MaterialPageRoute( builder: (BuildContext context) => PastPurchase()))
                                 },
                               ),
                             ),
                             width: double.infinity,
                             height: 50,
                           ),
-                          Divider(
-                            height: 10,
-                            thickness: 2,
-                            indent: 10,
-                            endIndent: 10,
-                            color: lightblack,
-                          ),
+                          Divider( height: 10, thickness: 2, indent: 10, endIndent: 10, color: lightblack,),
                         ]),
                       ),
-                      Expanded(
-                        flex: 2,
+                      Expanded( flex: 2,
                         child: ListView(children: <Widget>[
-                          Container(
-                            width: 450,
-                            height: 100,
+                          Container( width: 450, height: 100,
                             margin: const EdgeInsets.fromLTRB(50.0, 50, 50, 0),
                             padding: const EdgeInsets.all(20.0),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: accent)),
-                            child:  Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround
+                            decoration: BoxDecoration( border: Border.all(color: accent)),
+                            child:  Row( mainAxisAlignment: MainAxisAlignment.spaceAround
                               ,children: [
-                              Expanded(
-                                flex: 5,
-                                child: Text("Amount Available: ",
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontFamily: "Inria Serif",
-                                        color: lightblack,
-                                        fontWeight: FontWeight.w300
+                              Expanded( flex: 5,
+                                child: Text("Amount Available: ", style: TextStyle( fontSize: 30,
+                                        fontFamily: "Inria Serif", color: lightblack, fontWeight: FontWeight.w300
                                     )),
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Text("R",
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontFamily: "Inria Serif",
-                                        color: lightblack,
-                                        fontWeight: FontWeight.w100
-                                    )),
+                              Expanded( flex: 1,
+                                child: Text("R", style: TextStyle( fontSize: 30, fontFamily: "Inria Serif", color: lightblack,  fontWeight: FontWeight.w100
+                                )),
                               ),
-                              Expanded(
-                                flex: 2,
-                                child: Container(
-                                  child: Text(account.toStringAsFixed(2),
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        fontFamily: "Inria Serif",
-                                        color: lightblack,
-                                      )),
+                              Expanded( flex: 2, child: Container(
+                                  child: Text(account.toStringAsFixed(2), textAlign: TextAlign.right, style: TextStyle( fontSize: 30, fontFamily: "Inria Serif", color: lightblack,)),
                                 ),
                               )
                             ],
                             ),
                           ),
                           Container(
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                          width: 450,
-                                          height: 360,
+                              child: Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                                    Expanded( child: Container(
+                                          width: 450, height: 360,
                                           margin: const EdgeInsets.all(50.0),
                                           padding: const EdgeInsets.all(50.0),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: lightblack)),
-                                          child: new Column(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround
-                                                  ,children: [
-                                                  Expanded(
-                                                    flex: 5,
-                                                    child: Text("Order subtotal:",
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            fontFamily: "Inria Serif",
-                                                            color: lightblack,
-                                                            fontWeight: FontWeight.w100
-                                                        )),
+                                          decoration: BoxDecoration( border: Border.all(color: lightblack)),
+                                          child: new Column( mainAxisAlignment: MainAxisAlignment.spaceAround, crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: <Widget>[ Row( mainAxisAlignment: MainAxisAlignment.spaceAround  ,children: [
+                                                  Expanded( flex: 5,
+                                                    child: Text("Order subtotal:", style: TextStyle( fontSize: 20, fontFamily: "Inria Serif", color: lightblack, fontWeight: FontWeight.w100 )),
                                                   ),
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: Text("R",
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            fontFamily: "Inria Serif",
-                                                            color: lightblack,
-                                                            fontWeight: FontWeight.w100
-                                                        )),
+                                                  Expanded( flex: 1,  child: Text("R",
+                                                        style: TextStyle( fontSize: 20, fontFamily: "Inria Serif", color: lightblack,  fontWeight: FontWeight.w100  )),
                                                   ),
                                                   Expanded(
                                                     flex: 2,
