@@ -45,27 +45,18 @@ app that will feed the customers eyes what they are most interested. It recommen
   * Machine learning trained user curated product recommendations
  
  ## Admin Site
-  * Login Page
-  * Registration page with input validation
-  * Password Reset
-  * Dashboard with total revenue, total number of products, total number of orders and daily sales graph
-  * View products in the system
-  * Add new products to the system
-  * View all users in the system
-  * View all users' orders
-  * View AI models accuracies
-  * Trigger button to force train models
+ [Admin Site](https://github.com/mmasehume/AI-Shopping-System-Admin)
  
-## HOW TO USE THE USER WEBSITE 
+# HOW TO USE THE USER WEBSITE 
 
-# Loging and registration
+## Loging and registration
 
   * First time users will have to create an account by entering their personal details, their name, surname, email, password, date of birth and location.
   * Before the user will have access to the system they will have to verify their account by clicking on a link that will be sent to their email adress.
   * Then after that they will be permitted to login.
   * After signing in the user will be redirected to the home page where they will be able to see the products that are available.
 
-# Home page
+## Home page
 
   * The user will see personalised product recommendations based on their interactions with the system
   * The user can either select the category they want to shop in under the "Category" title or scroll vertically to see the
@@ -75,7 +66,7 @@ app that will feed the customers eyes what they are most interested. It recommen
   * The user will be able to see if the items are available, low on stock and not available.
   * The user is not permitted to add items that are not available to their cart.
 
-# App bar
+## App bar
 
   * On the App bar, when the user taps on the search button they get redirected to a seach page where they can see all the products and they can enter their search text to   filter the results.
   * When the user taps on the wishlist button they get redirected to a page where they can view the items that they added to their wishlist.
@@ -89,7 +80,7 @@ app that will feed the customers eyes what they are most interested. It recommen
   * The user can navigate to their settings by clicking on the settings icon.
   * The user can sign out from the web app by clicking on the signout button.
 
-## FUTURE SCOPE
+# FUTURE SCOPE
 
   * Make the settings's page work.
   * Make the App more secure.
