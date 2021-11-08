@@ -16,8 +16,6 @@ String? imageUrl;
 String? location;
 String? province;
 
-
-
 Future<User?> registerWithEmailPassword(String email, String password) async {
   await Firebase.initializeApp();
   User? user;
@@ -33,6 +31,7 @@ Future<User?> registerWithEmailPassword(String email, String password) async {
     if (user != null) {
       uid = user.uid;
       userEmail = user.email;
+      name = user.displayName;
     }
 
   } on FirebaseAuthException catch (e) {
@@ -62,6 +61,7 @@ Future<User?> signInWithEmailPassword(String email, String password) async {
     if (user != null) {
       uid = user.uid;
       userEmail = user.email;
+      name = user.displayName;
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('auth', true);
@@ -149,7 +149,19 @@ Future<User?> signInWithGoogle(loc, prov) async {
               'location': location,
               'province' : province
             }
-        )
+
+        ),
+        FirebaseFirestore.instance.collection("Users")
+      .doc(uid).set({
+          "account": 5000000,
+          "default delivery" : "Standard Delivery",
+          "delivery index": 0,
+          "delivery cost" : 70,
+          "total" : 0,
+          "use Address": location,
+          "invoices" : 0,
+          "invoices total" : 0
+      })
       }
       else{
         print("user exists in database")

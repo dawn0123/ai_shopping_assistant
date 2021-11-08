@@ -1,7 +1,5 @@
 import 'package:aishop/navigation/locator.dart';
 import 'package:aishop/navigation/routing/route_names.dart';
-import 'package:aishop/screens/cart/checkout_page.dart';
-import 'package:aishop/screens/settings/settings.dart';
 import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/styles/icon_button.dart';
 import 'package:aishop/styles/round_button.dart';
@@ -59,6 +57,7 @@ class _EditProfilePage extends State<EditProfilePage> {
 
   late FocusNode textFocusNodeLocation = FocusNode();
 
+  @override
   void initState() {
     getUserInfofromdb();
     super.initState();
@@ -204,30 +203,12 @@ class _EditProfilePage extends State<EditProfilePage> {
                                   : Container(),
                             ),
                           ),
-                          Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2.0),
-                              child: ElevatedButton(
-                                onPressed: () => updateProfileData(),
-                                child: Text(
-                                  "Edit Profile Picture",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold
-
-                                  ),
-
-                                ),
-
-                              )
-
                             /*RoundTextField(
                               autofocus: false,
                               preicon: Icon(Icons.alternate_email),
                               text: "Email",
                               control: userEmailController,
                             ),*/
-                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 15.0),
                             child: RoundTextField(

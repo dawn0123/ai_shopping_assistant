@@ -54,6 +54,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   //remove debug banner in the corner
+  @override
   void initState() {
     getUserInfo();
     super.initState();

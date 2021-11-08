@@ -1,248 +1,181 @@
-import 'package:aishop/screens/cart/components/order_review.dart';
 import 'package:aishop/styles/theme.dart';
+import 'package:aishop/utils/authentication.dart';
 import 'package:aishop/utils/cart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SingleCartProduct extends StatefulWidget {
-  final prodname;
-  final prodpicture;
-  final prodprice;
-  final prodtotal;
-  final prodquantity;
-  final proddescription;
-  final cartid;
-  final prodindex;
-  final stockamt;
-  final category;
+class SingleCartProduct extends StatefulWidget{
 
-  SingleCartProduct(
-      {this.prodname,
-      this.prodpicture,
-      this.prodprice,
-      this.prodtotal,
-      this.prodquantity,
-      this.proddescription,
-      this.prodindex,
-      this.stockamt,
-      this.cartid,
-      this.category});
+  final imageURL;
+  final title;
+  final description;
+  final price;
+  final quantity;
+  final cartid;
+
+
+  SingleCartProduct({
+    this.imageURL,
+    this.title,
+    this.description,
+    this.price,
+    this.quantity,
+    this.cartid});
 
   @override
-  _SingleCartProductState createState() => _SingleCartProductState();
+  State<StatefulWidget> createState() {
+    print(imageURL);
+    return _CartItem();
+  }
 }
 
-class _SingleCartProductState extends State<SingleCartProduct> {
+class _CartItem extends State<SingleCartProduct> {
+  int q = 0, p = 0, oneItem = 0;
+  @override
+  void initState(){
+    super.initState();
+    oneItem = widget.price;
+    q = widget.quantity;
+    p = widget.quantity*widget.price;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Color(0xB7242424),
-      child: ListTile(
-        leading: new Image.network(
-          widget.prodpicture,
-          width: 70.0,
-          height: 70.0,
-        ),
-        title: new Text(widget.prodname.toString(),
-            style: TextStyle(color: white)),
-        subtitle: new Column(
-          children: <Widget>[
-            new Row(
-              children: <Widget>[
-                Expanded(
-                  child: new Text(
-                    widget.proddescription,
-                    style: TextStyle(color: lightgrey),
-                    maxLines: 1,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            new Row(
-              children: [
-                GestureDetector(
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.yellow)),
-                    child: Center(
-                        child: Icon(
-                      Icons.remove,
-                      size: 10,
-                      color: Colors.yellowAccent,
-                    )),
-                  ),
-                  onTap: () async {
-                    // remove 1 item of the same type
-                    if (widget.prodquantity > 1) {
-                      await FirebaseFirestore.instance
-                          .collection('Users')
-                          .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .collection("Cart")
-                          .where('name', isEqualTo: widget.prodname)
-                          .get()
-                          .then((value) => value.docs.forEach((element) => {
-                                element.reference.update({
-                                  "quantity": FieldValue.increment(-1),
-                                  "total": FieldValue.increment(
-                                      -double.parse(widget.prodprice))
-                                })
-                              }));
-
-                      setState(() {
-
-                        updateCartTotal();
-                      });
-                    } else if (widget.prodquantity == 1) {
-                      // remove last item
-                      Cart.removeFromCart(
-                        widget.cartid,
-                        widget.prodpicture,
-                        widget.proddescription,
-                        widget.prodname,
-                        widget.prodprice,
-                        widget.prodquantity,
-                        widget.stockamt,
-                        widget.category
-                      );
-                      setState(() {
-
-                        updateCartTotal();
-                      });
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 5,
-                  width: 10,
-                ),
-                Text(
-                  "${widget.prodquantity.toString()}",
-                  style: TextStyle(fontSize: 10, color: Colors.yellowAccent),
-                ),
-                SizedBox(
-                  height: 5,
-                  width: 10,
-                ),
-                GestureDetector(
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.yellow)),
-                    child: Center(
-                        child: Icon(
-                      Icons.add,
-                      size: 10,
-                      color: Colors.yellowAccent,
-                    )),
-                  ),
-                  onTap: () async {
-
-                    // increment product quantity & product total
-
-                    await FirebaseFirestore.instance
-                        .collection('Users')
-                        .doc(FirebaseAuth.instance.currentUser!.uid)
-                        .collection("Cart")
-                        .where('name', isEqualTo: widget.prodname)
-                        .get()
-                        .then((value) => value.docs.forEach((element) => {
-                              element.reference.update(
-                                {
-                                  "quantity": FieldValue.increment(1),
-                                  "total": FieldValue.increment(
-                                      double.parse(widget.prodprice))
-                                },
-                              )
-                            }));
-
-                    setState(() {
-
-                      updateCartTotal();
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            new Container(
-              alignment: Alignment.bottomRight,
-              child: new Text(
-
-                  "R" +
-                      double.parse((double.parse(widget.prodprice) *
-                                  (widget.prodquantity))
-                              .toString())
-                          .toString(),
-                  style: TextStyle(color: Color(0xFFFDD835))),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            new Row(
-              children: <Widget>[
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 0,
-                        width: 0,
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          // remove from cart
-                          Cart.removeFromCart(
-                            widget.cartid,
-                            widget.prodpicture,
-                            widget.proddescription,
-                            widget.prodname,
-                            widget.prodprice,
-                            widget.prodquantity,
-                            widget.stockamt,
-                            widget.category
-                          );
-                          setState(() {
-
-                            updateCartTotal();
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.grey,
-                        ),
-                        icon: Icon(
-                          Icons.delete_outline_rounded,
-                          size: 15,
-                          color: Colors.black,
-                        ),
-                        label: Text(
-                          "Remove",
-                          style: TextStyle(
-                              fontSize: 10.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.yellowAccent),
-                        ),
-                      ),
-                    ],
-                  ),
-                ))
-              ],
-            ),
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.all(10),
+      height: 150,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+        color: white.withOpacity(0.02),
+        boxShadow: [
+          BoxShadow(
+            color: mediumblack.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
+      child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(50), bottomLeft: Radius.circular(50)),
+              child: Image.network(
+                widget.imageURL,
+                width: 150,
+                height: 150,
+                fit: BoxFit.fill,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.title,
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        maxLines: 1,
+                        style: TextStyle(
+                            color: white,
+                            fontFamily: "Inria Serif",
+                            fontSize: 20
+                        )
+                    ),
+                    Container(
+                      child: Text(
+                        widget.description,
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        style: TextStyle(color: lightgrey
+                            ,fontFamily: "Nunito Sans",
+                            fontSize: 18
+                        ),
+                        maxLines: 1,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(onPressed: () async { setState(() {
+                          q = q-1;
+                          p = p - oneItem;
+                        });
+
+                        await FirebaseFirestore.instance
+                            .collection("Users")
+                            .doc(uid)
+                            .update({'total': FieldValue.increment(-widget.price)});
+                        await FirebaseFirestore.instance
+                            .collection("Users")
+                            .doc(uid)
+                            .collection("Cart")
+                            .doc(widget.cartid)
+                            .update({'quantity': FieldValue.increment(-1)});
+
+                        if(q == 0){
+                          Cart.removeFromCart(widget.cartid, "", "", "", 0, 0, 0, "");
+                        }}, icon:
+                        Icon(Icons.remove, color: accent)
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(q.toString(),
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: "Nunito Sans",
+                                color: white.withOpacity(0.9),
+                                fontWeight: FontWeight.w100
+                            ),
+                          ),
+                        ),
+                        IconButton(onPressed: () async {setState(() {
+                          q = q+1;
+                          p = p + oneItem;
+                        });
+                        await FirebaseFirestore.instance
+                            .collection("Users")
+                            .doc(uid)
+                            .collection("Cart")
+                            .doc(widget.cartid)
+                            .update({'quantity': FieldValue.increment(1)});
+                        await FirebaseFirestore.instance
+                            .collection("Users")
+                            .doc(uid)
+                            .update({'total': FieldValue.increment(widget.price)});}, icon:
+                        Icon(Icons.add, color: accent)
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              width: 150,
+              padding: EdgeInsets.only(right: 50),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  IconButton(onPressed: (){}, icon:
+                  Icon(Icons.close,
+                    color: white.withOpacity(0.9),
+                    size: 30,
+                  ),
+                  ),
+                  Text("R  "+p.toStringAsFixed(2),
+                      style: TextStyle(
+                          color: accent,
+                          fontFamily: "Inria Serif",
+                          fontSize: 20
+                      ))
+                ],
+              ),
+            )
+          ]),
     );
   }
 }

@@ -1,5 +1,3 @@
-import 'package:aishop/screens/cart/components/order_review.dart';
-import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/appbar/appbar.dart';
 import 'package:aishop/widgets/product_model/product_model.dart';
@@ -12,14 +10,9 @@ class ShoesScreen extends StatefulWidget {
 }
 
 class _ShoesScreen extends State<ShoesScreen> {
-  late Stream<QuerySnapshot<Map<String, dynamic>>> shoes;
-
-  void initState(){
-    shoes = DatabaseManager().getShoes()!;
-  }
   @override
   Widget build(BuildContext context) {
-    updateCartTotal();
+
     return Scaffold(
       backgroundColor: lightestgrey,
       appBar: PreferredSize(
@@ -42,7 +35,10 @@ class _ShoesScreen extends State<ShoesScreen> {
         Container(
           height: 800,
           child: StreamBuilder<QuerySnapshot>(
-            stream: shoes,
+            stream: FirebaseFirestore.instance
+                .collection("Products")
+                .where("category", isEqualTo: "Shoes")
+                .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return SizedBox(
@@ -59,12 +55,12 @@ class _ShoesScreen extends State<ShoesScreen> {
                       mainAxisSpacing: 0),
                   itemBuilder: (context, index) {
                     return ProductCard(
-                      snapshot.data!.docs[index].id,
-                      snapshot.data!.docs[index].get('url'),
-                      snapshot.data!.docs[index].get('name'),
-                      snapshot.data!.docs[index].get('description'),
-                      snapshot.data!.docs[index].get('price'),
-                      snapshot.data!.docs[index].get('stockamt'),
+                        snapshot.data!.docs[index].id,
+                        snapshot.data!.docs[index].get('url'),
+                        snapshot.data!.docs[index].get('name'),
+                        snapshot.data!.docs[index].get('description'),
+                        snapshot.data!.docs[index].get('price'),
+                        snapshot.data!.docs[index].get('stockamt'),
                         snapshot.data!.docs[index].get('category')
                     );
                   },

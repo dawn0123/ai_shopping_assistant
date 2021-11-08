@@ -6,7 +6,7 @@ import 'package:aishop/screens/categories/clothes.dart';
 import 'package:aishop/screens/categories/kitchen.dart';
 import 'package:aishop/screens/categories/shoes.dart';
 import 'package:aishop/screens/categories/tech.dart';
-import 'package:aishop/screens/delivery/checkoutdelivery.dart';
+import 'package:aishop/screens/checkout/tabs.dart';
 import 'package:aishop/screens/delivery/first_delivery_page.dart';
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/invoices/invoices.dart';
@@ -15,8 +15,6 @@ import 'package:aishop/screens/past_purchases/pastpurchase.dart';
 import 'package:aishop/screens/profile_page/edit_profile.dart';
 import 'package:aishop/screens/search/search.dart';
 import 'package:aishop/screens/settings/settings.dart';
-import 'package:aishop/screens/signup/registerscreen.dart';
-import 'package:aishop/screens/verification_page/verifyscreen.dart';
 import 'package:aishop/screens/wishlist/wislistscreen.dart';
 import 'package:flutter/material.dart';
 
