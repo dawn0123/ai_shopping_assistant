@@ -22,6 +22,7 @@ class Invoice extends StatelessWidget {
               .collection('Users')
               .doc(uid)
               .collection("Invoices")
+              .orderBy('date', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
