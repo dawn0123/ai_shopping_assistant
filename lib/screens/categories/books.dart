@@ -1,5 +1,3 @@
-import 'package:aishop/screens/cart/components/order_review.dart';
-import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/appbar/appbar.dart';
 import 'package:aishop/widgets/product_model/product_model.dart';
@@ -13,15 +11,13 @@ class BooksScreen extends StatefulWidget {
 
 class _BooksScreen extends State<BooksScreen> {
 
-  late Stream<QuerySnapshot<Map<String, dynamic>>> books;
-
+  @override
   void initState(){
-    books = DatabaseManager().getBooks()!;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    updateCartTotal();
     return Scaffold(
       backgroundColor: lightestgrey,
       appBar: PreferredSize(
@@ -44,7 +40,10 @@ class _BooksScreen extends State<BooksScreen> {
         Container(
           height: 800,
           child: StreamBuilder<QuerySnapshot>(
-            stream: books,
+            stream: FirebaseFirestore.instance
+                .collection("Products")
+                .where("category", isEqualTo: "Books")
+                .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return SizedBox(

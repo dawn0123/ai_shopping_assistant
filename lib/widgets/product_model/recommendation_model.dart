@@ -2,7 +2,6 @@
 //take product details as parameters and return and clickable countainer that displays the image & price of product
 
 import 'package:aishop/icons/icons.dart';
-import 'package:aishop/screens/cart/components/order_review.dart';
 import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/services/datacollection.dart';
 import 'package:aishop/services/historytracker.dart';
@@ -187,7 +186,6 @@ class _RecommendationCard extends State<RecommendationCard> {
                                   widget.name,
                                   widget.price,
                                   widget.stockamt, widget.category);
-                              updateCartTotal();
                             } else
                               Cart.removeFromCart(
                                   widget.id,
@@ -197,7 +195,6 @@ class _RecommendationCard extends State<RecommendationCard> {
                                   widget.price,
                                   widget.stockamt,
                                   1, widget.category);
-                            updateCartTotal();
                           },
                           style: ElevatedButton.styleFrom(
                               primary: Color(0xFFFCAE1E),

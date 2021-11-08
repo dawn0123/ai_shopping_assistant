@@ -1,5 +1,6 @@
 import 'package:aishop/utils/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'DataCollection.dart';
 
 var cart_total;
@@ -24,6 +25,28 @@ class Cart  {
       'stockamt': stockamt,
       'total': price
     });
+
+    FirebaseFirestore.instance
+    .collection("Users")
+    .doc(uid)
+    .get().then((DocumentSnapshot ds) {
+      if(ds.exists)
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(uid)
+            .update(
+            {'total': FieldValue.increment(price)
+            });
+      else
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(uid)
+            .set(
+            {'total': price
+            });
+    });
+
+
     DataCollection(name, id, price, "wishlist", category).DataCollector();
   }
 
@@ -35,5 +58,12 @@ class Cart  {
         .collection("Cart")
         .doc(id)
         .delete();
+
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uid)
+        .update(
+        {'total': FieldValue.increment(-1*price)
+        });
   }
 }

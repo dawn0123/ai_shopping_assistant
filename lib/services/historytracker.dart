@@ -1,5 +1,8 @@
+import 'package:aishop/screens/address/checkout_address.dart';
 import 'package:aishop/utils/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../screens/checkout/tabs.dart';
 
 void addToPurchases() {
   DateTime now = new DateTime.now();
@@ -26,7 +29,10 @@ void addToPurchases() {
                 'unit price': productid.get("price"),
                 'total': productid.get("total"),
                 'date': date,
-                'quantity': productid.get("quantity")
+                'quantity': productid.get("quantity"),
+                'address' : selectedaddress,
+                'default delivery': deliveryOption,
+                'delivery cost': deliveryCost
               });
               FirebaseFirestore.instance
                   .collection('Products')
@@ -40,7 +46,6 @@ void addToPurchases() {
               'Purchased by': FieldValue.increment(1),
               });
               });
-              productid.reference.delete();
             })
           });
 }

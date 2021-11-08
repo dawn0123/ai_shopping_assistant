@@ -1,24 +1,23 @@
-import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/product_model/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-late Stream<QuerySnapshot<Map<String, dynamic>>> tech;
-
-getTech () {
-  tech = DatabaseManager().getTech()!;
+class Tech extends StatefulWidget {
+  @override
+  State<Tech> createState() => _TechState();
 }
 
-class Tech extends StatelessWidget {
+class _TechState extends State<Tech> {
   @override
   Widget build(BuildContext context) {
-    getTech();
     return Container(
-      width: 0,
       height: 400,
       child: StreamBuilder<QuerySnapshot>(
-        stream: tech,
+        stream: FirebaseFirestore.instance
+            .collection("Products")
+            .where("category", isEqualTo: "Tech")
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return SizedBox(

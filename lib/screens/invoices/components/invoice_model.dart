@@ -1,8 +1,11 @@
+import 'package:aishop/icons/icons.dart';
+import 'package:aishop/screens/invoices/components/create_pdf.dart';
+import 'package:aishop/screens/invoices/components/report.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/utils/authentication.dart';
-import 'package:aishop/screens/invoices/components/report.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 List<Report> reportList = List<Report>.empty(growable: true);
 
@@ -18,7 +21,8 @@ class Invoice extends StatelessWidget {
           stream: FirebaseFirestore.instance
               .collection('Users')
               .doc(uid)
-              .collection("Purchases")
+              .collection("Invoices")
+              .orderBy('date', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -32,12 +36,10 @@ class Invoice extends StatelessWidget {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   reportList.add(Report.fromMap({
-                    'name': snapshot.data!.docs[index].get('name').toString(),
-                    'price':
-                        snapshot.data!.docs[index].get('unit price').toString(),
-                    'quantity':
-                        snapshot.data!.docs[index].get('qquantity').toString(),
-                    'total': snapshot.data!.docs[index].get('total').toString()
+                    'invoiceID': snapshot.data!.docs[index].id,
+                    'date': snapshot.data!.docs[index].get('date').toString(),
+                    'address':snapshot.data!.docs[index].get('address'),
+                    'total': snapshot.data!.docs[index].get('invoice total')
                   }));
                   return Container(
                       decoration: BoxDecoration(
@@ -46,28 +48,24 @@ class Invoice extends StatelessWidget {
                         title: Row(
                           children: <Widget>[
                             Expanded(
-                                child: Text("        " +
-                                    snapshot.data!.docs[index]
-                                        .get('name')
-                                        .toString())),
+                                child: IconButton(icon: Icon(AIicons.download, size: 25, color: accent), onPressed: () {
+                                  createPDF(invoiceID: snapshot.data!.docs[index].id);
+                                },)),
                             Expanded(
-                                child: Text(
-                                    "                                  " +
-                                        snapshot.data!.docs[index]
-                                            .get('qquantity')
-                                            .toString())),
+                                child: Text(snapshot.data!.docs[index].id)),
                             Expanded(
-                                child: Text(
-                                    "                                     " +
-                                        snapshot.data!.docs[index]
-                                            .get('unit price')
-                                            .toString())),
+                                child: Text(DateFormat('dd-MM-yyyy').format(snapshot.data!.docs[index].get('date').toDate()).toString())),
                             Expanded(
-                                child: Text(
-                                    "                                     " +
-                                        snapshot.data!.docs[index]
-                                            .get('total')
-                                            .toString())),
+                                flex: 2,
+                                child: Text(snapshot.data!.docs[index].get('address'))),
+                            Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text("R"),
+                                    Text(snapshot.data!.docs[index].get('invoice total').toStringAsFixed(2)),
+                                  ],
+                                )),
                           ],
                         ),
                       ));
@@ -81,3 +79,6 @@ class Invoice extends StatelessWidget {
     );
   }
 }
+
+
+

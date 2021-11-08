@@ -365,7 +365,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           userPasswordController.text)
                                       .then((result) {
                                     if (result != null) {
-                                      setState(() {
+                                      setState(() async {
                                         if (userLocationController.text == "") {
                                           location = widget.cityName.toString();
                                           FirebaseFirestore.instance
@@ -382,6 +382,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             'lname':
                                                 userLastNameController.text,
                                             'province': province
+                                          });
+                                          await FirebaseFirestore.instance.collection("Users")
+                                              .doc(uid).set({
+                                            "account": 5000000,
+                                            "default delivery" : "Standard Delivery",
+                                            "delivery index": 0,
+                                            "delivery cost" : 70,
+                                            "total" : 0,
+                                            "use Address": location,
+                                            "invoices" : 0,
+                                            "invoices total" : 0
                                           });
                                           FirebaseFirestore.instance
                                               .collection('users')
@@ -416,6 +427,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             'lname':
                                                 userLastNameController.text,
                                             'province': province
+                                          });
+                                          await FirebaseFirestore.instance.collection("Users")
+                                              .doc(uid).set({
+                                            "account": 5000000,
+                                            "default delivery" : "Standard Delivery",
+                                            "delivery index": 0,
+                                            "delivery cost" : 70,
+                                            "total" : 0,
+                                            "use Address": location,
+                                            "invoices" : 0,
+                                            "invoices total" : 0
                                           });
                                           FirebaseFirestore.instance
                                               .collection('users')

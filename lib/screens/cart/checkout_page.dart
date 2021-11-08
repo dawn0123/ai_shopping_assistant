@@ -1,82 +1,27 @@
-import 'package:aishop/screens/address/checkout_address.dart';
 import 'package:aishop/screens/cart/components/order_review.dart';
-import 'package:aishop/styles/theme.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:aishop/screens/checkout/tabs.dart';
+import 'package:aishop/widgets/appbar/appbar.dart';
 import 'package:flutter/material.dart';
-
-var productsoncart = [];
-
-final CollectionReference usersRef = FirebaseFirestore.instance
-    .collection('Users')
-    .doc(_user.uid)
-    .collection("Cart");
-User _user = FirebaseAuth.instance.currentUser!;
 
 class CheckOutPage extends StatefulWidget {
   @override
-  _CheckOutPageState createState() => _CheckOutPageState();
+  State<StatefulWidget> createState() {
+    return _CheckOutPage();
+  }
 }
 
-class _CheckOutPageState extends State<CheckOutPage> {
+class _CheckOutPage extends State<CheckOutPage> {
+
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      updateCartTotal();
-    });
-
-    return DefaultTabController(
-      length: 3,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  "Checkout Page",
-                  textWidthBasis: TextWidthBasis.parent,
-                  style: TextStyle(color: white),
-                ),
-                backgroundColor: lightblack,
-                bottom: PreferredSize(
-                  preferredSize: Size(MediaQuery.of(context).size.width, 50),
-                  child: Text(
-                    "Address",
-                    style: TextStyle(color: white),
-                    textWidthBasis: TextWidthBasis.parent,
-                  ),
-                ),
-              ),
-              body: CheckOutAddress(),
-            ),
-          ),
-          Expanded(
-              child: Scaffold(
-            body: OrderReview(),
-          )),
+    return Scaffold(
+      appBar: MyAppBar(context: context),
+      body: Row(
+        children: <Widget> [
+          Flexible(flex: 2 ,child: CheckOutDelivery()),
+          Flexible(fit: FlexFit.tight ,child: OrderReview())
         ],
       ),
     );
-  }
-
-  getdata() async {
-    return usersRef;
-  }
-
-  getUsers() {
-    usersRef.get().then((QuerySnapshot snapshot) {
-      for (int i = 0; i < snapshot.docs.length; ++i) {
-        productsoncart.add(snapshot.docs[i].data());
-      }
-    });
-  }
-
-  @override
-  void initState() {
-
-    getUsers();
-
-    super.initState();
   }
 }

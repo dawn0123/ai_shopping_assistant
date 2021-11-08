@@ -1,326 +1,616 @@
-import 'package:aishop/navigation/locator.dart';
-import 'package:aishop/navigation/routing/route_names.dart';
-import 'package:aishop/screens/cart/components/checkoutpayment.dart';
-import 'package:aishop/services/navigation_service.dart';
+import 'package:aishop/screens/checkout/tabs.dart';
 import 'package:aishop/styles/theme.dart';
-import 'package:aishop/widgets/appbar/appbar.dart';
+import 'package:aishop/utils/authentication.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-var n = 0;
-
-class CheckOutDelivery extends StatefulWidget {
+class CheckoutDelivery extends StatefulWidget{
   @override
-  _CheckOutDelivery createState() => _CheckOutDelivery();
+  State<StatefulWidget> createState() {
+    return _NewDeliveryPage();
+  }
 }
 
-class _CheckOutDelivery extends State<CheckOutDelivery> {
+class _NewDeliveryPage extends State<CheckoutDelivery>{
+  late bool a;
+  late bool b;
+  late bool c;
+  late bool d;
+
+  @override
+  void initState(){
+    super.initState();
+    print(index);
+    a = true;
+    b = false;
+    c = false;
+    d = false;
+    if(index == 0){
+      a = true;
+      b = false;
+      c = false;
+      d = false;
+    }
+    else if(index == 1){
+      a = false;
+      b = true;
+      c = false;
+      d = false;
+    }
+    else if(index == 2){
+      a = false;
+      b = false;
+      c = true;
+      d = false;
+    }
+    else if(index == 3){
+      a = false;
+      b = false;
+      c = false;
+      d = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        floatingActionButton: null,
-        appBar: MyAppBar(
-          title: Text(
-            "Check Out Delivery Payment",
-          ),
-          context: context,
-        ),
-        body: Container(
-            child: ListView(children: <Widget>[
-          SizedBox(
-            height: 45,
-          ),
-          Container(
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //====================================================================================row
 
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: size.width*0.1),
+          child: Center(
+            child: ListView(
                 children: [
-                  Container(
-                    width: 500,
-                    height: 150,
+                  !a?  Container(
+                    width: size.width*0.5,
+                    height: 180,
+                    padding: EdgeInsets.symmetric(vertical: 25),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        onPrimary: black, // background
-                        primary: black,
-                        textStyle: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Nunito Sans',
-                          fontWeight: FontWeight.w300,
-                        ),
+                        primary: white,
                         side: BorderSide(color: lightblack, width: 2),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100)),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+
+                        await FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(uid)
+                            .update(
+                            {'default delivery': "Standard Delivery",
+                              "delivery cost" : 70,
+                              "delivery index" : 0
+                            });
+
                         setState(() {
-                          n = 70;
+                          a = true;
+                          b = false;
+                          c = false;
+                          d = false;
                         });
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                CheckOutPayment()));
+
                       },
-                      child: new Padding(
-                          padding: EdgeInsets.fromLTRB(5, 25, 3, 0),
-                          child: Column(children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: 5.0,
-                                  top: 8.0,
-                                  bottom: 2.0,
-                                  right: 300.0),
-                              child: Text("Standard Delivery",
-                                  style: new TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 18.0)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Standard Delivery",
+                                    style: new TextStyle(
+                                        color: lightblack,
+                                        fontFamily: "Inria Serif",
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 25.0)),
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                      "Estimated delivery in 4 - 7 business days",
+                                      style: new TextStyle(
+                                          color: lighterblack,
+                                          fontFamily: "Nunito Sans",
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 15.0)),
+                                ),
+                              ],
                             ),
-                            Container(
-                                margin: EdgeInsets.only(
-                                    left: 0.0,
-                                    top: 12.0,
-                                    bottom: 0.0,
-                                    right: 200.0),
-                                child: Text(
-                                    "Estimated delivery in 4 - 7 business days",
-                                    style: new TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 12.0))),
-                            Container(
-                                margin: EdgeInsets.only(
-                                    left: 400.0,
-                                    top: 0.0,
-                                    bottom: 12.0,
-                                    right: 0.0),
-                                child: Text("R70",
-                                    style: new TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 20.0))),
-                          ])),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text("R70",
+                                  style: new TextStyle(
+                                      color: lightblack,
+                                      fontFamily: "Inria Serif",
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 28.0)),
+                            ),
+                          ),
+                        ]),
+                      ),
                     ),
                   )
-                ]),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //====================================================================================row
-
-                  children: [
-                Container(
-                    width: 500,
-                    height: 150,
+                      :Container(
+                    width: size.width*0.5,
+                    height: 180,
+                    padding: EdgeInsets.symmetric(vertical: 25),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        onPrimary: black, // background
-                        primary: black,
-                        textStyle: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Nunito Sans',
-                          fontWeight: FontWeight.w300,
-                        ),
-                        side: BorderSide(color: lightblack, width: 2),
+                        primary: lightblack,
+                        side: BorderSide(color: black, width: 2),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100)),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          n = 250;
-                        });
-                        locator<NavigationService>()
-                                        .globalNavigateTo(CheckOutPaymentRoute, context);
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (BuildContext context) =>
-                        //         CheckOutPayment()));
-                      },
-                      child: new Padding(
-                          padding: EdgeInsets.fromLTRB(5, 25, 3, 0),
-                          child: Column(children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: 5.0,
-                                  top: 8.0,
-                                  bottom: 2.0,
-                                  right: 250.0),
-                              child: Text("Next Business Day Delivery",
-                                  style: new TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15.0)),
+                      onPressed: () { },
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Standard Delivery",
+                                    style: new TextStyle(
+                                        color: white,
+                                        fontFamily: "Inria Serif",
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 25.0)),
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                      "Estimated delivery in 4 - 7 business days",
+                                      style: new TextStyle(
+                                          color: lightestgrey,
+                                          fontFamily: "Nunito Sans",
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 15.0)),
+                                ),
+                              ],
                             ),
-                            Container(
-                                margin: EdgeInsets.only(
-                                    left: 0.0,
-                                    top: 12.0,
-                                    bottom: 0.0,
-                                    right: 250.0),
-                                child: Text("Estimated delivery tomorrow",
-                                    style: new TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 12.0))),
-                            Container(
-                                margin: EdgeInsets.only(
-                                    left: 400.0,
-                                    top: 0.0,
-                                    bottom: 12.0,
-                                    right: 0.0),
-                                child: Text("R250",
-                                    style: new TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 20.0))),
-                          ])),
-                    ))
-              ])),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //====================================================================================row
-
-                  children: [
-                Container(
-                  width: 500,
-                  height: 150,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      onPrimary: black, // background
-                      primary: black,
-                      textStyle: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Nunito Sans',
-                        fontWeight: FontWeight.w300,
-                      ),
-                      side: BorderSide(color: lightblack, width: 2),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100)),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        n = 200;
-                      });
-                      locator<NavigationService>()
-                                        .globalNavigateTo(CheckOutPaymentRoute, context);
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (BuildContext context) =>
-                      //         CheckOutPayment()));
-                    },
-                    child: new Padding(
-                        padding: EdgeInsets.fromLTRB(5, 25, 3, 0),
-                        child: Column(children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: 5.0, top: 4.0, bottom: 2.0, right: 220.0),
-                            child: Text("2nd - 3rd Business Day Delivery",
-                                style: new TextStyle(
-                                    color: white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 15.0)),
                           ),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left: 0.0,
-                                  top: 6.0,
-                                  bottom: 0.0,
-                                  right: 250.0),
-                              child: Text("Estimated delivery in 2 - 3 Days",
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text("R70",
                                   style: new TextStyle(
                                       color: white,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 12.0))),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left: 400.0,
-                                  top: 0.0,
-                                  bottom: 6.0,
-                                  right: 0.0),
-                              child: Text("R200",
-                                  style: new TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 20.0))),
-                        ])),
+                                      fontFamily: "Inria Serif",
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 28.0)),
+                            ),
+                          ),
+                        ]),
+                      ),
+                    ),
                   ),
-                )
-              ])),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //====================================================================================row
-
-                  children: [
-                Container(
-                  width: 500,
-                  height: 150,
-                  child: ElevatedButton(
+                  !b? Container(
+                    width: size.width*0.5,
+                    height: 180,
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        onPrimary: black, // background
-                        primary: black,
-                        textStyle: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Nunito Sans',
-                          fontWeight: FontWeight.w300,
-                        ),
+                        primary: white,
                         side: BorderSide(color: lightblack, width: 2),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100)),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+
+                        await FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(uid)
+                            .update(
+                            {'default delivery': "Next Business Day Delivery",
+                              "delivery cost" : 250,
+                              "delivery index" : 1
+                            });
                         setState(() {
-                          n = 500;
+                          a = false;
+                          b = true;
+                          c = false;
+                          d = false;
                         });
-                        locator<NavigationService>()
-                                        .globalNavigateTo(CheckOutPaymentRoute, context);
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (BuildContext context) =>
-                        //         CheckOutPayment()));
                       },
-                      child: new Padding(
-                          padding: EdgeInsets.fromLTRB(5, 25, 3, 0),
-                          child: Column(children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: 5.0,
-                                  top: 8.0,
-                                  bottom: 2.0,
-                                  right: 300.0),
-                              child: Text("Saturday DElivery",
-                                  style: new TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 15.0)),
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(
-                                    left: 0.0,
-                                    top: 12.0,
-                                    bottom: 0.0,
-                                    right: 250.0),
-                                child: Text("Estimated delivery in 2 -3 days",
-                                    style: new TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 12.0))),
-                            Container(
-                                margin: EdgeInsets.only(
-                                    left: 400.0,
-                                    top: 0.0,
-                                    bottom: 12.0,
-                                    right: 0.0),
-                                child: Text("R500",
-                                    style: new TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 20.0))),
-                          ]))),
-                ),
-              ])),
-        ])));
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Next Business Day Delivery",
+                                        overflow: TextOverflow.fade,
+                                        softWrap: false,
+                                        maxLines: 1,
+                                        style: new TextStyle(
+                                            color: lightblack,
+                                            fontFamily: "Inria Serif",
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 25.0)),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                          "Estimated delivery tomorrow",
+                                          overflow: TextOverflow.fade,
+                                          softWrap: false,
+                                          maxLines: 1,
+                                          style: new TextStyle(
+                                              color: lighterblack,
+                                              fontFamily: "Nunito Sans",
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 15.0)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text("R250",
+                                      style: new TextStyle(
+                                          color: lightblack,
+                                          fontFamily: "Inria Serif",
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 28.0)),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ):
+                  Container(
+                    width: size.width*0.5,
+                    height: 180,
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: lightblack,
+                        side: BorderSide(color: black, width: 2),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100)),
+                      ),
+                      onPressed: () {  },
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Next Business Day Delivery",
+                                        overflow: TextOverflow.fade,
+                                        softWrap: false,
+                                        maxLines: 1,
+                                        style: new TextStyle(
+                                            color: white,
+                                            fontFamily: "Inria Serif",
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 25.0)),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                          "Estimated delivery tomorrow",
+                                          overflow: TextOverflow.fade,
+                                          softWrap: false,
+                                          maxLines: 1,
+                                          style: new TextStyle(
+                                              color: lightestgrey,
+                                              fontFamily: "Nunito Sans",
+                                              fontWeight: FontWeight.w100,
+                                              fontSize: 15.0)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text("R250",
+                                      style: new TextStyle(
+                                          color: white,
+                                          fontFamily: "Inria Serif",
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 28.0)),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+                  !c? Container(
+                    width: size.width*0.5,
+                    height: 180,
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: white,
+                        side: BorderSide(color: lightblack, width: 2),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100)),
+                      ),
+                      onPressed: () async {
+
+                        await FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(uid)
+                            .update(
+                            {'default delivery': "2nd - 3rd Business Day Delivery",
+                              "delivery cost" : 200,
+                              "delivery index" : 2
+                            });
+                        setState(() {
+                          a = false;
+                          b = false;
+                          c = true;
+                          d = false;
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("2nd - 3rd Business Day Delivery",
+                                        overflow: TextOverflow.fade,
+                                        softWrap: false,
+                                        maxLines: 1,
+                                        style: new TextStyle(
+                                            color: lightblack,
+                                            fontFamily: "Inria Serif",
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 25.0)),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                          "Estimated delivery in 2 - 3 Days",
+                                          overflow: TextOverflow.fade,
+                                          softWrap: false,
+                                          maxLines: 1,
+                                          style: new TextStyle(
+                                              color: lighterblack,
+                                              fontFamily: "Nunito Sans",
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 15.0)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text("R200",
+                                      style: new TextStyle(
+                                          color: lightblack,
+                                          fontFamily: "Inria Serif",
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 28.0)),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ):
+                  Container(
+                    width: size.width*0.5,
+                    height: 180,
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: lightblack,
+                        side: BorderSide(color: black, width: 2),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100)),
+                      ),
+                      onPressed: () { },
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("2nd - 3rd Business Day Delivery",
+                                        overflow: TextOverflow.fade,
+                                        softWrap: false,
+                                        maxLines: 1,
+                                        style: new TextStyle(
+                                            color: white,
+                                            fontFamily: "Inria Serif",
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 25.0)),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                          "Estimated delivery in 2 - 3 Days",
+                                          overflow: TextOverflow.fade,
+                                          softWrap: false,
+                                          maxLines: 1,
+                                          style: new TextStyle(
+                                              color: lightestgrey,
+                                              fontFamily: "Nunito Sans",
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 15.0)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text("R200",
+                                      style: new TextStyle(
+                                          color: white,
+                                          fontFamily: "Inria Serif",
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 28.0)),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+                  !d? Container(
+                    width: size.width*0.5,
+                    height: 180,
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: white,
+                        side: BorderSide(color: lightblack, width: 2),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100)),
+                      ),
+                      onPressed: () async {
+
+                        await FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(uid)
+                            .update(
+                            {'default delivery': "Saturday Delivery",
+                              "delivery cost" : 500,
+                              "delivery index" : 3
+                            });
+                        setState(() {
+                          a = false;
+                          b = false;
+                          c = false;
+                          d = true;
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Saturday Delivery",
+                                        style: new TextStyle(
+                                            color: lightblack,
+                                            fontFamily: "Inria Serif",
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 25.0)),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                          "Estimated delivery next Saturday",
+                                          style: new TextStyle(
+                                              color: lighterblack,
+                                              fontFamily: "Nunito Sans",
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 15.0)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text("R500",
+                                      style: new TextStyle(
+                                          color: lightblack,
+                                          fontFamily: "Inria Serif",
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 28.0)),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  )
+                      :Container(
+                    width: size.width*0.5,
+                    height: 180,
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: lightblack,
+                        side: BorderSide(color: black, width: 2),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100)),
+                      ),
+                      onPressed: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Saturday Delivery",
+                                        style: new TextStyle(
+                                            color: white,
+                                            fontFamily: "Inria Serif",
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 25.0)),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                          "Estimated delivery next Saturday",
+                                          style: new TextStyle(
+                                              color: lightestgrey,
+                                              fontFamily: "Nunito Sans",
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 15.0)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text("R500",
+                                      style: new TextStyle(
+                                          color: white,
+                                          fontFamily: "Inria Serif",
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 28.0)),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+                ]),
+          ),
+        ));
   }
+
 }
