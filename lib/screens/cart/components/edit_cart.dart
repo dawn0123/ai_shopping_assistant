@@ -5,7 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SingleCartProduct extends StatefulWidget {
+class SingleCartProduct extends StatefulWidget{
+
   final imageURL;
   final title;
   final description;
@@ -13,17 +14,18 @@ class SingleCartProduct extends StatefulWidget {
   final quantity;
   final cartid;
 
-  SingleCartProduct(
-      {this.imageURL,
-      this.title,
-      this.description,
-      this.price,
-      this.quantity,
-      this.cartid});
+
+  SingleCartProduct({
+    this.imageURL,
+    this.title,
+    this.description,
+    this.price,
+    this.quantity,
+    this.cartid});
 
   @override
   State<StatefulWidget> createState() {
-    // print(imageURL);
+    print(imageURL);
     return _CartItem();
   }
 }
@@ -31,21 +33,21 @@ class SingleCartProduct extends StatefulWidget {
 class _CartItem extends State<SingleCartProduct> {
   int q = 0, p = 0, oneItem = 0;
   @override
-  void initState() {
+  void initState(){
     super.initState();
     oneItem = widget.price;
     q = widget.quantity;
-    p = widget.quantity * widget.price;
+    p = widget.quantity*widget.price;
   }
 
   @override
   Widget build(BuildContext context) {
     oneItem = widget.price;
     q = widget.quantity;
-    p = widget.quantity * widget.price;
+    p = widget.quantity*widget.price;
     return Container(
       margin: EdgeInsets.all(10),
-      height: 120,
+      height: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         color: white.withOpacity(0.02),
@@ -58,7 +60,6 @@ class _CartItem extends State<SingleCartProduct> {
           ),
         ],
       ),
-
       child: Row(
           children: [
             ClipRRect(
@@ -172,15 +173,8 @@ class _CartItem extends State<SingleCartProduct> {
                   ],
                 ),
               ),
-              Text("R  " + p.toStringAsFixed(2),
-                  style: TextStyle(
-                      color: accent,
-                      // fontFamily: "Inria Serif",
-                      fontSize: 15))
-            ],
-          ),
-        )
-      ]),
+            )
+          ]),
     );
   }
 }
@@ -208,7 +202,8 @@ increase(cartid, int oneItem) async {
   await FirebaseFirestore.instance
       .collection("Users")
       .doc(uid)
-      .update({'total': FieldValue.increment(oneItem)});
+      .update({'total': FieldValue.increment(oneItem)
+  });
 }
 
 delete(cartid, int p) async {
