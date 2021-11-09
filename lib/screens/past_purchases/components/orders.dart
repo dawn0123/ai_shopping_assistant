@@ -1,7 +1,7 @@
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/widgets/appbar/appbar.dart';
 import 'package:flutter/material.dart';
-import 'order_model.dart';
+import 'package:aishop/screens/past_purchases/components/order_model.dart';
 
 class OrdersPage extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class Orders extends State<OrdersPage> {
         ),
         body: Container(
             // height: 400,
-            // child: new SingleChildScrollView(
+             child: new SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 Center(
@@ -43,7 +43,7 @@ class Orders extends State<OrdersPage> {
                   ),
                 ),
                 Center(
-                  // child: new SingleChildScrollView(
+                   child: new SingleChildScrollView(
                     child: Container(
                       color: Colors.black45,
                       child: Row(
@@ -72,20 +72,19 @@ class Orders extends State<OrdersPage> {
                         ],
                       ),
                     ),
-                  // ),
+                  ),
                 ),
-                // Container(
-                //   child:
-                new SingleChildScrollView(
+                 Container(
+                   child: SingleChildScrollView(
                   child: Order(),
                 ),
-                // ),
-                // SizedBox(
-                //   width: 80,
-                // ),
+                 ),
+                 SizedBox(
+                   width: 80,
+                 ),
               ],
             ))
-        // )
+         )
         );
   }
 }
