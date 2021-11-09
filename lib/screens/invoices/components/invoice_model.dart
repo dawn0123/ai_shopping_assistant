@@ -1,6 +1,7 @@
 import 'package:aishop/icons/icons.dart';
 import 'package:aishop/screens/invoices/components/create_pdf.dart';
 import 'package:aishop/screens/invoices/components/report.dart';
+import 'package:aishop/screens/invoices/onlineInvoices.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:aishop/utils/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -52,7 +53,19 @@ class Invoice extends StatelessWidget {
                                   createPDF(invoiceID: snapshot.data!.docs[index].id);
                                 },)),
                             Expanded(
-                                child: Text(snapshot.data!.docs[index].id)),
+                                child: TextButton(child: Text(snapshot.data!.docs[index].id, style: TextStyle(color: Colors.blueAccent, fontSize: 16)), onPressed: (){
+                                  Navigator.of(context).push(MaterialPageRoute( builder: (BuildContext context) =>
+                                      OnlineInvoicesPage(
+                                        invoiceID: snapshot.data!.docs[index].id,
+                                        address: snapshot.data!.docs[index].get('address'),
+                                        date: snapshot.data!.docs[index].get('date').toString(),
+                                        delivery: snapshot.data!.docs[index].get('default delivery').toString(),
+                                        deliverycost:snapshot.data!.docs[index].get('delivery cost') ,
+                                        total: snapshot.data!.docs[index].get('invoice total'),
+                                      )
+                                  )
+                                  );
+                                },)),
                             Expanded(
                                 child: Text(DateFormat('dd-MM-yyyy').format(snapshot.data!.docs[index].get('date').toDate()).toString())),
                             Expanded(
