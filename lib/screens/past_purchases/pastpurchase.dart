@@ -6,6 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class PastPurchase extends StatefulWidget {
+  final String docu;
+  final String tprice;
+  final String orderi;
+  const PastPurchase(this.docu,this.tprice,this.orderi);
   @override
   PastPurchaseState createState() => PastPurchaseState();
 }
@@ -16,15 +20,15 @@ class PastPurchaseState extends State<PastPurchase> {
         floatingActionButton: null,
         appBar: MyAppBar(
           title: Text(
-            "Past Transactions",
+            "Orders",
           ),
           context: context,
         ),
         body: StreamBuilder(
             stream: FirebaseFirestore.instance
-                .collection('Users')
+                .collection('TestOrders')
                 .doc(uid)
-                .collection("Purchases")
+                .collection("Orders").doc(widget.docu).collection('products')
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -73,14 +77,28 @@ class PastPurchaseState extends State<PastPurchase> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                 SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: 500,
+                                  child: Text("Quantity: "+
+                                      snapshot.data!.docs[index]
+                                          .get('quantity').toString(),
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.grey[500]),
+                                  ),
+                                ),
                                 SizedBox(
                                   height: 10,
                                 ),
                                 Container(
                                   width: 500,
                                   child: Text(
-                                    snapshot.data!.docs[index]
-                                        .get('description'),
+                                    "Unit Price: R"+
+                                      snapshot.data!.docs[index]
+                                          .get('unit price').toString(),
                                     maxLines: 2,
                                     style: TextStyle(
                                         fontSize: 15, color: Colors.grey[500]),
@@ -90,14 +108,12 @@ class PastPurchaseState extends State<PastPurchase> {
                                     margin: EdgeInsets.only(
                                         left: 800.0,
                                         top: 0.0,
-                                        bottom: 12.0,
+                                        bottom: 9.0,
                                         right: 0.0),
                                     child: Text(
-                                        "Purchased on : " +
+                                        "Total : R" +
                                             snapshot.data!.docs[index]
-                                                .get('date')
-                                                .toDate()
-                                                .toString(),
+                                                .get('total'),
                                         style: new TextStyle(
                                             color: lightblack,
                                             fontWeight: FontWeight.normal,
@@ -111,6 +127,25 @@ class PastPurchaseState extends State<PastPurchase> {
                   );
                 },
               );
-            }));
+            }),
+            bottomNavigationBar: new Container(
+          color: Color(0xD2242424),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                  child: ListTile(
+                    title: new Text(
+                      " Order: # "+widget.orderi,
+                      style: TextStyle(color: white),
+                    ),
+                    subtitle: new Text(
+                      " \n TOTAL :                       R"+widget.tprice,
+                      style: TextStyle(color: white, fontSize: 19.0),
+                    ),
+                  ))
+            ],
+          ),
+        )
+    );
   }
 }
