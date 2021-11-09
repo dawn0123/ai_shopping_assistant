@@ -75,9 +75,9 @@ class Orders extends State<OrdersPage> {
                   ),
                 ),
                  Container(
-                   child: SingleChildScrollView(
+               
                   child: Order(),
-                ),
+                
                  ),
                  SizedBox(
                    width: 80,
