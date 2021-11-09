@@ -367,7 +367,7 @@ class _CheckOutPaymentState extends State<CheckOutPayment> {
                                   ),
                                   onPressed: () {
                                     addToPurchases();
-                                    // addToOrders();
+                                    addToOrders(total);
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>

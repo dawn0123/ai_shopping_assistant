@@ -12,10 +12,10 @@ class Order extends StatelessWidget with ChangeNotifier {
   @override
   Widget build(BuildContext context) {
     return Center(
+      child: new SingleChildScrollView(
       child: Container(
-        // height: 12 * (MediaQuery.of(context).copyWith().size.height/6.34),
-        height: 460,
-        // width: 1300,
+        height: 100 * (MediaQuery.of(context).copyWith().size.height/6.34),
+        width: 1300,
         decoration: BoxDecoration(border: Border.all(color: Colors.black)),
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
@@ -77,6 +77,7 @@ class Order extends StatelessWidget with ChangeNotifier {
             }
           },
         ),
+      ),
       ),
     );
   }
