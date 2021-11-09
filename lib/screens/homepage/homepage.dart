@@ -28,51 +28,42 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     void choiceAction(String choice) {
       if (choice == Constants.profile) {
-        locator<NavigationService>()
-                                        .globalNavigateTo(ProfileRoute, context);
-        // Navigator.push(context,
-        //     new MaterialPageRoute(builder: (context) => EditProfilePage()));
+        locator<NavigationService>().globalNavigateTo(ProfileRoute, context);
       } else if (choice == Constants.settings) {
-        locator<NavigationService>()
-                                        .globalNavigateTo(SettingsRoute, context);
-        // Navigator.push(context,
-        //     new MaterialPageRoute(builder: (context) => SettingsPage()));
+        locator<NavigationService>().globalNavigateTo(SettingsRoute, context);
       } else if (choice == Constants.orders) {
         locator<NavigationService>()
-                                        .globalNavigateTo(PastPurchasesRoute, context);
-        // Navigator.push(context,
-        //     new MaterialPageRoute(builder: (context) => PastPurchase()));
+            .globalNavigateTo(PastPurchasesRoute, context);
       } else if (choice == Constants.invoices) {
-        locator<NavigationService>()
-                                        .globalNavigateTo(InvoicesRoute, context);
-        // Navigator.push(context,
-        //     new MaterialPageRoute(builder: (context) => InvoicesPage()));
+        locator<NavigationService>().globalNavigateTo(InvoicesRoute, context);
       } else if (choice == Constants.signout) {
         signOut().then((response) => {
               if (response == "User signed out")
                 {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: new Text("Success!"),
-                        content: new Text(response),
-                        actions: <Widget>[
-                          ElevatedButton(
-                            child: new Text("OK"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              locator<NavigationService>()
-                                        .globalNavigateTo(LoginRoute, context);
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //     builder: (BuildContext context) =>
-                              //         LoginScreen()));
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                  locator<NavigationService>()
+                      .globalNavigateTo(LoginRoute, context),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("You have signed out!")))
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (BuildContext context) {
+                  //     return AlertDialog(
+                  //       title: new Text("Success!"),
+                  //       content: new Text(response),
+                  //       actions: <Widget>[
+                  //         ElevatedButton(
+                  //           child: new Text("OK"),
+                  //           onPressed: () {
+                  //             Navigator.of(context).pop();
+                  //             locator<NavigationService>()
+                  //                       .globalNavigateTo(LoginRoute, context);
+
+                  //           },
+                  //         ),
+                  //       ],
+                  //     );
+                  //   },
+                  // ),
                 }
               else
                 showDialog(
@@ -135,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                       setState(() {
                         this.isSearching = true;
                         locator<NavigationService>()
-                                        .globalNavigateTo(SearchRoute, context);
+                            .globalNavigateTo(SearchRoute, context);
                         // Navigator.of(context).push(MaterialPageRoute(
                         //     builder: (BuildContext context) => Search()));
                       });
@@ -158,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onPressed: () {
                     locator<NavigationService>()
-                                        .globalNavigateTo(WishlistRoute, context);
+                        .globalNavigateTo(WishlistRoute, context);
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (BuildContext context) => WishlistPage()));
                   },
@@ -178,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       onPressed: () {
                         locator<NavigationService>()
-                                        .globalNavigateTo(CheckOutRoute, context);
+                            .globalNavigateTo(CheckOutRoute, context);
                         // Navigator.push(
                         //     context,
                         //     new MaterialPageRoute(
