@@ -72,92 +72,106 @@ class _CartItem extends State<SingleCartProduct> {
               ),
             ),
             Expanded(
+              flex: 3,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(widget.title,
-                        overflow: TextOverflow.fade,
-                        softWrap: false,
-                        maxLines: 1,
-                        style: TextStyle(
-                            color: white,
-                            fontFamily: "Inria Serif",
-                            fontSize: 20
-                        )
-                    ),
-                    Container(
-                      child: Text(
-                        widget.description,
-                        overflow: TextOverflow.fade,
-                        softWrap: false,
-                        style: TextStyle(color: lightgrey
-                            ,fontFamily: "Nunito Sans",
-                            fontSize: 18
-                        ),
-                        maxLines: 1,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        IconButton(onPressed: () async {
-                          if(q < 2){
-                          delete(widget.cartid, p);
-                        }
-                        else{
-                          reduce(widget.cartid, oneItem);
-                        }
-
-                        }, icon:
-                        Icon(Icons.remove, color: accent)
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(q.toString(),
+                child: Container(
+                  constraints: BoxConstraints.expand(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(widget.title,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            maxLines: 1,
                             style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: "Nunito Sans",
-                                color: white.withOpacity(0.9),
-                                fontWeight: FontWeight.w100
+                                color: white,
+                                fontFamily: "Inria Serif",
+                                fontSize: 16
+                            )
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          child: Text(
+                            widget.description,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            style: TextStyle(color: lightgrey
+                                ,fontFamily: "Nunito Sans",
+                                fontSize: 14
                             ),
+                            maxLines: 1,
                           ),
                         ),
-                        IconButton(onPressed: () async {setState(() async {
-                          increase(widget.cartid, oneItem);
-                        });
-                        }, icon:
-                        Icon(Icons.add, color: accent)
-                        )
-                      ],
-                    )
-                  ],
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            IconButton(onPressed: () async {
+                              if(q < 2){
+                              delete(widget.cartid, p);
+                            }
+                            else{
+                              reduce(widget.cartid, oneItem);
+                            }
+
+                            }, icon:
+                            Icon(Icons.remove, color: accent, size: 16,)
+                            ),
+                            Text(q.toString(),
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: "Nunito Sans",
+                                  color: white.withOpacity(0.9),
+                                  fontWeight: FontWeight.w100
+                              ),
+                            ),
+                            IconButton(onPressed: () async {setState(() async {
+                              increase(widget.cartid, oneItem);
+                            });
+                            }, icon:
+                            Icon(Icons.add, color: accent, size: 16,)
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-            Container(
-              width: 150,
-              padding: EdgeInsets.only(right: 50),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  IconButton(onPressed: () async {
-                    delete(widget.cartid, p);},
-                    icon:
-                  Icon(Icons.close,
-                    color: white.withOpacity(0.9),
-                    size: 30,
-                  ),
-                  ),
-                  Text("R  "+p.toStringAsFixed(2),
-                      style: TextStyle(
-                          color: accent,
-                          fontFamily: "Inria Serif",
-                          fontSize: 20
-                      ))
-                ],
+            Expanded(
+              flex: 2,
+              child: Container(
+                constraints: BoxConstraints.expand(),
+                padding: EdgeInsets.only(right: 50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(onPressed: () async {
+                      delete(widget.cartid, p);},
+                      icon:
+                    Icon(Icons.close,
+                      color: white.withOpacity(0.9),
+                      size: 20,
+                    ),
+                    ),
+                    Container(
+                      child: Text("R  "+p.toStringAsFixed(2),
+                          overflow: TextOverflow.fade,
+                          softWrap: false,
+                          style: TextStyle(
+                              color: accent,
+                              fontFamily: "Inria Serif",
+                              fontSize: 18
+                          )),
+                    )
+                  ],
+                ),
               ),
             )
           ]),

@@ -121,7 +121,7 @@ class _OrderReview extends State<OrderReview>{
           Expanded(
             flex: 1,
             child: Container(
-              height: 170,
+              constraints: BoxConstraints.expand(),
               padding: EdgeInsets.symmetric(horizontal: 60, vertical: 20),
               color: white.withOpacity(0.04),
               child: Column(
@@ -198,7 +198,7 @@ class _OrderReview extends State<OrderReview>{
                     )
                   ],
                   ),
-                  Divider(color: white,height: 40,indent: 10,endIndent: 10,thickness: 0.05),
+                  Divider(color: white,height: 20,indent: 10,endIndent: 10,thickness: 0.05),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround
                     ,children: [
