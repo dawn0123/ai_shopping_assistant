@@ -16,6 +16,9 @@ shoppers may purchase different types of items from the comfort of their home or
 visiting those stores. It allows Users to buy items from multiple stores despite their location. Aish is an artificial intelligent
 app that will feed the customers eyes what they are most interested. It recommends products that the user might be interested in, using machine learning algorithms.
 
+# WEBSITE LINK
+[AI Shopping](https://github.com/MmasehumeR/AI-Shopping-System-Admin)
+
 # DOCUMENTATION 
 * [Requirements Analysis Document](https://docs.google.com/document/d/1fOcOD5PfAJeSOr_vy4FCrDGsdkLrttcEqX3IggBki58/edit?usp=sharing)
 * [UML Diagrams](https://docs.google.com/document/d/1fOcOD5PfAJeSOr_vy4FCrDGsdkLrttcEqX3IggBki58/edit?usp=sharing)
