@@ -11,6 +11,7 @@ import 'package:aishop/screens/delivery/first_delivery_page.dart';
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/invoices/invoices.dart';
 import 'package:aishop/screens/login/loginscreen.dart';
+import 'package:aishop/screens/past_purchases/components/orders.dart';
 import 'package:aishop/screens/past_purchases/pastpurchase.dart';
 import 'package:aishop/screens/profile_page/edit_profile.dart';
 import 'package:aishop/screens/search/search.dart';
@@ -31,7 +32,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(KitchenScreen());
     case LoginRoute:
       return _getPageRoute(LoginScreen());
-    // case RegistrationRoute:
+    // case DeliveryRoute:
     //   return _getPageRoute(RegisterScreen());
     case ClothesRoute:
       return _getPageRoute(ClothesScreen());
@@ -44,7 +45,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case ProfileRoute:
       return _getPageRoute(EditProfilePage());
     case PastPurchasesRoute:
-      return _getPageRoute(PastPurchase());
+      return _getPageRoute(OrdersPage());
     case SearchRoute:
       return _getPageRoute(Search());
     case CheckOutRoute:
@@ -55,10 +56,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(FirstDelivaryPage());
     case CheckOutDeliveryRoute:
       return _getPageRoute(CheckOutDelivery());
-     case CheckOutPaymentRoute:
+    case CheckOutPaymentRoute:
       return _getPageRoute(CheckOutPayment());
-      // case VerificationRoute:
-      // return _getPageRoute(VerifyScreen());
+    // case VerificationRoute:
+    // return _getPageRoute(VerifyScreen());
     // case PageControllerRoute:
     //   return _getPageRoute(AppPagesController());
     default:
