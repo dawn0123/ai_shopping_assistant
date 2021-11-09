@@ -42,6 +42,9 @@ class _CartItem extends State<SingleCartProduct> {
 
   @override
   Widget build(BuildContext context) {
+    oneItem = widget.price;
+    q = widget.quantity;
+    p = widget.quantity*widget.price;
     return Container(
       margin: EdgeInsets.all(10),
       height: 150,
@@ -99,25 +102,15 @@ class _CartItem extends State<SingleCartProduct> {
                     ),
                     Row(
                       children: [
-                        IconButton(onPressed: () async { setState(() {
-                          q = q-1;
-                          p = p - oneItem;
-                        });
+                        IconButton(onPressed: () async {
+                          if(q < 2){
+                          delete(widget.cartid, p);
+                        }
+                        else{
+                          reduce(widget.cartid, oneItem);
+                        }
 
-                        await FirebaseFirestore.instance
-                            .collection("Users")
-                            .doc(uid)
-                            .update({'total': FieldValue.increment(-widget.price)});
-                        await FirebaseFirestore.instance
-                            .collection("Users")
-                            .doc(uid)
-                            .collection("Cart")
-                            .doc(widget.cartid)
-                            .update({'quantity': FieldValue.increment(-1)});
-
-                        if(q == 0){
-                          Cart.removeFromCart(widget.cartid, "", "", "", 0, 0, 0, "");
-                        }}, icon:
+                        }, icon:
                         Icon(Icons.remove, color: accent)
                         ),
                         Padding(
@@ -131,20 +124,10 @@ class _CartItem extends State<SingleCartProduct> {
                             ),
                           ),
                         ),
-                        IconButton(onPressed: () async {setState(() {
-                          q = q+1;
-                          p = p + oneItem;
+                        IconButton(onPressed: () async {setState(() async {
+                          increase(widget.cartid, oneItem);
                         });
-                        await FirebaseFirestore.instance
-                            .collection("Users")
-                            .doc(uid)
-                            .collection("Cart")
-                            .doc(widget.cartid)
-                            .update({'quantity': FieldValue.increment(1)});
-                        await FirebaseFirestore.instance
-                            .collection("Users")
-                            .doc(uid)
-                            .update({'total': FieldValue.increment(widget.price)});}, icon:
+                        }, icon:
                         Icon(Icons.add, color: accent)
                         )
                       ],
@@ -160,7 +143,9 @@ class _CartItem extends State<SingleCartProduct> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  IconButton(onPressed: (){}, icon:
+                  IconButton(onPressed: () async {
+                    delete(widget.cartid, p);},
+                    icon:
                   Icon(Icons.close,
                     color: white.withOpacity(0.9),
                     size: 30,
@@ -178,4 +163,39 @@ class _CartItem extends State<SingleCartProduct> {
           ]),
     );
   }
+}
+
+reduce(cartid, int oneItem) async {
+  await FirebaseFirestore.instance
+      .collection("Users")
+      .doc(uid)
+      .update({'total': FieldValue.increment(-oneItem)});
+  await FirebaseFirestore.instance
+      .collection("Users")
+      .doc(uid)
+      .collection("Cart")
+      .doc(cartid)
+      .update({'quantity': FieldValue.increment(-1)});
+}
+
+increase(cartid, int oneItem) async {
+  await FirebaseFirestore.instance
+      .collection("Users")
+      .doc(uid)
+      .collection("Cart")
+      .doc(cartid)
+      .update({'quantity': FieldValue.increment(1)});
+  await FirebaseFirestore.instance
+      .collection("Users")
+      .doc(uid)
+      .update({'total': FieldValue.increment(oneItem)
+  });
+}
+
+delete(cartid, int p) async {
+  await FirebaseFirestore.instance
+      .collection("Users")
+      .doc(uid)
+      .update({'total': FieldValue.increment(-p)});
+  Cart.removeFromCart(cartid, "", "", "", 0, 0, 0, "");
 }

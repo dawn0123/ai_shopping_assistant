@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/screens/signup/registerscreen.dart';
+import 'package:aishop/services/databasemanager.dart';
 import 'package:aishop/services/networking.dart';
 import 'package:aishop/styles/google_round_button.dart';
 import 'package:aishop/styles/or_divider.dart';
@@ -15,8 +18,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:aishop/services/databasemanager.dart';
-import 'dart:async';
 
 class LoginScreen extends StatefulWidget {
   @override

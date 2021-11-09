@@ -16,7 +16,7 @@ class RecommendationCard extends StatefulWidget {
   final String imgUrl;
   final String name;
   final String description;
-  final String price;
+  final double price;
   final int stockamt;
   final String category;
 
@@ -109,7 +109,7 @@ class _RecommendationCard extends State<RecommendationCard> {
                                 ),
                               ),
                               //price
-                              Text("R " + widget.price,
+                              Text("R " + widget.price.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 15,

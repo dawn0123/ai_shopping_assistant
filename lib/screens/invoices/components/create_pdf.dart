@@ -67,7 +67,9 @@ Future<void> createPDF({required String invoiceID}) async {
     deliveryMethod = value.get("default delivery");
   });
 
-  double grandTotal = tots + delivery;
+  double grandTotal = tots;
+  tots = tots - delivery;
+
 
   //Draws the heading on the page
   final date = new DateFormat('dd-MM-yyyy');

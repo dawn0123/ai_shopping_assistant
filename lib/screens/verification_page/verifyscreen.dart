@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:aishop/navigation/locator.dart';
 import 'package:aishop/navigation/routing/route_names.dart';
-import 'package:aishop/screens/homepage/homepage.dart';
 import 'package:aishop/services/navigation_service.dart';
 import 'package:aishop/styles/theme.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
