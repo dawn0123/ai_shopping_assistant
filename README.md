@@ -21,7 +21,7 @@ app that will feed the customers eyes what they are most interested. It recommen
 
 # DOCUMENTATION 
 * [Requirements Analysis Document](https://docs.google.com/document/d/1fOcOD5PfAJeSOr_vy4FCrDGsdkLrttcEqX3IggBki58/edit?usp=sharing)
-* [UML Diagrams](https://docs.google.com/document/d/1fOcOD5PfAJeSOr_vy4FCrDGsdkLrttcEqX3IggBki58/edit?usp=sharing)
+* [UML Diagrams](https://github.com/MmasehumeR/AI-Shopping-System-v2/wiki/Software-Architecture-and-Design-Diagrams)
 * [Daily Scrum](https://third-safflower-7c4.notion.site/Software-Design-Project-Daily-Scrum-d467bcafe4ad453a9ed90791aa2e3ff7)
 * [Tiaga wiki](https://tree.taiga.io/project/waffles-ai-shopping-system-v2/wiki/home)
 * [Github wiki](https://github.com/mmasehume/AI-Shopping-System-v2/wiki)
