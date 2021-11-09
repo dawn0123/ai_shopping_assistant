@@ -1,8 +1,12 @@
-import 'dart:math';
+
+import 'dart:convert';
+
 import 'package:aishop/utils/authentication.dart';
 import 'package:aishop/widgets/product_model/recommendation_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class Recommendations extends StatefulWidget {
   @override
@@ -11,193 +15,77 @@ class Recommendations extends StatefulWidget {
   }
 }
 
-class _Recommendations extends State<Recommendations> {
+class _Recommendations extends State<Recommendations>{
+  var recommendations;
   @override
   Widget build(BuildContext context) {
-    List<DocumentSnapshot> recommendations = [];
-    // ignore: non_constant_identifier_names
-    List<DocumentSnapshot> Purchases = [];
-    // ignore: non_constant_identifier_names
-    List<DocumentSnapshot> Wishlist = [];
-    // ignore: non_constant_identifier_names
-    List<DocumentSnapshot> Most_Purchased = [];
-    return Container(
-        height: 420,
-        child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Users")
-                .doc(uid)
-                .collection("History")
-                .snapshots(),
-            builder: (context, snapshot1) {
-              if (snapshot1.hasData) {
-                recommendations = snapshot1.data!.docs;
-              }
-              return StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection("Users")
-                      .doc(uid)
-                      .collection("Wishlist")
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      Wishlist = snapshot.data!.docs;
-                    }
-                    return StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection("Products")
-                            .where("Purchased by", isGreaterThan: 0)
-                            .orderBy("Purchased by", descending: false)
-                            .snapshots(),
-                        builder: (context, snapshot3) {
-                          if (snapshot3.hasData) {
-                            //taking the 20 most purchased products
-                            if(snapshot3.data!.docs.length >= 20){
-                              Most_Purchased.clear();
-                              for(var i = 0; i < 20; i++){
-                                Most_Purchased.add(snapshot3.data!.docs[i]);
-                              }
-                            }
-                            else{
-                              Most_Purchased = snapshot3.data!.docs;
-                            }
+    CollectionReference Products = FirebaseFirestore.instance.collection('Products');
+    return FutureBuilder<String>(
+      future: getRecommendations(), // async work
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting: return Text('Loading....');
+          default:
+            if (snapshot.hasError)
+              return Text('Error: ${snapshot.error}');
+            else
+              recommendations = jsonDecode(snapshot.data.toString());
+            return Container(
+              height: 420,
+              child: GridView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(vertical: 10),
+                gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    childAspectRatio: 3 / 2,
+                    mainAxisSpacing: 0),
+                itemBuilder: (context, index) {
+                  while (index < recommendations.length) {
+                    return FutureBuilder<DocumentSnapshot>(
+                        future: Products.doc(recommendations[index]).get(),
+                        builder:
+                            (BuildContext context,
+                            AsyncSnapshot<DocumentSnapshot> snapshot1) {
+                          if(snapshot1.hasData){
+                            return RecommendationCard(
+                                snapshot1.data!.id,
+                                snapshot1.data!.get('url'),
+                                snapshot1.data!.get('name'),
+                                snapshot1.data!.get('description'),
+                                snapshot1.data!.get('price'),
+                                snapshot1.data!.get('stockamt'),
+                                snapshot1.data!.get('category'));
                           }
-                          return StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance
-                                  .collection("Users")
-                                  .doc(uid)
-                                  .collection("Purchases")
-                                  .snapshots(),
-                              builder: (context, snapshot2) {
-                                if (snapshot2.hasData) {
-                                  Purchases = snapshot2.data!.docs;
-                                }
-                                //New users
-                                if (Wishlist.isEmpty && recommendations.isEmpty && Purchases.isEmpty) {
-                                  recommendations = randoms(Most_Purchased);
-                                }
-                                //recommending based of history
-                                if (recommendations.isNotEmpty && Purchases.isNotEmpty) {
-                                  for (var i = 0; i < recommendations.length; i++) {
-                                    for (var j = 0; j < Purchases.length; j++) {
-                                      if (recommendations[i].id == Purchases[j].id) {
-                                        recommendations.remove(recommendations[i]);
-                                        if (i == recommendations.length)
-                                          i = i - 1;
-                                      }
-                                    }
-                                  }
-                                }
-                                //recommending based on items in a wishlist
-                                if (recommendations.isNotEmpty && Wishlist.isNotEmpty) {
-                                  for (var i = 0; i < recommendations.length; i++) {
-                                    for (var j = 0; j < Wishlist.length; j++) {
-                                      if (recommendations[i].id == Wishlist[j].id) {
-                                        Wishlist.remove(Wishlist[j]);
-                                        if (j == Wishlist.length) j = j - 1;
-                                      }
-                                    }
-                                  }
-                                  for (var count = 0; count < Wishlist.length; count++) {
-                                    recommendations.add(Wishlist[count]);
-                                  }
-                                }
-                                //recommending based on most purchased
-                                if (recommendations.isNotEmpty && Most_Purchased.isNotEmpty) {
-                                  for (var i = 0; i < recommendations.length; i++) {
-                                    for (var j = 0; j < Most_Purchased.length; j++) {
-                                      if (recommendations[i].id == Most_Purchased[j].id) {
-                                        //recommendations.removeAt(i);
-                                        Most_Purchased.remove(Most_Purchased[j]);
-                                        if (j == Most_Purchased.length)
-                                          j = j - 1;
-                                      }
-                                    }
-                                  }
-                                  for (var count = 0; count < Most_Purchased.length; count++) {
-                                    recommendations.add(Most_Purchased[count]);
-                                  }
-                                }
-
-                                if (recommendations.length != 0) {
-                                  recommendations.shuffle();
-                                  for (var i = 0; i < recommendations.length; i++) {
-                                    return GridView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      padding: EdgeInsets.symmetric(vertical: 10),
-                                      gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 1,
-                                          childAspectRatio: 3 / 2,
-                                          mainAxisSpacing: 0),
-                                      itemBuilder: (context, index) {
-                                        while (index < recommendations.length) {
-                                          return RecommendationCard(
-                                            recommendations[index].id,
-                                            recommendations[index].get('url'),
-                                            recommendations[index].get('name'),
-                                            recommendations[index].get('description'),
-                                            recommendations[index].get('price').toString(),
-                                            recommendations[index].get('stockamt'),
-                                            recommendations[index].get('category')
-                                          );
-                                        }
-                                        throw '';
-                                      },
-                                      itemCount: recommendations.length,
-                                    );
-                                  }
-
-                                } else {
-                                  return Text("No Recommendations yet");
-                                }
-                                throw'';
-                              });
-                        });
-                  });
-            }));
-  }
-  List<DocumentSnapshot> randoms(List<DocumentSnapshot> MostPurchased){
-    List<DocumentSnapshot> randomized = [];
-    for(var i = 0; i < MostPurchased.length; i++){
-      var cat = MostPurchased[i].get("category");
-      Stream<QuerySnapshot> stream = FirebaseFirestore.instance.collection("Products").where("category", isEqualTo: cat).snapshots();
-      stream.forEach((element) {
-        if(element != null){
-          element.docs..shuffle();
-          element.docs..reversed;
-          element.docs..shuffle();
-          element.docs..shuffle();
-          element.docs..reversed;
-          element.docs..shuffle();
-          final _random = new Random();
-          final doc = element.docs[_random.nextInt(element.docs.length)];
-          if(randomized.length <= 20){
-            if(randomized.length == 0){
-              randomized.add(doc);
-            }
-            else{
-              if(!_contains(randomized, doc)){
-                randomized.add(doc);
-              }
-            }
-          }
+                          else{
+                            return Container(
+                                alignment: Alignment.topCenter,
+                                margin: EdgeInsets.only(top: 20),
+                                child: CircularProgressIndicator(
+                                  backgroundColor: Colors.grey,
+                                  color: Colors.black,
+                                ));
+                          }
+                        }
+                    );
+                  }
+                  throw'';
+                },
+                itemCount: recommendations.length,
+              ),
+            );
         }
-      });
-    }
-    return randomized;
+      },);
   }
-  bool _contains(List<DocumentSnapshot> list, QueryDocumentSnapshot<Object?> documentSnapshot){
-    var counter = 0;
-    var state = false;
-    for(var i = 0; i < list.length; i++){
-      if(list[i].data() == documentSnapshot.data()){
-        counter++;
-      }
-    }
-    if(counter > 0){
-      state =  true;
-    }
-    return state;
+
+  Future<String> getRecommendations()async {
+    var url = "https://aish-python.herokuapp.com/decision_tree_customer?uid="+uid!;
+    var uri = Uri.parse(url);
+    http.Response response = await http.get(uri);
+    String data = response.body;
+    return data;
   }
+
+
+
 }

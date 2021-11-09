@@ -54,8 +54,8 @@ class _InvoicesPage extends State<InvoicesPage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(200, 0, 0, 0),
                         ),
-                        Image(
-                          image: AssetImage("assets/assets/images/cover.png"),
+                        Image.network(
+                          "assets/images/cover.png",
                           width: 600,
                         ),
                         SizedBox(
