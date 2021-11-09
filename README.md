@@ -1,8 +1,8 @@
 # AI SHOPPING SYSTEM V2
 Developed by : We don't byte
 
-[![Build Status](https://app.travis-ci.com/mmasehume/AI-Shopping-System-v2.svg?branch=dev)](https://app.travis-ci.com/mmasehume/AI-Shopping-System-v2)
-[![Coverage Status](https://coveralls.io/repos/github/mmasehume/AI-Shopping-System-Admin/badge.svg?branch=fake)](https://coveralls.io/github/mmasehume/AI-Shopping-System-Admin?branch=fake)
+[![Build Status](https://app.travis-ci.com/MmasehumeR/AI-Shopping-System-v2.svg?branch=dev)](https://app.travis-ci.com/MmasehumeR/AI-Shopping-System-v2)
+[![Coverage Status](https://coveralls.io/repos/github/MmasehumeR/AI-Shopping-System-v2/badge.svg?branch=dev)](https://coveralls.io/github/MmasehumeR/AI-Shopping-System-v2?branch=dev)
 
 # AI SHOPPING SYSTEM
 
