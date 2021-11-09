@@ -113,7 +113,7 @@ class PastPurchaseState extends State<PastPurchase> {
                                     child: Text(
                                         "Total : R" +
                                             snapshot.data!.docs[index]
-                                                .get('total'),
+                                                .get('total').toString(),
                                         style: new TextStyle(
                                             color: lightblack,
                                             fontWeight: FontWeight.normal,
